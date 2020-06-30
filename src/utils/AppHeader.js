@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FcIdea } from 'react-icons/fc';
+import { FcFilmReel } from 'react-icons/fc';
 import { IconContext } from 'react-icons';
 
 export default function AppHeader() {
@@ -11,9 +11,9 @@ export default function AppHeader() {
 				{' '}
 				<IconContext.Provider value={{ size: '1em' }}>
 					<h1>
-						Advicely{' '}
+						Film Forage
 						<sup>
-							<FcIdea />
+							<FcFilmReel />
 						</sup>
 					</h1>
 				</IconContext.Provider>
@@ -23,20 +23,18 @@ export default function AppHeader() {
 }
 
 const AppHeaderWrapper = styled.div`
-	background-color: #000000;
-	color: #ffffff;
-	font-family: 'Spartan', Roboto, sans-serif;
+	display: flex;
+	flex-direction: column;
+	color: #eef4e6;
 	font-weight: bolder;
-	@media only screen and (max-width: 960px) {
-	}
-	@media only screen and (max-width: 768px) {
-		font-size: 14px;
-	}
-	@media only screen and (max-width: 400px) {
-		font-size: 12px;
+	text-align: center;
+	font-size: 20px;
+	letter-spacing: 3px;
+	@media (max-width: 812px) {
+		font-size: 16px;
 	}
 `;
 
 AppHeader.defaultProps = {
-	title: 'default title',
+	title: 'Film Forage',
 };

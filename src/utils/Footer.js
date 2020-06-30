@@ -5,21 +5,19 @@ export default function Footer() {
 	return (
 		<FooterWrapper>
 			<div className="disclaimer">
-				<h5>
-					Advice data is fetched from{' '}
-					<a href="https://api.adviceslip.com/">https://api.adviceslip.com/</a>{' '}
+				<h4>
+					Movie data (images, titles, ratings, release dates, descriptions) are
+					fetched from{' '}
+					<a href="https://www.themoviedb.org/">
+						<img
+							className="tmdb"
+							src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
+							alt="TMDb"
+						/>
+					</a>{' '}
 					as JSON.
-				</h5>
-				<h6>
-					DISCLAIMER: &nbsp;
-					<i>
-						I am not responsible for any advice you take from this application.
-						I highly advise the use of common sense when taking any action from
-						any application that could jeopordize, yours or anyone elses life,
-						health, or well being.
-					</i>
-				</h6>
-				<h6>&copy;2020 Created By Shoaib (Aib) Syed</h6>
+				</h4>
+				<h5>&copy;2020 Created By Shoaib (Aib) Syed</h5>
 			</div>
 		</FooterWrapper>
 	);
@@ -30,11 +28,16 @@ const FooterWrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background-color: #000000;
+	background-color: #837573;
 	color: #ffffff;
-	font-family: 'Spartan', Roboto, sans-serif;
 	text-align: left;
+
 	.disclaimer {
-		margin: 20px;
+		margin: 10px;
+		font-size: 13px;
+		font-weight: lighter;
+	}
+	.tmdb {
+		width: 100px;
 	}
 `;

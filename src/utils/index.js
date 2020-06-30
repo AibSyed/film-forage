@@ -1,7 +1,7 @@
-import AdviceLoader from './AdviceLoader';
-import AdviceButton from './AdviceButton';
 import AppHeader from './AppHeader';
-import Card from './Card';
+import MovieCard from './MovieCard';
+import MovieResult from './MovieResult';
+import MovieSearch from './MovieSearch';
 import Footer from './Footer';
 
-export { AppHeader, AdviceLoader, AdviceButton, Card, Footer };
+export { AppHeader, Footer, MovieCard, MovieResult, MovieSearch };
