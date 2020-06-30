@@ -33,8 +33,8 @@ const FooterWrapper = styled.div`
 	text-align: left;
 
 	.disclaimer {
-		margin: 5px;
 		font-size: 13px;
+		padding: 10px;
 		font-weight: lighter;
 	}
 	.tmdb {

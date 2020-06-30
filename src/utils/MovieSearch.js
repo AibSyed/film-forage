@@ -56,10 +56,10 @@ export default function MovieSearch() {
 }
 
 const MovieFormWrapper = styled.div`
-	max-width: 90vh;
 	display: flex;
 	flex-direction: column;
 	margin: 0 auto;
+	width: 90%;
 	.form {
 		display: flex;
 		margin: 0 30px;
@@ -67,16 +67,6 @@ const MovieFormWrapper = styled.div`
 		align-items: center;
 		align-content: center;
 		flex-direction: row;
-	}
-	.box1 {
-		flex: 4;
-		margin: 0;
-		padding: 0;
-	}
-	.box2 {
-		flex: 2;
-		margin: 0;
-		padding: 0;
 	}
 
 	.input {
@@ -92,6 +82,8 @@ const MovieFormWrapper = styled.div`
 
 	.input:focus {
 		outline: none;
+		border-radius: 20px 0px 0px 20px;
+		border: 2px dashed #414460;
 	}
 
 	.button {
@@ -119,7 +111,7 @@ const MovieFormWrapper = styled.div`
 	}
 
 	.disabledButton {
-		font-size: 1.1rem;
+		font-size: 1.6rem;
 		padding: 0.5rem 2rem;
 		line-height: 2.8rem;
 		border-radius: 0px 20px 20px 0px;
@@ -135,20 +127,9 @@ const MovieFormWrapper = styled.div`
 		outline: none;
 	}
 
-	@media (max-width: 1024px) {
-		.disabledButton {
-			font-size: 1rem;
-		}
-	}
-
 	@media (max-width: 823px) {
-		.box1 {
-			min-height: 60px;
-		}
-		.box2 {
-			min-height: 60px;
-		}
 		.form {
+			display: flex;
 			flex-direction: column;
 			align-items: stretch;
 			align-content: space-evenly;
@@ -158,6 +139,11 @@ const MovieFormWrapper = styled.div`
 			border-radius: 20px;
 			margin: 20px 0;
 			max-width: 400px;
+		}
+		.input:focus {
+			outline: none;
+			border-radius: 20px;
+			border: 2px dashed #414460;
 		}
 		.button {
 			border-radius: 20px;
@@ -172,6 +158,29 @@ const MovieFormWrapper = styled.div`
 
 	@media (max-width: 414px) {
 		.form {
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
+			align-content: space-evenly;
+			margin: 0 auto;
+		}
+		.input {
+			border-radius: 20px;
+			margin: 20px 0;
+			max-width: 300px;
+		}
+		.button {
+			border-radius: 20px;
+			max-width: 300px;
+		}
+		.disabledButton {
+			border-radius: 20px;
+			max-width: 300px;
+		}
+	}
+
+	@media (max-height: 782px) {
+		.form {
 			flex-direction: column;
 			align-items: stretch;
 			align-content: space-evenly;
@@ -181,18 +190,14 @@ const MovieFormWrapper = styled.div`
 			border-radius: 20px;
 			margin: 20px 0;
 			max-width: 300px;
-			min-width: 220px;
 		}
 		.button {
 			border-radius: 20px;
 			max-width: 300px;
-			min-width: 220px;
 		}
 		.disabledButton {
-			font-size: 1.6rem;
 			border-radius: 20px;
 			max-width: 300px;
-			min-width: 220px;
 		}
 	}
 `;
