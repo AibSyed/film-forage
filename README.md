@@ -4,7 +4,7 @@
 
 ## Usage example
 
-To use, simply enter movie in search bar. [Get your results](filmforage.netlify.app).
+To use, simply enter movie in search bar and [get your results](filmforage.netlify.app).
 
 ### Meta
 

@@ -23,17 +23,6 @@ export default function MovieSearch() {
 		setMovies(data.results);
 	};
 
-	if (/Android/.test(navigator.appVersion)) {
-		window.addEventListener('resize', function () {
-			if (
-				document.activeElement.tagName == 'INPUT' ||
-				document.activeElement.tagName == 'TEXTAREA'
-			) {
-				document.activeElement.scrollIntoView();
-			}
-		});
-	}
-
 	return (
 		<MovieFormWrapper>
 			<form className="form" onSubmit={movieSearch}>
@@ -85,7 +74,7 @@ const MovieFormWrapper = styled.div`
 		padding: 0;
 	}
 	.box2 {
-		flex: 1;
+		flex: 2;
 		margin: 0;
 		padding: 0;
 	}
@@ -146,7 +135,19 @@ const MovieFormWrapper = styled.div`
 		outline: none;
 	}
 
-	@media (max-width: 812px) {
+	@media (max-width: 1024px) {
+		.disabledButton {
+			font-size: 1rem;
+		}
+	}
+
+	@media (max-width: 823px) {
+		.box1 {
+			min-height: 60px;
+		}
+		.box2 {
+			min-height: 60px;
+		}
 		.form {
 			flex-direction: column;
 			align-items: stretch;
