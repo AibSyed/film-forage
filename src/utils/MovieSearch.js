@@ -23,6 +23,17 @@ export default function MovieSearch() {
 		setMovies(data.results);
 	};
 
+	if (/Android/.test(navigator.appVersion)) {
+		window.addEventListener('resize', function () {
+			if (
+				document.activeElement.tagName == 'INPUT' ||
+				document.activeElement.tagName == 'TEXTAREA'
+			) {
+				document.activeElement.scrollIntoView();
+			}
+		});
+	}
+
 	return (
 		<MovieFormWrapper>
 			<form className="form" onSubmit={movieSearch}>
@@ -144,8 +155,8 @@ const MovieFormWrapper = styled.div`
 		}
 		.input {
 			border-radius: 20px;
-			max-width: 400px;
 			margin: 20px 0;
+			max-width: 400px;
 		}
 		.button {
 			border-radius: 20px;
@@ -155,6 +166,32 @@ const MovieFormWrapper = styled.div`
 			font-size: 1.6rem;
 			border-radius: 20px;
 			max-width: 400px;
+		}
+	}
+
+	@media (max-width: 414px) {
+		.form {
+			flex-direction: column;
+			align-items: stretch;
+			align-content: space-evenly;
+			margin: 0 30px;
+		}
+		.input {
+			border-radius: 20px;
+			margin: 20px 0;
+			max-width: 300px;
+			min-width: 220px;
+		}
+		.button {
+			border-radius: 20px;
+			max-width: 300px;
+			min-width: 220px;
+		}
+		.disabledButton {
+			font-size: 1.6rem;
+			border-radius: 20px;
+			max-width: 300px;
+			min-width: 220px;
 		}
 	}
 `;

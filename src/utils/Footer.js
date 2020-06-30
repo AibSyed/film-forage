@@ -33,7 +33,7 @@ const FooterWrapper = styled.div`
 	text-align: left;
 
 	.disclaimer {
-		margin: 20px;
+		margin: 5px;
 		font-size: 13px;
 		font-weight: lighter;
 	}

@@ -46,11 +46,11 @@ const MovieCardWrapper = styled.div`
 	}
 	.releaseDate {
 		text-decoration: underline;
-		font-size: 14px;
+		font-size: 15px;
 		font-weight: bold;
 	}
 	.rating {
-		font-size: 14px;
+		font-size: 18px;
 		font-weight: bold;
 		color: #1b171a;
 	}
@@ -71,11 +71,12 @@ const MovieCardWrapper = styled.div`
 		}
 		.cardContent {
 			margin: 0 2rem;
-			min-width: 50%;
 		}
 	}
 
 	@media (max-width: 414px) {
-		margin: 2rem;
+		max-width: 300px;
+		min-width: 220px;
+		margin: 2rem auto 2rem auto;
 	}
 `;
