@@ -6,7 +6,7 @@ export default function Footer() {
 		<FooterWrapper>
 			<div className="disclaimer">
 				<h4>
-					Movie data (images, titles, ratings, release dates, descriptions) are
+					Movie data (images, titles, ratings, release dates, descriptions)
 					fetched from{' '}
 					<a href="https://www.themoviedb.org/">
 						<img
@@ -33,11 +33,11 @@ const FooterWrapper = styled.div`
 	text-align: left;
 
 	.disclaimer {
-		margin: 10px;
+		margin: 20px;
 		font-size: 13px;
 		font-weight: lighter;
 	}
 	.tmdb {
-		width: 100px;
+		width: 80px;
 	}
 `;
