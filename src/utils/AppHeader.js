@@ -11,7 +11,7 @@ export default function AppHeader() {
 				{' '}
 				<IconContext.Provider value={{ size: '1em' }}>
 					<h1>
-						Film Forage
+						<a href="https://filmforage.netlify.app/">Film Forage</a>
 						<sup>
 							<FcFilmReel />
 						</sup>
@@ -30,6 +30,10 @@ const AppHeaderWrapper = styled.div`
 	text-align: center;
 	font-size: 20px;
 	letter-spacing: 3px;
+	a {
+		text-decoration: none;
+		color: #eef4e6;
+	}
 	@media (max-width: 812px) {
 		font-size: 16px;
 	}
