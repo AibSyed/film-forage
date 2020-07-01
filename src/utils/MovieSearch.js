@@ -198,26 +198,4 @@ const MovieFormWrapper = styled.div`
 			max-width: 300px;
 		}
 	}
-
-	@media (max-height: 782px) {
-		.form {
-			flex-direction: column;
-			align-items: stretch;
-			align-content: space-evenly;
-			margin: 0 30px;
-		}
-		.input {
-			border-radius: 20px;
-			margin: 20px 0;
-			max-width: 300px;
-		}
-		.button {
-			border-radius: 20px;
-			max-width: 300px;
-		}
-		.disabledButton {
-			border-radius: 20px;
-			max-width: 300px;
-		}
-	}
 `;
