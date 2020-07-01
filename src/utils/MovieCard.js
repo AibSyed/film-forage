@@ -31,7 +31,8 @@ const MovieCardWrapper = styled.div`
 	margin: 2rem;
 	background-color: #eef4e6;
 	.cardContent {
-		margin: auto 2rem auto 2rem;
+		margin: 0 auto;
+		padding: 20px;
 		min-width: 60%;
 		justify-content: flex-end;
 	}
