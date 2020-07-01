@@ -6,11 +6,15 @@
 
 ## Usage example
 
-To use, simply enter movie in search bar and [get your results](https://filmforage.netlify.app/).
+To use, visit (https://filmforage.netlify.app/) - Simply enter film name in search bar and get your results.
 
 ### Technologies Used
 
 Create React App Boilerplate, React-Icons, Styled-Components
+
+### Lessons Learned
+
+Querying API data with input parameters, displaying results based on input query, conditionally changing layout elements based on events
 
 ### Meta
 
