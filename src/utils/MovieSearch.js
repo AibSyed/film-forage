@@ -5,6 +5,7 @@ import { MovieResult } from '.';
 export default function MovieSearch() {
 	const [query, setQuery] = useState('');
 	const [movies, setMovies] = useState([]);
+
 	const wrapperRef = useRef(null);
 	const [disabledButtonText, setDisabledButtonText] = useState(
 		'Enter Film Name'
@@ -28,24 +29,23 @@ export default function MovieSearch() {
 	};
 
 	useEffect(() => {
-		document.addEventListener('mousedown', handleClickOutside);
+		document.addEventListener('submit', handleDisabledButtonText);
 
 		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
+			document.removeEventListener('submit', handleDisabledButtonText);
 		};
 	}, []);
 
-	const handleClickOutside = (e) => {
+	const handleDisabledButtonText = (e) => {
 		const { current: wrap } = wrapperRef;
 		if (wrap && !wrap.contains(e.target)) {
-			setQuery('');
 			setDisabledButtonText('Search More Films');
 		}
 	};
 
 	return (
 		<MovieFormWrapper>
-			<form ref={wrapperRef} className="form" onSubmit={movieSearch}>
+			<form className="form" onSubmit={movieSearch}>
 				<div className="box1">
 					<input
 						className="input"
@@ -60,7 +60,7 @@ export default function MovieSearch() {
 				</div>
 				<div className="box2">
 					{query ? (
-						<button className="button" type="submit">
+						<button ref={wrapperRef} className="button" type="submit">
 							Search
 						</button>
 					) : (
