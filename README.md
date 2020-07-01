@@ -1,10 +1,16 @@
-# Film Forage &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/AibSyed/advicely/pulls) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/AibSyed/film-forage/blob/master/LICENSE)
+# Film Forage &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/AibSyed/advicely/pulls) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/AibSyed/film-forage/blob/master/LICENSE)
+
+![Film Forage Gif](https://media.giphy.com/media/dByGRZREAyMBneeqnH/giphy.gif)
 
 > Movie data (images, titles, ratings, release dates, descriptions) fetched from [TMDb](https://www.themoviedb.org/) as JSON.
 
 ## Usage example
 
-To use, simply enter movie in search bar and [get your results](filmforage.netlify.app).
+To use, simply enter movie in search bar and [get your results](https://filmforage.netlify.app/).
+
+### Technologies Used
+
+Create React App Boilerplate, React-Icons, Styled-Components
 
 ### Meta
 
