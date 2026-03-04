@@ -14,8 +14,7 @@ async function fetchMovies(mood: string, genre: string, runtime: number) {
     throw new Error("Failed to load discovery results");
   }
 
-  const payload = (await response.json()) as { items: Movie[]; source: string };
-  return payload;
+  return (await response.json()) as { items: Movie[]; source: string };
 }
 
 export function DiscoveryBoard() {
@@ -32,18 +31,20 @@ export function DiscoveryBoard() {
   const lead = useMemo(() => query.data?.items?.[0], [query.data]);
 
   return (
-    <section className="mx-auto grid w-full max-w-6xl gap-8 px-6 pb-12 pt-4 md:grid-cols-[2fr_1fr]">
-      <div className="space-y-6 rounded-3xl border border-slate-700 bg-slate-900/70 p-6 shadow-glow backdrop-blur">
+    <section className="mx-auto grid w-full max-w-6xl gap-8 px-6 pb-12 pt-4 md:grid-cols-[2fr_1fr]" aria-label="Film discovery board">
+      <div className="space-y-6 rounded-3xl border border-slate-700 bg-slate-900/70 p-6 shadow-2xl backdrop-blur">
         <div className="flex flex-wrap items-center gap-3 text-sm">
           <span className="inline-flex items-center gap-2 rounded-full bg-sky-500/20 px-3 py-1 font-medium text-sky-200">
-            <Clapperboard size={16} /> Discovery Engine
+            <Clapperboard size={16} aria-hidden="true" /> Discovery Engine
           </span>
           <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-200">Source: {query.data?.source ?? "loading"}</span>
+          <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-200">Saved: {saved.length}</span>
         </div>
-        <div className="grid gap-3 md:grid-cols-3">
+
+        <form className="grid gap-3 md:grid-cols-3" aria-label="Discovery filters" onSubmit={(event) => event.preventDefault()}>
           <label className="space-y-1">
             <span className="text-sm text-slate-300">Mood</span>
-            <select className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2" value={mood} onChange={(event) => setMood(event.target.value)}>
+            <select aria-label="Mood" className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2" value={mood} onChange={(event) => setMood(event.target.value)}>
               {moods.map((item) => (
                 <option key={item} value={item}>{item}</option>
               ))}
@@ -51,7 +52,7 @@ export function DiscoveryBoard() {
           </label>
           <label className="space-y-1">
             <span className="text-sm text-slate-300">Genre</span>
-            <select className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2" value={genre} onChange={(event) => setGenre(event.target.value)}>
+            <select aria-label="Genre" className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2" value={genre} onChange={(event) => setGenre(event.target.value)}>
               {genres.map((item) => (
                 <option key={item} value={item}>{item}</option>
               ))}
@@ -59,32 +60,45 @@ export function DiscoveryBoard() {
           </label>
           <label className="space-y-1">
             <span className="text-sm text-slate-300">Max Runtime</span>
-            <input className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2" type="number" min={70} max={240} value={runtime} onChange={(event) => setRuntime(Number(event.target.value))} />
+            <input
+              aria-label="Max runtime"
+              className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2"
+              type="number"
+              min={70}
+              max={240}
+              value={runtime}
+              onChange={(event) => setRuntime(Number(event.target.value))}
+            />
           </label>
-        </div>
+        </form>
 
-        {query.isPending && <p className="text-slate-300">Calibrating your stack...</p>}
-        {query.isError && <p className="rounded-lg border border-rose-400/40 bg-rose-950/40 p-3 text-rose-100">Discovery temporarily unavailable. Retry in a moment.</p>}
+        <div role="status" aria-live="polite" className="min-h-6">
+          {query.isPending && <p className="text-slate-300">Calibrating your stack...</p>}
+          {query.isError && <p className="rounded-lg border border-rose-400/40 bg-rose-950/40 p-3 text-rose-100">Discovery temporarily unavailable. Retry in a moment.</p>}
+        </div>
 
         {lead ? (
           <article className="grid gap-4 rounded-2xl border border-slate-700 bg-slate-950/70 p-4 md:grid-cols-[1fr_2fr]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={lead.posterUrl} alt={`${lead.title} poster`} className="h-72 w-full rounded-xl object-cover" />
+            <img src={lead.posterUrl} alt={`${lead.title} poster`} className="h-72 w-full rounded-xl object-cover" loading="lazy" />
             <div className="space-y-3">
               <h2 className="font-heading text-3xl">{lead.title}</h2>
               <p className="text-sm uppercase tracking-wide text-slate-400">{lead.year} · {lead.rating.toFixed(1)} / 10 · {lead.runtimeMinutes} min</p>
               <p className="text-slate-200">{lead.overview}</p>
               <button
+                type="button"
                 className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-4 py-2 font-semibold text-slate-950 transition hover:bg-amber-400"
                 onClick={() => setSaved((current) => (current.find((movie) => movie.id === lead.id) ? current : [...current, lead]))}
               >
-                <BookmarkPlus size={16} /> Save to shortlist
+                <BookmarkPlus size={16} aria-hidden="true" /> Save to shortlist
               </button>
             </div>
           </article>
-        ) : null}
+        ) : (
+          <p className="rounded-lg border border-slate-700 bg-slate-950/50 p-4 text-slate-300">No lead recommendation available with current filters. Try broadening runtime or switching mood.</p>
+        )}
 
-        <div className="grid gap-3 md:grid-cols-3">
+        <div className="grid gap-3 md:grid-cols-3" aria-label="Additional recommendations">
           {query.data?.items?.slice(1, 7).map((movie) => (
             <article key={movie.id} className="rounded-xl border border-slate-700 bg-slate-900 p-3">
               <h3 className="font-semibold">{movie.title}</h3>
@@ -94,11 +108,11 @@ export function DiscoveryBoard() {
         </div>
       </div>
 
-      <aside className="space-y-4 rounded-3xl border border-slate-700 bg-slate-900/70 p-5">
+      <aside className="space-y-4 rounded-3xl border border-slate-700 bg-slate-900/70 p-5" aria-label="Saved shortlist">
         <div className="flex items-center justify-between">
           <h2 className="font-heading text-2xl">Saved Stack</h2>
-          <button className="inline-flex items-center gap-2 text-sm text-slate-300 hover:text-white" onClick={() => query.refetch()}>
-            <RefreshCcw size={14} /> Refresh
+          <button type="button" className="inline-flex items-center gap-2 text-sm text-slate-300 hover:text-white" onClick={() => query.refetch()}>
+            <RefreshCcw size={14} aria-hidden="true" /> Refresh
           </button>
         </div>
         <ul className="space-y-2">

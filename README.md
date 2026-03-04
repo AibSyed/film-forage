@@ -1,32 +1,37 @@
 # Film Forage 2.0
 
-Film Forage is a cinematic discovery experience rebuilt from zero for modern performance, reliability, and product quality. It blends mood-driven curation with resilient live provider access and graceful fallback behavior.
+Film Forage is a modern cinematic discovery product designed for fast exploration, strong visual hierarchy, and resilient fallback behavior.
 
 ## Highlights
-- Intent-led discovery (mood, genre, runtime).
-- Swipe-ready recommendation board and shortlist workflow.
-- Strictly typed contracts (Zod) from provider to UI.
-- Server-only secret handling with fallback when live provider is unavailable.
+- Mood + genre + runtime guided discovery.
+- Fast shortlist loop with clear action feedback.
+- Contract-first data handling (Zod) from adapter to UI.
+- Server-only secret policy and graceful provider fallback.
 
 ## Architecture
 ```mermaid
 flowchart LR
-  U[Player] --> UI[Next.js App Router UI]
-  UI --> Q[TanStack Query Cache]
-  Q --> RH[/app/api/discovery Route Handler]
-  RH --> AD[TMDB Adapter]
-  AD --> Z[Zod Contract Validation]
-  AD --> TMDB[(TMDB API)]
-  AD --> FB[(Curated Fallback Catalog)]
+  U["Player"] --> UI["Next.js App Router UI"]
+  UI --> Q["TanStack Query Cache"]
+  Q --> RH["/app/api/discovery Route Handler"]
+  RH --> AD["TMDB Adapter"]
+  AD --> Z["Zod Contract Validation"]
+  AD --> TMDB["TMDB API"]
+  AD --> FB["Curated Fallback Catalog"]
   Z --> UI
 ```
 
+## Deployment Model
+- Platform: Vercel (production)
+- Branch strategy: `master` auto-promotes to production
+- Previews: feature branch and PR previews when Git integration is active
+
 ## Tech Stack
 - Next.js 16 App Router
-- React 19 + TypeScript (strict)
+- React 19 + TypeScript strict mode
 - TanStack Query v5
 - Zod v4
-- Tailwind CSS
+- Tailwind CSS v4
 - Vitest + Playwright
 
 ## Local Development
@@ -35,22 +40,23 @@ pnpm install
 pnpm dev
 ```
 
-## Verification Commands
+## Quality Gates
 ```bash
 pnpm run check
 pnpm run test:e2e
 pnpm run audit:high
+pnpm run docs:check
 ```
 
 ## Environment
-Copy `.env.example` to `.env.local` and fill values.
+Copy `.env.example` to `.env.local`.
 
-- `TMDB_ACCESS_TOKEN` (server-only): optional read-access token for live TMDB requests.
-- `TMDB_BASE_URL`: defaults to `https://api.themoviedb.org/3`.
+- `TMDB_ACCESS_TOKEN` server-only token for live TMDB requests.
+- `TMDB_BASE_URL` optional TMDB base override.
 
-Security note: this project intentionally avoids `NEXT_PUBLIC_` for secrets.
+Security rule: do not place secrets in `NEXT_PUBLIC_` variables.
 
-## Product Reinvention Notes
-- Legacy CRA architecture removed.
-- Discovery experience redesigned with stronger pacing, clarity, and interaction quality.
-- Failure-path UX is first-class: data outage still yields useful recommendations.
+## Troubleshooting
+- If live discovery fails, confirm `TMDB_ACCESS_TOKEN` in Vercel env for production.
+- If docs CI fails, run `pnpm run docs:check` locally and fix Mermaid/markdown issues.
+- If stale data appears, use the in-app refresh control to refetch.
