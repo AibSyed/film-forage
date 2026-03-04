@@ -1,25 +1,28 @@
-import { getDiscoveryMovies } from "@/lib/api/tmdb";
-import { z } from "zod";
+import { NextRequest } from "next/server";
+import { discoveryQuerySchema } from "@/features/discovery/schema";
+import { getDiscoveryFeed } from "@/lib/domain/discovery";
 
-const querySchema = z.object({
-  mood: z.string().optional(),
-  genre: z.string().optional(),
-  runtime: z.coerce.number().int().positive().optional(),
-});
+export async function GET(request: NextRequest) {
+  const params = Object.fromEntries(request.nextUrl.searchParams.entries());
+  const parsedQuery = discoveryQuerySchema.safeParse(params);
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const parsed = querySchema.safeParse(Object.fromEntries(searchParams.entries()));
-
-  if (!parsed.success) {
-    return Response.json({ error: "Invalid query", issues: parsed.error.issues }, { status: 400 });
+  if (!parsedQuery.success) {
+    return Response.json(
+      {
+        error: "invalid_payload",
+        message: "Invalid query params. Expected mood, genre, runtime within supported ranges.",
+      },
+      { status: 400 }
+    );
   }
 
-  const movies = await getDiscoveryMovies({
-    mood: parsed.data.mood,
-    genre: parsed.data.genre,
-    maxRuntime: parsed.data.runtime,
-  });
+  const query = parsedQuery.data;
+  const result = await getDiscoveryFeed(query);
 
-  return Response.json({ items: movies, source: process.env.TMDB_ACCESS_TOKEN ? "tmdb" : "fallback" }, { status: 200 });
+  return Response.json(result, {
+    status: 200,
+    headers: {
+      "Cache-Control": "public, s-maxage=300, stale-while-revalidate=900",
+    },
+  });
 }

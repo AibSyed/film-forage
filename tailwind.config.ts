@@ -1,20 +1,23 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}", "./features/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./app/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./features/**/*.{ts,tsx}",
+    "./lib/**/*.{ts,tsx}",
+  ],
   theme: {
     extend: {
-      colors: {
-        ink: "#0f172a",
-        neon: "#0ea5e9",
-        ember: "#f97316",
+      fontFamily: {
+        display: ["var(--font-display)"],
+        body: ["var(--font-body)"],
       },
       boxShadow: {
-        glow: "0 10px 30px rgba(14,165,233,0.35)",
+        noir: "0 24px 64px rgba(0, 0, 0, 0.45)",
       },
     },
   },
-  plugins: [],
 };
 
 export default config;
