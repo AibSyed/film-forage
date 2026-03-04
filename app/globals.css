@@ -1,13 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../tailwind.config.ts";
 
 :root {
-  color-scheme: dark;
-  --surface-1: #020617;
-  --surface-2: #0f172a;
-  --text-main: #e2e8f0;
-  --focus-ring: #38bdf8;
+  --bg-1: #050505;
+  --bg-2: #0f172a;
+  --text-main: #f4f4f5;
+  --focus-ring: #fbbf24;
 }
 
 * {
@@ -16,13 +14,32 @@
 
 body {
   margin: 0;
-  background: radial-gradient(circle at 20% 20%, #0c4a6e, var(--surface-1));
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(245, 158, 11, 0.16), transparent 30%),
+    radial-gradient(circle at 90% 15%, rgba(59, 130, 246, 0.12), transparent 32%),
+    linear-gradient(140deg, var(--bg-1), var(--bg-2));
   color: var(--text-main);
   font-family: var(--font-body), sans-serif;
 }
 
-.font-heading {
-  font-family: var(--font-heading), serif;
+.font-display {
+  font-family: var(--font-display), sans-serif;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -40px;
+  z-index: 100;
+  border-radius: 9999px;
+  background: #fef3c7;
+  color: #111827;
+  padding: 0.45rem 0.8rem;
+}
+
+.skip-link:focus {
+  top: 1rem;
 }
 
 :focus-visible {
@@ -30,24 +47,10 @@ body {
   outline-offset: 2px;
 }
 
-.skip-link {
-  position: absolute;
-  left: 1rem;
-  top: -40px;
-  z-index: 50;
-  border-radius: 9999px;
-  background: #f8fafc;
-  color: #020617;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.875rem;
-}
-
-.skip-link:focus {
-  top: 1rem;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation: none !important;
     transition: none !important;
     scroll-behavior: auto !important;
