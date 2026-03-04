@@ -4,13 +4,52 @@
 
 :root {
   color-scheme: dark;
+  --surface-1: #020617;
+  --surface-2: #0f172a;
+  --text-main: #e2e8f0;
+  --focus-ring: #38bdf8;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  background: radial-gradient(circle at 20% 20%, #0c4a6e, var(--surface-1));
+  color: var(--text-main);
   font-family: var(--font-body), sans-serif;
 }
 
 .font-heading {
   font-family: var(--font-heading), serif;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -40px;
+  z-index: 50;
+  border-radius: 9999px;
+  background: #f8fafc;
+  color: #020617;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.875rem;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }
