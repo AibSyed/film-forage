@@ -13,7 +13,6 @@ type TmdbMovie = {
   vote_average?: number;
   overview?: string;
   poster_path?: string | null;
-  genre_ids?: number[];
 };
 
 const genreMap: Record<string, number> = {
@@ -47,16 +46,21 @@ export async function getDiscoveryMovies(query: Query): Promise<Movie[]> {
   const mood = query.mood ?? "atmospheric";
   const genre = query.genre ?? "sci-fi";
 
-  if (!env.TMDB_API_KEY) {
-    logInfo("TMDB key missing, serving curated fallback discovery set");
+  if (!env.TMDB_ACCESS_TOKEN) {
+    logInfo("TMDB token missing, serving curated fallback discovery set");
     return fallbackMovies.filter((movie) => movie.genre === genre || genre === "all");
   }
 
   try {
     const genreId = genreMap[genre] ?? 878;
     const response = await fetchWithTimeout(
-      `${env.TMDB_BASE_URL}/discover/movie?api_key=${env.TMDB_API_KEY}&with_genres=${genreId}&sort_by=popularity.desc&vote_count.gte=400`,
-      {},
+      `${env.TMDB_BASE_URL}/discover/movie?with_genres=${genreId}&sort_by=popularity.desc&vote_count.gte=400`,
+      {
+        headers: {
+          Authorization: `Bearer ${env.TMDB_ACCESS_TOKEN}`,
+          Accept: "application/json",
+        },
+      },
       7000,
     );
 

@@ -21,5 +21,5 @@ export async function GET(request: Request) {
     maxRuntime: parsed.data.runtime,
   });
 
-  return Response.json({ items: movies, source: process.env.TMDB_API_KEY ? "tmdb" : "fallback" }, { status: 200 });
+  return Response.json({ items: movies, source: process.env.TMDB_ACCESS_TOKEN ? "tmdb" : "fallback" }, { status: 200 });
 }
