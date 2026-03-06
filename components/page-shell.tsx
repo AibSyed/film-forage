@@ -37,17 +37,13 @@ export function PageShell({
               </p>
               <h1 className="max-w-4xl font-display text-[2.9rem] leading-[0.92] text-[var(--ink-strong)] md:text-[4.6rem]">{title}</h1>
               <p className="max-w-3xl text-base leading-7 text-[var(--ink-soft)]">{intro}</p>
-              <div className="flex flex-wrap gap-2 lg:hidden">
-                <span className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[rgba(255,255,255,0.04)] px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-[var(--ink-dim)]">Region-aware</span>
-                <span className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[rgba(255,255,255,0.04)] px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-[var(--ink-dim)]">Service checks</span>
-                <span className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[rgba(255,255,255,0.04)] px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-[var(--ink-dim)]">Local watchlist</span>
-              </div>
+              <p className="text-xs uppercase tracking-[0.16em] text-[var(--ink-muted)] lg:hidden">
+                Region-aware • Service checks • Local watchlist
+              </p>
             </div>
-            <div className="hidden flex-wrap gap-2 lg:flex">
-              <span className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[rgba(255,255,255,0.04)] px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-[var(--ink-dim)]">Region-aware</span>
-              <span className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[rgba(255,255,255,0.04)] px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-[var(--ink-dim)]">Service checks</span>
-              <span className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[rgba(255,255,255,0.04)] px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-[var(--ink-dim)]">Local watchlist</span>
-            </div>
+            <p className="hidden text-xs uppercase tracking-[0.16em] text-[var(--ink-muted)] lg:block">
+              Region-aware • Service checks • Local watchlist
+            </p>
           </section>
         ) : (
           <section className="grid gap-3 border-b border-[var(--line-soft)] pb-4">
