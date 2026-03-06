@@ -13,7 +13,7 @@ test("renders the film-forage picker and supports save plus search flows", async
   await page.getByLabel("Primary").getByRole("link", { name: "Watchlist" }).click();
   await expect(page).toHaveURL(/\/watchlist$/);
   await expect(page.getByRole("heading", { name: "Keep the movies you still want to watch." })).toBeVisible();
-  await expect(page.getByText(firstTitle)).toBeVisible();
+  await expect(page.getByRole("heading", { name: firstTitle })).toBeVisible();
 
   await page.getByLabel("Primary").getByRole("link", { name: "Search" }).click();
   await page.getByLabel("Search by title").fill("Mad");

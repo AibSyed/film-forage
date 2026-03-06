@@ -5,6 +5,7 @@ import type { Route } from "next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronDown, Film, Search, SlidersHorizontal } from "lucide-react";
+import { toast } from "sonner";
 import {
   availabilityModes,
   genreOptions,
@@ -37,14 +38,12 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
   const [pick, setPick] = useState(initialPick);
   const [providerCatalog, setProviderCatalog] = useState(initialProviders);
   const [pending, setPending] = useState(false);
-  const [status, setStatus] = useState("");
   const [searchPrompt, setSearchPrompt] = useState("");
   const [filters, setFilters] = useState(defaultPickRequest);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   const submitPick = useCallback(async (nextFilters: typeof filters, userInitiated = true) => {
     setPending(true);
-    setStatus("");
 
     try {
       const payload = pickRequestSchema.parse(nextFilters);
@@ -56,10 +55,12 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
 
       setPick(nextPick);
       if (userInitiated) {
-        setStatus(getPickerStatusMessage(nextPick.meta.source));
+        toast.success(getPickerStatusMessage(nextPick.meta.source));
       }
     } catch (error) {
-      setStatus(error instanceof Error ? error.message : "Could not update the list right now.");
+      toast.error("Could not update the shortlist.", {
+        description: error instanceof Error ? error.message : "Try again in a moment.",
+      });
     } finally {
       setPending(false);
     }
@@ -275,7 +276,6 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
           </div>
         </div>
 
-        {status ? <p className="mt-4 text-sm text-[var(--ink-dim)]">{status}</p> : null}
       </article>
 
       <section className="space-y-4 rounded-[1.8rem] border border-[var(--line-soft)] bg-[linear-gradient(160deg,rgba(14,22,31,0.99),rgba(8,13,20,0.99))] p-4 shadow-[0_26px_80px_rgba(0,0,0,0.28)] md:p-6 lg:p-7">

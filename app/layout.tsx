@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Bodoni_Moda, Manrope } from "next/font/google";
+import { ToastProvider } from "@/components/ui/toast-provider";
 import "@/app/globals.css";
 
 const display = Bodoni_Moda({ subsets: ["latin"], variable: "--font-display" });
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to main content
         </a>
         {children}
+        <ToastProvider />
       </body>
     </html>
   );

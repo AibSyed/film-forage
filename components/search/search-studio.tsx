@@ -4,6 +4,7 @@ import type { Route } from "next";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Clock3, Search, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 import type { SearchResponseVM } from "@/features/picker/contracts";
 import { launchRegions } from "@/features/picker/contracts";
 import { getSearchFallbackMessage } from "@/features/picker/presentation";
@@ -98,7 +99,10 @@ export function SearchStudio({
             ))}
             <button
               type="button"
-              onClick={clearRecentSearches}
+              onClick={() => {
+                clearRecentSearches();
+                toast("Recent searches cleared.");
+              }}
               className="ml-auto inline-flex items-center gap-2 text-sm text-[var(--ink-dim)] hover:text-[var(--ink-main)]"
             >
               <Trash2 size={15} /> Clear
