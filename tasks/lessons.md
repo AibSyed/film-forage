@@ -15,3 +15,7 @@
 - What went wrong: the first Film Forage relaunch still looked overdesigned and under-reviewed because the shell and result cards were not re-checked as a product system in the browser.
 - Root cause: I stopped after the structural rewrite passed verification instead of running a separate reviewer-style visual pass that challenged hierarchy, contrast, and above-the-fold usefulness.
 - Prevention rule: for every non-trivial UI relaunch, require one explicit reviewer pass plus local desktop/mobile screenshots before declaring the UX complete.
+
+- What went wrong: helper labels like "Tonight picker" started overshadowing the actual product name and made the app feel like an internal concept instead of Film Forage.
+- Root cause: I let implementation-era feature naming leak into the core product framing instead of checking whether the identity still centered the brand the user is presenting publicly.
+- Prevention rule: when product branding matters, make the branded noun the primary UI label and demote helper phrases to supporting copy only.
