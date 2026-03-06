@@ -121,4 +121,35 @@ describe("searchMovies", () => {
     expect(result.items).toEqual([reserveItem]);
     expect(searchReserveCards).toHaveBeenCalledWith("ga", "US");
   });
+
+  it("falls back to reserve results when hydrated cards fail schema validation", async () => {
+    requestTmdb.mockImplementation(async (path: string) => {
+      if (path === "search/movie") {
+        return {
+          page: 1,
+          total_pages: 1,
+          results: [{ id: 4, title: "Delta", overview: "q", release_date: "2023-01-01", poster_path: null, backdrop_path: null, genre_ids: [], vote_average: 5.8 }],
+        };
+      }
+      if (path === "movie/4") {
+        return {
+          ...baseDetail,
+          id: 4,
+          title: "Delta",
+          genres: [],
+        };
+      }
+      if (path === "movie/4/watch/providers") {
+        return baseProviders;
+      }
+      throw new Error(`Unexpected path ${path}`);
+    });
+
+    const { searchMovies } = await import("@/lib/tmdb/search");
+    const result = await searchMovies({ query: "de", region: "US" });
+
+    expect(result.meta.source).toBe("editorial_reserve");
+    expect(result.items).toEqual([reserveItem]);
+    expect(searchReserveCards).toHaveBeenCalledWith("de", "US");
+  });
 });
