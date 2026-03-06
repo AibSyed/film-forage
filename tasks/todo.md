@@ -138,3 +138,22 @@
   - desktop `/` console clean and captured in `tasks/live-home-desktop-final.png`
   - mobile `/` console clean and captured in `tasks/live-home-mobile-final.png`
   - form-field warning resolved on the redesigned picker
+
+
+## Plain-Language Shortlist Pass
+
+### Checklist
+- [completed] Replace lead/backups language with a plain shortlist model users can understand immediately.
+- [completed] Change the Film Forage type system so the app has its own utility-cinema identity instead of sharing a sibling-app feel.
+- [completed] Re-run verification and local browser QA after the plain-language/product-model rewrite.
+
+### Verification Log
+- `pnpm run check`
+- `pnpm run docs:check`
+- `pnpm run audit:high`
+- `pnpm dlx knip --no-progress`
+- `pnpm run test:e2e`
+- Chrome DevTools MCP on `http://127.0.0.1:32131`:
+  - mobile `/` console clean and rechecked after rebuild/restart
+  - desktop `/` screenshot captured in `tasks/local-home-desktop-plain.png`
+  - mobile `/` screenshot captured in `tasks/local-home-mobile-plain.png`

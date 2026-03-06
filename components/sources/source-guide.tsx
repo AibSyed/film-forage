@@ -18,11 +18,11 @@ export function SourceGuide() {
           </ul>
         </article>
         <article className="rounded-[1.75rem] border border-[var(--line-strong)] bg-[var(--surface-1)] p-5 shadow-[0_18px_52px_rgba(0,0,0,0.16)]">
-          <h2 className="font-display text-3xl text-[var(--ink-strong)]">Reserve shelf</h2>
+          <h2 className="font-display text-3xl text-[var(--ink-strong)]">Fallback list</h2>
           <ul className="mt-4 grid gap-3 text-sm leading-7 text-[var(--ink-soft)]">
             <li>If live TMDB data is unavailable, Film Forage falls back to a small in-app shelf so you still have credible options to compare.</li>
-            <li>Reserve-shelf titles are clearly labeled and do not claim current service availability.</li>
-            <li>The reserve shelf is a backup, not the primary source of truth.</li>
+            <li>Fallback list titles are clearly labeled and do not claim current service availability.</li>
+            <li>The fallback list is a backup, not the primary source of truth.</li>
           </ul>
         </article>
       </section>

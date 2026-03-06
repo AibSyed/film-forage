@@ -3,10 +3,10 @@ import { expect, test } from "@playwright/test";
 test("renders the film-forage picker and supports save plus search flows", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page.getByRole("heading", { name: "Find the movie. Keep the shortlist." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Find a movie to watch tonight." })).toBeVisible();
   await expect(page.getByLabel("Region")).toBeVisible();
   await expect(page.getByLabel("Availability")).toBeVisible();
-  await expect(page.getByRole("button", { name: /Find a movie|Finding.../ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Find movies|Finding.../ })).toBeVisible();
 
   const firstTitle = (await page.getByTestId("best-match-card").locator("h2").textContent())?.trim() ?? "";
   await page.getByRole("button", { name: /^Save$/ }).first().click();

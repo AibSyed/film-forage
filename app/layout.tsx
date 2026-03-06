@@ -1,27 +1,27 @@
 import type { Metadata } from "next";
-import { Archivo, Manrope } from "next/font/google";
+import { Inter_Tight, Oswald } from "next/font/google";
 import "@/app/globals.css";
 
-const display = Archivo({ subsets: ["latin"], variable: "--font-display" });
-const body = Manrope({ subsets: ["latin"], variable: "--font-body" });
+const display = Oswald({ subsets: ["latin"], variable: "--font-display", weight: ["500", "600", "700"] });
+const body = Inter_Tight({ subsets: ["latin"], variable: "--font-body" });
 
 export const metadata: Metadata = {
-  title: "Film Forage | Find the Movie. Keep the Shortlist.",
-  description: "Film Forage helps you land on one strong movie, compare a few backups, and check live streaming availability by region.",
+  title: "Film Forage | Find a Movie to Watch Tonight",
+  description: "Film Forage helps you filter by region, services, runtime, and mood so you can find a movie to watch tonight without the endless scroll.",
   metadataBase: new URL("https://film-forage.vercel.app"),
   icons: {
     icon: "/icon",
     apple: "/apple-icon",
   },
   openGraph: {
-    title: "Film Forage | Find the Movie. Keep the Shortlist.",
-    description: "Film Forage helps you land on one strong movie, compare a few backups, and check live streaming availability by region.",
+    title: "Film Forage | Find a Movie to Watch Tonight",
+    description: "Film Forage helps you filter by region, services, runtime, and mood so you can find a movie to watch tonight without the endless scroll.",
     images: "/opengraph-image",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Film Forage | Find the Movie. Keep the Shortlist.",
-    description: "Film Forage helps you land on one strong movie, compare a few backups, and check live streaming availability by region.",
+    title: "Film Forage | Find a Movie to Watch Tonight",
+    description: "Film Forage helps you filter by region, services, runtime, and mood so you can find a movie to watch tonight without the endless scroll.",
     images: "/twitter-image",
   },
 };
