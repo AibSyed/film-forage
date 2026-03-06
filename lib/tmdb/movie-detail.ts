@@ -2,7 +2,9 @@ import { movieDetailResponseSchema } from "@/features/picker/contracts";
 import { buildFitReasons } from "@/features/picker/fit-reasons";
 import { getReserveCardById } from "@/lib/reserve/catalog";
 import { requestTmdb, TmdbUnavailableError } from "@/lib/tmdb/client";
+import { buildMovieCardBase } from "@/lib/tmdb/movie-card";
 import { buildTmdbImageUrl } from "@/lib/tmdb/images";
+import { buildProviderSummary } from "@/lib/tmdb/provider-summary";
 import {
   tmdbMovieCreditsSchema,
   tmdbMovieDetailSchema,
@@ -38,39 +40,10 @@ export async function getMovieDetail(id: number, region: string) {
       }),
     ]);
 
-    const regional = providers.results[region];
+    const providerSummary = buildProviderSummary(region, providers.results[region]);
     const cardBase = {
-      id: detail.id,
-      title: detail.title,
-      year: Number(detail.release_date.slice(0, 4)) || 1970,
-      runtimeMinutes: detail.runtime,
-      genres: detail.genres.map((genre) => genre.name).slice(0, 3),
-      overview: detail.overview || "No overview available.",
-      posterUrl: buildTmdbImageUrl(detail.poster_path, "w500"),
+      ...buildMovieCardBase(detail, providerSummary),
       backdropUrl: buildTmdbImageUrl(detail.backdrop_path, "original"),
-      providerSummary: {
-        region,
-        included: [...(regional?.flatrate ?? []), ...(regional?.free ?? []), ...(regional?.ads ?? [])].map((provider) => ({
-          id: provider.provider_id,
-          name: provider.provider_name,
-          logoUrl: buildTmdbImageUrl(provider.logo_path, "w300"),
-        })),
-        rent: (regional?.rent ?? []).map((provider) => ({
-          id: provider.provider_id,
-          name: provider.provider_name,
-          logoUrl: buildTmdbImageUrl(provider.logo_path, "w300"),
-        })),
-        buy: (regional?.buy ?? []).map((provider) => ({
-          id: provider.provider_id,
-          name: provider.provider_name,
-          logoUrl: buildTmdbImageUrl(provider.logo_path, "w300"),
-        })),
-        note: regional ? `Availability listed for ${region}` : `Availability is not listed for ${region}`,
-        linkUrl: regional?.link,
-        status: regional ? ("available" as const) : ("unknown" as const),
-      },
-      voteAverage: detail.vote_average,
-      provenance: "live_tmdb" as const,
     };
 
     const trailer = videos.results.find((video) => video.site === "YouTube" && (video.official || video.type === "Trailer"));

@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { Route } from "next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronDown, Film, Search, Sparkles, SlidersHorizontal } from "lucide-react";
+import { ChevronDown, Film, Search, SlidersHorizontal, Sparkles } from "lucide-react";
 import {
   availabilityModes,
   genreOptions,
@@ -17,6 +17,7 @@ import {
 import { defaultPickRequest } from "@/features/picker/defaults";
 import {
   getPickerStatusMessage,
+  getProviderFallbackMessage,
   getSourceLabel,
 } from "@/features/picker/presentation";
 import {
@@ -25,6 +26,7 @@ import {
   setRegionPreference,
 } from "@/features/workspace/storage";
 import { MovieCard } from "@/components/movie/movie-card";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SelectField } from "@/components/ui/select";
@@ -71,7 +73,7 @@ export function TonightPicker({
         setStatus(getPickerStatusMessage(nextPick.meta.source));
       }
     } catch (error) {
-      setStatus(error instanceof Error ? error.message : "Could not refresh tonight's picks.");
+      setStatus(error instanceof Error ? error.message : "Could not refresh Film Forage right now.");
     } finally {
       setPending(false);
     }
@@ -137,81 +139,59 @@ export function TonightPicker({
   }
 
   return (
-    <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_22rem] 2xl:grid-cols-[minmax(0,1.08fr)_24rem]">
-      <div className="order-1 space-y-5">
+    <section className="space-y-5">
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.24fr)_22rem] 2xl:grid-cols-[minmax(0,1.32fr)_24rem]">
         <article className="space-y-4 rounded-[2rem] border border-[var(--line-soft)] bg-[linear-gradient(160deg,rgba(15,31,40,0.96),rgba(9,20,28,0.94))] p-4 shadow-[0_28px_90px_rgba(0,0,0,0.26)] md:p-5">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm font-semibold text-[var(--ink-main)]">
-                <Sparkles size={16} className="text-[var(--accent-strong)]" /> Best match
+                <Sparkles size={16} className="text-[var(--accent-strong)]" /> Lead pick
               </div>
-              <p className="max-w-xl text-sm leading-7 text-[var(--ink-dim)]">
-                Start with one usable answer from Film Forage, then keep the alternates nearby if the room changes direction.
+              <p className="max-w-2xl text-sm leading-7 text-[var(--ink-dim)]">
+                Start with one strong option, then only scan the backups if the room pushes back.
               </p>
             </div>
-            <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">Start here</p>
+            <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">{getSourceLabel(pick.meta.source)}</p>
           </div>
+
           <div className="flex flex-wrap gap-2">
             {quickFacts.map((fact) => (
-              <span key={fact} className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[var(--panel-muted)] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-[var(--ink-dim)]">
-                {fact}
-              </span>
+              <Badge key={fact} className="bg-[var(--panel)] text-[var(--ink-main)]">{fact}</Badge>
             ))}
           </div>
+
+          {pick.meta.source === "editorial_reserve" ? (
+            <div className="rounded-[1.25rem] border border-[var(--line-strong)] bg-[var(--panel-muted)] px-4 py-3 text-sm leading-7 text-[var(--ink-dim)]">
+              Live TMDB data is unavailable right now. Film Forage is showing fallback picks, and streaming availability may be missing until TMDB returns.
+            </div>
+          ) : null}
+
           {pick.bestMatch ? (
             <div data-testid="best-match-card">
-              {pick.bestMatch.fitReasons[0] ? (
-                <p className="mb-3 rounded-[1.2rem] border border-[var(--line-soft)] bg-[rgba(6,18,25,0.34)] px-4 py-3 text-sm text-[var(--ink-main)]">
-                  Tonight&apos;s lead because it is <span className="text-[var(--ink-strong)]">{pick.bestMatch.fitReasons[0].toLowerCase()}</span>.
-                </p>
-              ) : null}
-              <MovieCard movie={pick.bestMatch} onDismissed={(id) => setPick((current) => ({ ...current, bestMatch: current.bestMatch?.id === id ? null : current.bestMatch }))} />
+              <MovieCard
+                movie={pick.bestMatch}
+                onDismissed={(id) =>
+                  setPick((current) => ({
+                    ...current,
+                    bestMatch: current.bestMatch?.id === id ? null : current.bestMatch,
+                  }))
+                }
+              />
             </div>
           ) : (
             <div className="rounded-[1.5rem] border border-dashed border-[var(--line-strong)] bg-[var(--surface-soft)] p-8 text-sm text-[var(--ink-dim)]">
-              No strong live match yet. Try widening the runtime or removing a service filter.
+              No strong match yet. Widen the runtime, loosen the service filter, or search directly.
             </div>
           )}
         </article>
 
-        <section className="space-y-4 rounded-[2rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.18)] md:p-5">
-          <div className="flex items-center justify-between gap-3">
-            <div>
-              <h3 className="font-display text-3xl text-[var(--ink-strong)]">Good backups</h3>
-              <p className="text-sm text-[var(--ink-dim)]">Keep a few solid alternates ready before everyone changes their mind.</p>
-            </div>
-            <Link href={"/watchlist" as Route} className="text-sm font-semibold text-[var(--ink-main)] hover:text-[var(--ink-strong)]">View watchlist</Link>
-          </div>
-          <div className="grid gap-4 2xl:grid-cols-2">
-            {pick.backups.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} compact onDismissed={(id) => setPick((current) => ({ ...current, backups: current.backups.filter((entry) => entry.id !== id) }))} />
-            ))}
-          </div>
-        </section>
-
-        {pick.alternateLane.length > 0 ? (
-          <section className="space-y-4 rounded-[2rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.18)] md:p-5">
-            <div>
-              <h3 className="font-display text-3xl text-[var(--ink-strong)]">Try a different lane</h3>
-              <p className="text-sm text-[var(--ink-dim)]">If your current services are thin tonight, these looser picks are still worth a look.</p>
-            </div>
-            <div className="grid gap-4 2xl:grid-cols-2">
-              {pick.alternateLane.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} compact onDismissed={(id) => setPick((current) => ({ ...current, alternateLane: current.alternateLane.filter((entry) => entry.id !== id) }))} />
-              ))}
-            </div>
-          </section>
-        ) : null}
-      </div>
-
-      <div className="order-2">
         <article className="rounded-[2rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.24)] md:p-6 xl:sticky xl:top-6">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs uppercase tracking-[0.24em] text-[var(--ink-muted)]">Forage controls</p>
-              <h2 className="mt-2 font-display text-3xl text-[var(--ink-strong)] md:text-[2.4rem]">Tune the forage, then commit.</h2>
+              <p className="text-xs uppercase tracking-[0.24em] text-[var(--ink-muted)]">Refine the shortlist</p>
+              <h2 className="mt-2 font-display text-3xl text-[var(--ink-strong)] md:text-[2.4rem]">Adjust a few filters. Keep the answer tight.</h2>
               <p className="mt-2 max-w-lg text-sm leading-7 text-[var(--ink-dim)]">
-                Keep the decision surface simple. Search directly if you already know the title, or adjust a few filters and rerun.
+                Search directly if you already know the title, or rerun the forage with a smaller set of constraints.
               </p>
             </div>
             <div className="rounded-[1.25rem] border border-[var(--line)] bg-[var(--panel-muted)] px-3 py-2 text-right text-xs uppercase tracking-[0.2em] text-[var(--ink-muted)]">
@@ -237,7 +217,7 @@ export function TonightPicker({
 
           <div className="mt-5 flex flex-wrap gap-3">
             <Button onClick={() => submitPick(filters)} disabled={pending}>
-              <Film size={16} /> {pending ? "Refreshing..." : "Find a movie"}
+              <Film size={16} /> {pending ? "Refreshing..." : "Refresh picks"}
             </Button>
             <Button
               variant="secondary"
@@ -248,20 +228,6 @@ export function TonightPicker({
             </Button>
             <Button variant="secondary" onClick={() => router.push("/watchlist" as Route)}>Watchlist</Button>
           </div>
-
-          <div className="mt-4 flex flex-wrap gap-2">
-            {quickFacts.map((fact) => (
-              <span key={fact} className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[var(--panel)] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-[var(--ink-dim)]">
-                {fact}
-              </span>
-            ))}
-          </div>
-
-          {pick.meta.source === "editorial_reserve" ? (
-            <div className="mt-5 rounded-[1.25rem] border border-[var(--line-strong)] bg-[var(--panel-muted)] px-4 py-3 text-sm leading-7 text-[var(--ink-dim)]">
-              TMDB is unavailable right now. The reserve shelf still gives you workable movie options, but streaming availability is currently unknown.
-            </div>
-          ) : null}
 
           <div className="mt-5 md:hidden">
             <button
@@ -329,7 +295,7 @@ export function TonightPicker({
               </div>
               {providerCatalog.source === "unavailable" ? (
                 <p className="rounded-2xl border border-dashed border-[var(--line-strong)] bg-[var(--panel-muted)] px-4 py-3 text-sm text-[var(--ink-dim)]">
-                  Provider filters are offline right now, so service-specific narrowing is temporarily unavailable.
+                  {getProviderFallbackMessage()}
                 </p>
               ) : (
                 <div className="flex flex-wrap gap-2">
@@ -359,6 +325,35 @@ export function TonightPicker({
           {status ? <p className="mt-4 text-sm text-[var(--ink-dim)]">{status}</p> : null}
         </article>
       </div>
+
+      <section className="space-y-4 rounded-[2rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.18)] md:p-5">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <h3 className="font-display text-3xl text-[var(--ink-strong)]">Good backups</h3>
+            <p className="text-sm text-[var(--ink-dim)]">Keep a few solid alternates nearby before everyone changes their mind.</p>
+          </div>
+          <Link href={"/watchlist" as Route} className="text-sm font-semibold text-[var(--ink-main)] hover:text-[var(--ink-strong)]">View watchlist</Link>
+        </div>
+        <div className="grid gap-4 xl:grid-cols-2">
+          {pick.backups.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} compact onDismissed={(id) => setPick((current) => ({ ...current, backups: current.backups.filter((entry) => entry.id !== id) }))} />
+          ))}
+        </div>
+      </section>
+
+      {pick.alternateLane.length > 0 ? (
+        <section className="space-y-4 rounded-[2rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.18)] md:p-5">
+          <div>
+            <h3 className="font-display text-3xl text-[var(--ink-strong)]">Try another lane</h3>
+            <p className="text-sm text-[var(--ink-dim)]">If the first pass feels too narrow, these picks widen the lane without turning into a random dump.</p>
+          </div>
+          <div className="grid gap-4 xl:grid-cols-2">
+            {pick.alternateLane.map((movie) => (
+              <MovieCard key={movie.id} movie={movie} compact onDismissed={(id) => setPick((current) => ({ ...current, alternateLane: current.alternateLane.filter((entry) => entry.id !== id) }))} />
+            ))}
+          </div>
+        </section>
+      ) : null}
     </section>
   );
 }

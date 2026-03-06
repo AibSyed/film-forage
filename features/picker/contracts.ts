@@ -162,6 +162,7 @@ export const movieDetailResponseSchema = z.object({
 export type PickRequestVM = z.infer<typeof pickRequestSchema>;
 export type PickResponseVM = z.infer<typeof pickResponseSchema>;
 export type MovieMatchCardVM = z.infer<typeof movieMatchCardSchema>;
+export type ProviderSummaryVM = z.infer<typeof providerSummarySchema>;
 export type ProviderCatalogResponseVM = z.infer<typeof providerCatalogResponseSchema>;
 export type SearchRequestVM = z.infer<typeof searchRequestSchema>;
 export type SearchResponseVM = z.infer<typeof searchResponseSchema>;

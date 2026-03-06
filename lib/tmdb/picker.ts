@@ -6,7 +6,8 @@ import {
 import { buildFitReasons } from "@/features/picker/fit-reasons";
 import { getReserveCards } from "@/lib/reserve/catalog";
 import { requestTmdb, TmdbUnavailableError } from "@/lib/tmdb/client";
-import { buildTmdbImageUrl } from "@/lib/tmdb/images";
+import { buildMovieCardBase } from "@/lib/tmdb/movie-card";
+import { buildProviderSummary } from "@/lib/tmdb/provider-summary";
 import {
   tmdbDiscoverResponseSchema,
   tmdbMovieDetailSchema,
@@ -84,52 +85,8 @@ async function hydrateMovie(id: number, request: PickRequestVM): Promise<MovieMa
     }),
   ]);
 
-  const regional = providers.results[request.region];
-  const included = [...(regional?.flatrate ?? []), ...(regional?.free ?? []), ...(regional?.ads ?? [])].map((provider) => ({
-    id: provider.provider_id,
-    name: provider.provider_name,
-    logoUrl: buildTmdbImageUrl(provider.logo_path, "w300"),
-  }));
-  const rent = (regional?.rent ?? []).map((provider) => ({
-    id: provider.provider_id,
-    name: provider.provider_name,
-    logoUrl: buildTmdbImageUrl(provider.logo_path, "w300"),
-  }));
-  const buy = (regional?.buy ?? []).map((provider) => ({
-    id: provider.provider_id,
-    name: provider.provider_name,
-    logoUrl: buildTmdbImageUrl(provider.logo_path, "w300"),
-  }));
-
-  const note = included.length > 0
-    ? `Included with ${included.slice(0, 2).map((provider) => provider.name).join(", ")} in ${request.region}`
-    : rent.length > 0
-      ? `Rent on ${rent.slice(0, 2).map((provider) => provider.name).join(", ")} in ${request.region}`
-      : buy.length > 0
-        ? `Buy on ${buy.slice(0, 2).map((provider) => provider.name).join(", ")} in ${request.region}`
-        : `Availability is not listed for ${request.region}`;
-
-  const cardBase = {
-    id: detail.id,
-    title: detail.title,
-    year: Number(detail.release_date.slice(0, 4)) || 1970,
-    runtimeMinutes: detail.runtime,
-    genres: detail.genres.map((genre) => genre.name).slice(0, 3),
-    overview: detail.overview || "No overview available.",
-    posterUrl: buildTmdbImageUrl(detail.poster_path, "w500"),
-    backdropUrl: buildTmdbImageUrl(detail.backdrop_path, "w780"),
-    providerSummary: {
-      region: request.region,
-      included,
-      rent,
-      buy,
-      note,
-      linkUrl: regional?.link,
-      status: regional ? ("available" as const) : ("unknown" as const),
-    },
-    voteAverage: detail.vote_average,
-    provenance: "live_tmdb" as const,
-  };
+  const providerSummary = buildProviderSummary(request.region, providers.results[request.region]);
+  const cardBase = buildMovieCardBase(detail, providerSummary);
 
   return {
     ...cardBase,

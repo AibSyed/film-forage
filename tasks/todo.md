@@ -94,3 +94,32 @@
   - mobile `/` console clean and captured in `tasks/final-home-mobile.png`
   - mobile `/search` console clean and captured in `tasks/final-search-mobile.png`
   - mobile `/watchlist` console clean and captured in `tasks/final-watchlist-mobile.png`
+
+## Auth + Layout Recovery Pass
+
+### Checklist
+- [in_progress] Restore live TMDB access by supporting TMDB's official bearer-token and v3 API-key auth modes server-side.
+- [in_progress] Rebuild the home control surface so the movie cards use the width instead of living beside a cramped sticky sidebar.
+- [pending] Re-run local verification, live production verification, and responsive browser QA after the auth/layout changes land.
+
+### Acceptance Criteria
+- Production TMDB provider and pick routes return live data again with the server-only env configuration.
+- The home route leads with Film Forage branding, compact controls, and wide result cards on desktop and mobile.
+- Footer, metadata, and nav copy center the Film Forage product identity instead of helper/internal labels.
+- Docs and env guidance reflect the supported TMDB auth modes accurately.
+
+## Live Data + Product Polish Pass
+
+### Checklist
+- [in_progress] Restore live TMDB data in Vercel without exposing secrets in the client bundle.
+- [pending] Rework the home layout so Film Forage feels like a full-width picking tool, not a narrow side-rail shell.
+- [pending] Remove the remaining internal/helper language and recenter the product on the Film Forage brand.
+- [pending] Centralize duplicated TMDB/provider normalization where it materially reduces repetition.
+- [pending] Refresh tests, docs, Vercel verification, and browser QA against the real live-data state.
+
+### Acceptance Criteria
+- Production `GET /api/providers` and `POST /api/pick` return live TMDB-backed data when the configured server secret is valid.
+- The home page uses the available width cleanly on mobile and desktop, with the control surface and lead pick feeling like one product flow.
+- Film Forage branding is primary in the page title, nav, footer, and hero copy; helper phrases remain secondary only.
+- TMDB auth stays server-side and is compatible with either a TMDB read token or the legacy v3 API key stored in environment variables.
+- Shared TMDB/provider normalization is centralized only where it removes real duplication.

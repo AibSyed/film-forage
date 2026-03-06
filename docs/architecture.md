@@ -65,7 +65,7 @@ flowchart LR
 - No synthetic confidence percentages.
 - No fake curator rationale.
 - Missing provider data is shown as unknown, not inferred.
-- Reserve-shelf cards are explicitly labeled and never presented as live availability.
+- Film Forage fallback picks are explicitly labeled and never presented as live availability.
 
 ## Caching and Revalidation
 - TMDB discover and search requests revalidate on short windows.
@@ -73,7 +73,8 @@ flowchart LR
 - Local watchlist state is browser-only and not synchronized server-side.
 
 ## Security Notes
-- `TMDB_ACCESS_TOKEN` remains server-only.
-- If `TMDB_ACCESS_TOKEN` is missing or invalid, the picker and detail flows degrade to the reserve shelf instead of guessing live availability.
+- `TMDB_ACCESS_TOKEN` and `TMDB_API_KEY` remain server-only.
+- The runtime accepts either TMDB bearer-token auth or TMDB's official v3 API-key auth mode, but never exposes either one to the client.
+- If the configured TMDB credential is missing or invalid, the picker and detail flows degrade to Film Forage fallback picks instead of guessing live availability.
 - CSP and security headers are enforced globally.
 - No `NEXT_PUBLIC_` secrets are used.

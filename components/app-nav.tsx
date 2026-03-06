@@ -4,7 +4,7 @@ import { Bookmark, CircleHelp, Film, Search } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 
 const navItems = [
-  { href: "/" as Route, label: "Tonight", icon: Film },
+  { href: "/" as Route, label: "Forage", icon: Film },
   { href: "/search" as Route, label: "Search", icon: Search },
   { href: "/watchlist" as Route, label: "Watchlist", icon: Bookmark },
   { href: "/sources" as Route, label: "Sources", icon: CircleHelp },
@@ -44,7 +44,7 @@ export function AppNav({ pathname }: { pathname: string }) {
         aria-label="Primary mobile"
         className="fixed inset-x-4 bottom-4 z-40 md:hidden"
       >
-        <div className="grid grid-cols-4 rounded-[1.75rem] border border-[var(--line-soft)] bg-[rgba(6,18,25,0.92)] p-2 shadow-[0_22px_70px_rgba(0,0,0,0.35)] backdrop-blur">
+        <div className="grid grid-cols-4 rounded-[1.5rem] border border-[var(--line-soft)] bg-[rgba(6,18,25,0.92)] p-1.5 shadow-[0_22px_70px_rgba(0,0,0,0.35)] backdrop-blur">
           {navItems.map((item) => {
             const Icon = item.icon;
             const active = isActive(pathname, item.href);
@@ -53,7 +53,7 @@ export function AppNav({ pathname }: { pathname: string }) {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex flex-col items-center justify-center gap-1 rounded-[1.1rem] px-2 py-2 text-[11px] font-medium transition",
+                  "flex flex-col items-center justify-center gap-1 rounded-[1rem] px-2 py-2 text-[11px] font-medium transition",
                   active
                     ? "bg-[var(--accent-pale)] text-[var(--ink-strong)]"
                     : "text-[var(--ink-muted)] hover:text-[var(--ink-main)]"

@@ -7,15 +7,34 @@ export class TmdbUnavailableError extends Error {
   }
 }
 
-function ensureToken() {
-  const token = process.env.TMDB_ACCESS_TOKEN;
-  if (!token) {
-    throw new TmdbUnavailableError("TMDB_ACCESS_TOKEN is not configured");
+type TmdbCredential =
+  | { kind: "api_key"; value: string }
+  | { kind: "bearer"; value: string };
+
+export function resolveTmdbAuth(): TmdbCredential {
+  const accessToken = process.env.TMDB_ACCESS_TOKEN?.trim();
+  const apiKey = process.env.TMDB_API_KEY?.trim();
+
+  if (accessToken && !/^[a-f0-9]{32}$/i.test(accessToken)) {
+    return { kind: "bearer", value: accessToken };
   }
-  return token;
+
+  if (apiKey) {
+    return { kind: "api_key", value: apiKey };
+  }
+
+  if (accessToken) {
+    return { kind: "api_key", value: accessToken };
+  }
+
+  throw new TmdbUnavailableError("TMDB_ACCESS_TOKEN or TMDB_API_KEY is not configured");
 }
 
-function buildUrl(path: string, params?: Record<string, string | number | undefined>) {
+function buildUrl(
+  path: string,
+  params: Record<string, string | number | undefined> | undefined,
+  credential: TmdbCredential
+) {
   const baseUrl = process.env.TMDB_BASE_URL ?? "https://api.themoviedb.org/3";
   const url = new URL(path, `${baseUrl}/`);
 
@@ -24,6 +43,10 @@ function buildUrl(path: string, params?: Record<string, string | number | undefi
       url.searchParams.set(key, String(value));
     }
   });
+
+  if (credential.kind === "api_key") {
+    url.searchParams.set("api_key", credential.value);
+  }
 
   return url.toString();
 }
@@ -37,16 +60,20 @@ export async function requestTmdb<T>(
     timeoutMs?: number;
   }
 ): Promise<T> {
-  const token = ensureToken();
+  const credential = resolveTmdbAuth();
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), options?.timeoutMs ?? 5000);
 
   try {
-    const response = await fetch(buildUrl(path, options?.params), {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
-      },
+    const response = await fetch(buildUrl(path, options?.params, credential), {
+      headers: credential.kind === "bearer"
+        ? {
+            Authorization: `Bearer ${credential.value}`,
+            Accept: "application/json",
+          }
+        : {
+            Accept: "application/json",
+          },
       next: { revalidate: options?.revalidate ?? 900 },
       signal: controller.signal,
     });

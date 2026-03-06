@@ -62,10 +62,10 @@ export function MovieCard({
       transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
       className="overflow-hidden rounded-[1.9rem] border border-[var(--line-soft)] bg-[linear-gradient(180deg,rgba(16,31,40,0.98),rgba(11,22,30,0.96))] shadow-[0_24px_80px_rgba(0,0,0,0.22)]"
     >
-      <div className={compact ? "grid grid-cols-[104px_1fr] gap-0 sm:grid-cols-[120px_1fr] lg:grid-cols-[136px_1fr]" : "grid grid-cols-[122px_1fr] gap-0 sm:grid-cols-[176px_1fr] lg:grid-cols-[220px_1fr]"}>
+      <div className={compact ? "grid grid-cols-[90px_1fr] gap-0 sm:grid-cols-[104px_1fr] xl:grid-cols-[120px_1fr]" : "grid grid-cols-[110px_1fr] gap-0 sm:grid-cols-[148px_1fr] lg:grid-cols-[188px_1fr]"}>
         <div className={compact ? "relative min-h-full bg-[linear-gradient(160deg,rgba(216,159,84,0.22),rgba(57,86,110,0.48))]" : "relative min-h-full bg-[linear-gradient(160deg,rgba(216,159,84,0.24),rgba(57,86,110,0.52))]"}>
           {movie.posterUrl ? (
-            <Image src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes={compact ? "136px" : "220px"} />
+            <Image src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes={compact ? "120px" : "188px"} />
           ) : (
             <div className={compact ? "flex h-full flex-col justify-between p-3" : "flex h-full flex-col justify-between p-4"}>
               <div className={compact ? "inline-flex h-9 w-9 items-center justify-center rounded-2xl border border-[var(--line-soft)] bg-[rgba(6,18,25,0.28)] font-display text-sm text-[var(--ink-strong)]" : "inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--line-soft)] bg-[rgba(6,18,25,0.28)] font-display text-lg text-[var(--ink-strong)]"}>
@@ -86,7 +86,7 @@ export function MovieCard({
                 <Badge>{movie.year}</Badge>
                 {movie.runtimeMinutes ? <Badge>{movie.runtimeMinutes} min</Badge> : null}
               </div>
-              <h2 className={compact ? "font-display text-[1.85rem] leading-[0.94] text-[var(--ink-strong)] sm:text-[2.1rem]" : "font-display text-[2rem] leading-[0.95] text-[var(--ink-strong)] md:text-[2.6rem]"}>{movie.title}</h2>
+              <h2 className={compact ? "font-display text-[1.45rem] leading-[1.02] text-[var(--ink-strong)] sm:text-[1.7rem]" : "font-display text-[1.75rem] leading-[0.96] text-[var(--ink-strong)] md:text-[2.3rem]"}>{movie.title}</h2>
               <p className="text-sm text-[var(--ink-dim)]">{movie.genres.join(" · ")}</p>
             </div>
             {movie.voteAverage ? (
@@ -96,7 +96,7 @@ export function MovieCard({
             ) : null}
           </div>
 
-          <p className={compact ? "text-[15px] leading-7 text-[var(--ink-main)]" : "text-[15px] leading-7 text-[var(--ink-main)]"}>{movie.overview}</p>
+          <p className="text-[15px] leading-7 text-[var(--ink-main)]">{movie.overview}</p>
 
           <div className="flex flex-wrap gap-2">
             {fitReasons.map((reason) => (

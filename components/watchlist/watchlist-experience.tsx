@@ -55,7 +55,7 @@ export function WatchlistExperience() {
 
         {savedMovies.length === 0 ? (
           <div className="mt-6 rounded-[1.75rem] border border-dashed border-[var(--line-strong)] bg-[var(--panel-muted)] p-8 text-sm text-[var(--ink-dim)]">
-            Nothing is saved yet. Save a few finalists from Tonight or Search and they will show up here.
+            Nothing is saved yet. Save a few finalists from Forage or Search and they will show up here.
           </div>
         ) : (
           <div className="mt-6 grid gap-4">

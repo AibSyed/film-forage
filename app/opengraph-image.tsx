@@ -25,7 +25,7 @@ export default function OpenGraphImage() {
       >
         <div style={{ fontSize: 28, letterSpacing: 10, textTransform: "uppercase", color: "#6f5d49" }}>Film Forage</div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 88, fontWeight: 700, lineHeight: 1 }}>Pick tonight&apos;s movie.</div>
+          <div style={{ fontSize: 80, fontWeight: 700, lineHeight: 1 }}>Find one good movie faster.</div>
           <div style={{ marginTop: 24, fontSize: 34, maxWidth: 880, color: "#4c3a2b" }}>
             Real watch availability, cleaner filters, and a local-first watchlist.
           </div>
