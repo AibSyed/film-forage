@@ -11,9 +11,9 @@ export function MovieDetail({ detail }: { detail: MovieDetailResponseVM }) {
 
   return (
     <section className="space-y-6">
-      <article className="overflow-hidden rounded-[2rem] border border-[var(--line-soft)] bg-white/92 shadow-[0_24px_80px_rgba(49,36,20,0.10)]">
+      <article className="overflow-hidden rounded-[2rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] shadow-[0_28px_90px_rgba(0,0,0,0.24)]">
         <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="relative min-h-[24rem] bg-[linear-gradient(135deg,#d9c6a5,#9faec7)]">
+          <div className="relative min-h-[24rem] bg-[linear-gradient(135deg,rgba(216,159,84,0.24),rgba(63,90,113,0.5))]">
             {movie.card.backdropUrl ? (
               <Image src={movie.card.backdropUrl} alt={`${movie.card.title} backdrop`} fill className="object-cover" priority sizes="(min-width: 1024px) 50vw, 100vw" />
             ) : null}
@@ -50,7 +50,7 @@ export function MovieDetail({ detail }: { detail: MovieDetailResponseVM }) {
       </article>
 
       <section className="grid gap-6 lg:grid-cols-[0.92fr_1.08fr]">
-        <article className="rounded-[1.75rem] border border-[var(--line-soft)] bg-white/92 p-5">
+        <article className="rounded-[1.75rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-5">
           <h3 className="font-display text-3xl text-[var(--ink-strong)]">Current data status</h3>
           <p className="mt-3 text-sm leading-7 text-[var(--ink-dim)]">{movie.provenanceNote}</p>
           {movie.cast.length > 0 ? (
@@ -65,7 +65,7 @@ export function MovieDetail({ detail }: { detail: MovieDetailResponseVM }) {
           ) : null}
         </article>
 
-        <article className="rounded-[1.75rem] border border-[var(--line-soft)] bg-white/92 p-5">
+        <article className="rounded-[1.75rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-5">
           <h3 className="font-display text-3xl text-[var(--ink-strong)]">If this misses, try these next</h3>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             {[...movie.recommendations, ...movie.similar].slice(0, 6).map((entry) => (

@@ -1,7 +1,7 @@
-# Film Forage v4 Tonight Picker Rebuild
+# Film Forage v4 Rebuild
 
 ## Checklist
-- [completed] Replace discovery-first IA with tonight-picker routes: `/`, `/search`, `/movie/[id]`, `/watchlist`, `/sources`.
+- [completed] Replace discovery-first IA with Film Forage home/search/watchlist routes: `/`, `/search`, `/movie/[id]`, `/watchlist`, `/sources`.
 - [completed] Replace legacy discovery contracts and adapters with truthful TMDB picker/search/detail contracts.
 - [completed] Remove fake confidence/rationale language and any curated-detail assumptions.
 - [completed] Rebuild the visual system as a useful screening-concierge product with strong mobile behavior.
@@ -57,7 +57,7 @@
 - Reserve-mode copy is plain-language and user-facing, not internal jargon.
 - Verification and browser QA are refreshed after the follow-up edits.
 
-- Production Vercel alias currently serves the v4 tonight-picker UI but remains in reserve mode because TMDB provider data is unavailable.
+- Production Vercel alias currently serves the v4 Film Forage UI but remains in reserve mode because TMDB provider data is unavailable.
 - Live production `GET /api/providers` returned `{ "source": "unavailable" }` during post-merge verification.
 
 - Follow-up polish verification:
@@ -66,3 +66,31 @@
   - `pnpm run audit:high`
   - `pnpm dlx knip --no-progress`
   - `pnpm run test:e2e`
+
+
+## UX Relaunch Pass
+
+### Checklist
+- [completed] Replace the oversized shared hero shell with a compact site frame and route-specific page headers.
+- [completed] Rebuild the home page above-the-fold layout so the picker and best match are visible and credible on mobile and desktop.
+- [completed] Rework navigation, spacing, and footer treatment so the app feels like a polished product instead of stacked cards.
+- [completed] Tighten search, watchlist, and detail layouts so they inherit the new system cleanly.
+- [completed] Re-run local verification and local browser QA with desktop and mobile screenshots.
+
+### Acceptance Criteria
+- Mobile home view shows a compact header, usable navigation, and useful picker content above the fold.
+- Desktop home view feels deliberate, premium, and clearly structured around the decision task.
+- Secondary routes share a coherent system without repeating oversized hero chrome.
+- The fallback state remains honest, but it no longer dominates the visual experience.
+- Browser QA confirms the new layout works on mobile and desktop without console issues.
+
+### Verification Log
+- `pnpm run check`
+- `pnpm run test:e2e`
+- `pnpm run docs:check`
+- `pnpm run audit:high`
+- `pnpm dlx knip --no-progress`
+- Chrome DevTools MCP on `http://127.0.0.1:32125`:
+  - mobile `/` console clean and captured in `tasks/final-home-mobile.png`
+  - mobile `/search` console clean and captured in `tasks/final-search-mobile.png`
+  - mobile `/watchlist` console clean and captured in `tasks/final-watchlist-mobile.png`

@@ -10,12 +10,20 @@ import { getSourceLabel } from "@/features/picker/presentation";
 import { MovieActions } from "@/components/movie/movie-actions";
 import { Badge } from "@/components/ui/badge";
 
+function getPosterMonogram(title: string) {
+  return title
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
 function ProviderRow({ movie }: { movie: MovieMatchCardVM }) {
   const included = movie.providerSummary.included.slice(0, 4);
   const rent = movie.providerSummary.rent.slice(0, 2);
 
   if (movie.providerSummary.status === "unknown") {
-    return <p className="text-sm text-[var(--ink-muted)]">{movie.providerSummary.note}</p>;
+    return <p className="text-sm text-[var(--ink-dim)]">Availability is currently unknown for this title.</p>;
   }
 
   return (
@@ -43,6 +51,8 @@ export function MovieCard({
   onDismissed?: (id: number) => void;
 }) {
   const href = `/movie/${movie.id}` as Route;
+  const fitReasons = compact ? movie.fitReasons.slice(0, 2) : movie.fitReasons.slice(0, 3);
+  const monogram = getPosterMonogram(movie.title);
 
   return (
     <motion.article
@@ -50,25 +60,33 @@ export function MovieCard({
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-      className="overflow-hidden rounded-[1.75rem] border border-[var(--line-soft)] bg-white/92 shadow-[0_20px_60px_rgba(44,33,20,0.10)]"
+      className="overflow-hidden rounded-[1.9rem] border border-[var(--line-soft)] bg-[linear-gradient(180deg,rgba(16,31,40,0.98),rgba(11,22,30,0.96))] shadow-[0_24px_80px_rgba(0,0,0,0.22)]"
     >
-      <div className={compact ? "grid gap-0 md:grid-cols-[180px_1fr]" : "grid gap-0 lg:grid-cols-[240px_1fr]"}>
-        <div className="relative min-h-56 bg-[linear-gradient(135deg,#d9c6a5,#9faec7)]">
+      <div className={compact ? "grid grid-cols-[116px_1fr] gap-0 sm:grid-cols-[132px_1fr]" : "grid grid-cols-[122px_1fr] gap-0 sm:grid-cols-[176px_1fr] lg:grid-cols-[220px_1fr]"}>
+        <div className={compact ? "relative min-h-full bg-[linear-gradient(160deg,rgba(216,159,84,0.22),rgba(57,86,110,0.48))]" : "relative min-h-full bg-[linear-gradient(160deg,rgba(216,159,84,0.24),rgba(57,86,110,0.52))]"}>
           {movie.posterUrl ? (
-            <Image src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes={compact ? "180px" : "240px"} />
+            <Image src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes={compact ? "132px" : "220px"} />
           ) : (
-            <div className="flex h-full items-end p-5 text-sm uppercase tracking-[0.24em] text-white/90">Poster unavailable</div>
+            <div className="flex h-full flex-col justify-between p-4">
+              <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--line-soft)] bg-[rgba(6,18,25,0.28)] font-display text-lg text-[var(--ink-strong)]">
+                {monogram}
+              </div>
+              <div className="space-y-2">
+                <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--ink-muted)]">Poster unavailable</p>
+                <p className="text-xs leading-6 text-[var(--ink-soft)]">{movie.year}</p>
+              </div>
+            </div>
           )}
         </div>
-        <div className="flex flex-col gap-4 p-5 md:p-6">
+        <div className={compact ? "flex flex-col gap-4 p-4 sm:p-5" : "flex flex-col gap-4 p-4 sm:p-5 lg:p-6"}>
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="space-y-2">
               <div className="flex flex-wrap gap-2">
-                <Badge>{getSourceLabel(movie.provenance)}</Badge>
+                {movie.provenance !== "live_tmdb" ? <Badge>{getSourceLabel(movie.provenance)}</Badge> : null}
                 <Badge>{movie.year}</Badge>
                 {movie.runtimeMinutes ? <Badge>{movie.runtimeMinutes} min</Badge> : null}
               </div>
-              <h2 className="font-display text-3xl leading-tight text-[var(--ink-strong)] md:text-4xl">{movie.title}</h2>
+              <h2 className={compact ? "font-display text-2xl leading-tight text-[var(--ink-strong)] sm:text-[2rem]" : "font-display text-[2rem] leading-[0.95] text-[var(--ink-strong)] md:text-[2.6rem]"}>{movie.title}</h2>
               <p className="text-sm text-[var(--ink-dim)]">{movie.genres.join(" · ")}</p>
             </div>
             {movie.voteAverage ? (
@@ -81,12 +99,14 @@ export function MovieCard({
           <p className="text-[15px] leading-7 text-[var(--ink-main)]">{movie.overview}</p>
 
           <div className="flex flex-wrap gap-2">
-            {movie.fitReasons.map((reason) => (
+            {fitReasons.map((reason) => (
               <Badge key={reason} className="border-[var(--accent-muted)] bg-[var(--accent-pale)] text-[var(--ink-main)]">{reason}</Badge>
             ))}
           </div>
 
-          <ProviderRow movie={movie} />
+          <div className="rounded-[1.35rem] border border-[var(--line-soft)] bg-[rgba(6,18,25,0.34)] p-3">
+            <ProviderRow movie={movie} />
+          </div>
 
           <div className="mt-auto flex flex-wrap items-center justify-between gap-3">
             <MovieActions movie={movie} onDismissed={onDismissed} />

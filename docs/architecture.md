@@ -9,7 +9,7 @@
 ## Topology
 ```mermaid
 flowchart LR
-  UI["Tonight Picker and Search UI"] --> PICK["POST /api/pick"]
+  UI["Film Forage Home and Search UI"] --> PICK["POST /api/pick"]
   UI --> SEARCH["GET /api/search"]
   UI --> MOVIE["GET /api/movie/[id]"]
   UI --> PROVIDERS["GET /api/providers"]

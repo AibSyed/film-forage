@@ -13,7 +13,7 @@ describe("picker presentation helpers", () => {
   });
 
   it("uses reserve copy that explains the fallback plainly", () => {
-    expect(getPickerStatusMessage("live_tmdb")).toBe("Tonight picker refreshed.");
+    expect(getPickerStatusMessage("live_tmdb")).toBe("Film Forage refreshed.");
     expect(getPickerStatusMessage("editorial_reserve")).toContain("reserve shelf");
     expect(getProviderFallbackMessage()).toContain("provider filters");
     expect(getSearchFallbackMessage()).toContain("reserve shelf");

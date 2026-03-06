@@ -5,14 +5,14 @@ Film Forage is a practical movie-picking tool built for one job: help you decide
 It uses TMDB for live movie discovery, title lookup, detail pages, recommendations, and watch-provider data. Saved picks, notes, hidden titles, and recent searches stay local in the browser for this phase.
 
 ## Product Value
-- `Tonight picker` for region, runtime, service, genre, and vibe filtering.
+- `Home picker` for region, runtime, service, genre, and vibe filtering.
 - `Best match` plus honest backup rows instead of an endless decorative deck.
 - `Direct title search` for when you already know the neighborhood.
 - `Local-first watchlist` with private notes and clean export.
 - `Source guide` that explains live data, regional limits, and reserve-shelf fallback behavior plainly.
 
 ## Routes
-- `/` tonight picker
+- `/` home picker
 - `/search` title lookup
 - `/movie/[id]` live movie detail
 - `/watchlist` local saved picks and notes
@@ -21,7 +21,7 @@ It uses TMDB for live movie discovery, title lookup, detail pages, recommendatio
 ## Architecture
 ```mermaid
 flowchart LR
-  U["Viewer"] --> UI["Tonight Picker UI"]
+  U["Viewer"] --> UI["Film Forage Home UI"]
   UI --> RH1["POST /api/pick"]
   UI --> RH2["GET /api/search"]
   UI --> RH3["GET /api/providers"]

@@ -10,6 +10,7 @@ import { getSearchFallbackMessage } from "@/features/picker/presentation";
 import {
   addRecentSearch,
   clearRecentSearches,
+  createWorkspaceDefaults,
   readWorkspace,
   subscribeToWorkspace,
 } from "@/features/workspace/storage";
@@ -30,7 +31,7 @@ export function SearchStudio({
   const router = useRouter();
   const [query, setQuery] = useState(initialQuery);
   const [region, setRegion] = useState(initialRegion);
-  const [recentSearches, setRecentSearches] = useState(() => readWorkspace().recentSearches);
+  const [recentSearches, setRecentSearches] = useState(() => readWorkspace().recentSearches ?? createWorkspaceDefaults().recentSearches);
 
   useEffect(() => {
     if (initialQuery.trim().length >= 2) {
@@ -50,9 +51,9 @@ export function SearchStudio({
 
   return (
     <section className="space-y-6">
-      <article className="rounded-[1.75rem] border border-[var(--line-soft)] bg-white/92 p-5 shadow-[0_20px_60px_rgba(44,33,20,0.08)] md:p-6">
+      <article className="rounded-[2rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.22)] md:p-6">
         <form
-          className="grid gap-3 md:grid-cols-[1fr_200px_auto]"
+          className="grid gap-3 xl:grid-cols-[1fr_220px_auto]"
           onSubmit={(event) => {
             event.preventDefault();
             runSearch();
@@ -109,13 +110,16 @@ export function SearchStudio({
       {initialQuery.length >= 2 && initialResults ? (
         <section className="space-y-4">
           {initialResults.meta.source === "editorial_reserve" ? (
-            <div className="rounded-[1.5rem] border border-[var(--line-soft)] bg-[var(--panel-muted)] p-4 text-sm leading-7 text-[var(--ink-dim)]">
+            <div className="rounded-[1.75rem] border border-[var(--line-soft)] bg-[var(--panel-muted)] p-4 text-sm leading-7 text-[var(--ink-dim)]">
               {getSearchFallbackMessage()}
             </div>
           ) : null}
-          <div>
-            <h2 className="font-display text-4xl text-[var(--ink-strong)]">Search results</h2>
-            <p className="text-sm text-[var(--ink-dim)]">{initialResults.items.length} title{initialResults.items.length === 1 ? "" : "s"} found for &quot;{initialResults.query}&quot;.</p>
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <h2 className="font-display text-4xl text-[var(--ink-strong)]">Search results</h2>
+              <p className="text-sm text-[var(--ink-dim)]">{initialResults.items.length} title{initialResults.items.length === 1 ? "" : "s"} found for &quot;{initialResults.query}&quot;.</p>
+            </div>
+            <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">Best for direct verification</p>
           </div>
           <div className="grid gap-4 lg:grid-cols-2">
             {initialResults.items.map((movie) => (
@@ -124,7 +128,7 @@ export function SearchStudio({
           </div>
         </section>
       ) : (
-        <section className="rounded-[1.75rem] border border-dashed border-[var(--line-strong)] bg-white/80 p-8 text-sm text-[var(--ink-dim)]">
+        <section className="rounded-[2rem] border border-dashed border-[var(--line-strong)] bg-[var(--surface-soft)] p-8 text-sm leading-7 text-[var(--ink-dim)]">
           Search a title when you know part of the answer already and just need a clean detail page, availability view, or a saveable fallback.
         </section>
       )}

@@ -11,3 +11,7 @@
 - What went wrong: user-facing copy still leaked internal fallback language and placeholder product phrasing after the first rewrite landed.
 - Root cause: I validated the architecture and truthfulness rules, but I did not do a second pass that asked whether the copy still made sense to a normal viewer.
 - Prevention rule: after any major rewrite, run a dedicated user-language sweep that replaces internal product terms with plain labels and back it with at least one regression test or tracked checklist item.
+
+- What went wrong: the first Film Forage relaunch still looked overdesigned and under-reviewed because the shell and result cards were not re-checked as a product system in the browser.
+- Root cause: I stopped after the structural rewrite passed verification instead of running a separate reviewer-style visual pass that challenged hierarchy, contrast, and above-the-fold usefulness.
+- Prevention rule: for every non-trivial UI relaunch, require one explicit reviewer pass plus local desktop/mobile screenshots before declaring the UX complete.
