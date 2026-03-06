@@ -55,7 +55,7 @@ export function WatchlistExperience() {
 
         {savedMovies.length === 0 ? (
           <div className="mt-6 rounded-[1.75rem] border border-dashed border-[var(--line-strong)] bg-[var(--panel-muted)] p-8 text-sm text-[var(--ink-dim)]">
-            Nothing is saved yet. Save a few finalists from Forage or Search and they will show up here.
+            Nothing is saved yet. Save a few finalists from Home or Search and they will show up here.
           </div>
         ) : (
           <div className="mt-6 grid gap-4">
@@ -70,20 +70,20 @@ export function WatchlistExperience() {
                     )}
                   </div>
                   <div className="p-4 md:p-5">
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div>
-                    <h3 className="font-display text-3xl text-[var(--ink-strong)]">{movie.title}</h3>
-                    <p className="mt-1 text-sm text-[var(--ink-dim)]">{movie.year} · {movie.runtimeMinutes ? `${movie.runtimeMinutes} min` : "Runtime unavailable"} · {movie.providerSummary.note}</p>
-                  </div>
-                  <Button variant="ghost" size="sm" onClick={() => removeSavedMovie(movie.id)}>Remove</Button>
-                </div>
-                <p className="mt-4 text-sm leading-7 text-[var(--ink-main)]">{movie.overview}</p>
-                <div className="mt-4">
-                  <label className="space-y-2 text-sm text-[var(--ink-main)]">
-                    <span>Private note</span>
-                    <Textarea value={movie.note} onChange={(event) => updateMovieNote(movie.id, event.target.value)} placeholder="Why did this stay on the list?" />
-                  </label>
-                </div>
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div>
+                        <h3 className="font-display text-3xl text-[var(--ink-strong)]">{movie.title}</h3>
+                        <p className="mt-1 text-sm text-[var(--ink-dim)]">{movie.year} · {movie.runtimeMinutes ? `${movie.runtimeMinutes} min` : "Runtime unavailable"} · {movie.providerSummary.note}</p>
+                      </div>
+                      <Button variant="ghost" size="sm" onClick={() => removeSavedMovie(movie.id)}>Remove</Button>
+                    </div>
+                    <p className="mt-4 text-sm leading-7 text-[var(--ink-main)]">{movie.overview}</p>
+                    <div className="mt-4">
+                      <label className="space-y-2 text-sm text-[var(--ink-main)]">
+                        <span>Private note</span>
+                        <Textarea value={movie.note} onChange={(event) => updateMovieNote(movie.id, event.target.value)} placeholder="Why did this stay on the list?" />
+                      </label>
+                    </div>
                   </div>
                 </div>
               </article>
@@ -96,7 +96,7 @@ export function WatchlistExperience() {
         <h2 className="font-display text-3xl text-[var(--ink-strong)]">Local-only by design</h2>
         <ul className="mt-4 space-y-3 text-sm leading-7 text-[var(--ink-dim)]">
           <li>Saved picks and notes never leave this browser.</li>
-          <li>Hidden titles are excluded from future Film Forage picks.</li>
+          <li>Hidden titles are excluded from future shortlist refreshes.</li>
           <li>Recent search history stays local so you can revisit likely options quickly.</li>
           <li>Copy plan turns your saved titles into a plain text shortlist for messages or notes.</li>
         </ul>

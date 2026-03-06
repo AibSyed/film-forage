@@ -98,9 +98,9 @@
 ## Auth + Layout Recovery Pass
 
 ### Checklist
-- [in_progress] Restore live TMDB access by supporting TMDB's official bearer-token and v3 API-key auth modes server-side.
-- [in_progress] Rebuild the home control surface so the movie cards use the width instead of living beside a cramped sticky sidebar.
-- [pending] Re-run local verification, live production verification, and responsive browser QA after the auth/layout changes land.
+- [completed] Restore live TMDB access by supporting TMDB's official bearer-token and v3 API-key auth modes server-side.
+- [completed] Rebuild the home control surface so the movie cards use the width instead of living beside a cramped sticky sidebar.
+- [completed] Re-run local verification, live production verification, and responsive browser QA after the auth/layout changes land.
 
 ### Acceptance Criteria
 - Production TMDB provider and pick routes return live data again with the server-only env configuration.
@@ -111,11 +111,11 @@
 ## Live Data + Product Polish Pass
 
 ### Checklist
-- [in_progress] Restore live TMDB data in Vercel without exposing secrets in the client bundle.
-- [pending] Rework the home layout so Film Forage feels like a full-width picking tool, not a narrow side-rail shell.
-- [pending] Remove the remaining internal/helper language and recenter the product on the Film Forage brand.
-- [pending] Centralize duplicated TMDB/provider normalization where it materially reduces repetition.
-- [pending] Refresh tests, docs, Vercel verification, and browser QA against the real live-data state.
+- [completed] Restore live TMDB data in Vercel without exposing secrets in the client bundle.
+- [completed] Rework the home layout so Film Forage feels like a full-width picking tool, not a narrow side-rail shell.
+- [completed] Remove the remaining internal/helper language and recenter the product on the Film Forage brand.
+- [completed] Centralize duplicated TMDB/provider normalization where it materially reduces repetition.
+- [completed] Refresh tests, docs, Vercel verification, and browser QA against the real live-data state.
 
 ### Acceptance Criteria
 - Production `GET /api/providers` and `POST /api/pick` return live TMDB-backed data when the configured server secret is valid.
@@ -123,3 +123,18 @@
 - Film Forage branding is primary in the page title, nav, footer, and hero copy; helper phrases remain secondary only.
 - TMDB auth stays server-side and is compatible with either a TMDB read token or the legacy v3 API key stored in environment variables.
 - Shared TMDB/provider normalization is centralized only where it removes real duplication.
+
+### Verification Log
+- `pnpm run lint`
+- `pnpm exec tsc --noEmit --pretty false`
+- `pnpm run test`
+- `pnpm run build`
+- `pnpm run docs:check`
+- `pnpm run audit:high`
+- `pnpm run test:e2e`
+- `pnpm run check`
+- `pnpm dlx knip --no-progress`
+- Chrome DevTools MCP on `http://127.0.0.1:3201`:
+  - desktop `/` console clean and captured in `tasks/live-home-desktop-final.png`
+  - mobile `/` console clean and captured in `tasks/live-home-mobile-final.png`
+  - form-field warning resolved on the redesigned picker
