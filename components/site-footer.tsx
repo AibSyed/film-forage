@@ -6,11 +6,11 @@ export function SiteFooter({ compact = false }: { compact?: boolean }) {
 
   return (
     <footer className="border-t border-[var(--line-soft)] bg-[rgba(7,12,18,0.94)]">
-      <div className={`mx-auto grid w-full max-w-[118rem] gap-6 px-4 py-10 md:px-8 ${compact ? "lg:grid-cols-[1.25fr_0.75fr]" : "lg:grid-cols-[1.1fr_0.65fr_0.9fr]"}`}>
+      <div className={`mx-auto grid w-full max-w-[118rem] gap-5 px-4 ${compact ? "py-6 md:py-7 lg:grid-cols-[1fr_auto]" : "py-10 md:px-8 lg:grid-cols-[1fr_auto]"}`}>
         <div>
           <p className="font-display text-[1.9rem] text-[var(--ink-strong)]">Film Forage</p>
-          <p className="mt-3 max-w-xl text-sm leading-7 text-[var(--ink-dim)]">
-            Filter what is available, compare a short list, and keep the finalists close. Built for the part of movie night where everyone starts scrolling and nobody picks.
+          <p className="mt-2 max-w-xl text-sm leading-7 text-[var(--ink-dim)]">
+            Filter what is available, compare a short list, and keep your best options close.
           </p>
           <p className="mt-3 text-sm text-[var(--ink-muted)]">&copy; {year} Film Forage by Shoaib (Aib) Syed.</p>
           {!compact ? (
@@ -22,31 +22,25 @@ export function SiteFooter({ compact = false }: { compact?: boolean }) {
           ) : null}
         </div>
 
-        <div>
-          <p className="text-xs uppercase tracking-[0.28em] text-[var(--ink-muted)]">Routes</p>
-          <div className="mt-3 grid gap-2 text-sm text-[var(--ink-dim)]">
+        <div className="grid content-start gap-3">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--ink-dim)]">
             <Link href={("/" as Route)} className="hover:text-[var(--ink-main)]">Home</Link>
             <Link href={("/search" as Route)} className="hover:text-[var(--ink-main)]">Search</Link>
             <Link href={("/watchlist" as Route)} className="hover:text-[var(--ink-main)]">Watchlist</Link>
-            <Link href={("/sources" as Route)} className="hover:text-[var(--ink-main)]">Sources</Link>
+            <Link href={("/sources" as Route)} className="hover:text-[var(--ink-main)]">Data</Link>
           </div>
+          {!compact ? (
+            <>
+              <p className="text-sm leading-7 text-[var(--ink-dim)]">
+                Data comes from TMDB and JustWatch-backed provider availability through TMDB. If live data drops out, Film Forage clearly marks backup titles.
+              </p>
+              <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--ink-dim)]">
+                <a href="https://www.themoviedb.org/" target="_blank" rel="noreferrer" className="hover:text-[var(--ink-main)]">TMDB</a>
+                <a href="https://www.justwatch.com/" target="_blank" rel="noreferrer" className="hover:text-[var(--ink-main)]">JustWatch</a>
+              </div>
+            </>
+          ) : null}
         </div>
-
-        {!compact ? (
-          <div>
-            <p className="text-xs uppercase tracking-[0.28em] text-[var(--ink-muted)]">Data</p>
-            <p className="mt-3 text-sm leading-7 text-[var(--ink-dim)]">
-              Movie metadata comes from TMDB. Streaming availability comes from TMDB&apos;s JustWatch-backed provider data and can change by region.
-            </p>
-            <p className="mt-3 text-sm leading-7 text-[var(--ink-dim)]">
-              If live data drops out, Film Forage switches to fallback picks and labels them clearly instead of pretending the stream data is current.
-            </p>
-            <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-[var(--ink-dim)]">
-              <a href="https://www.themoviedb.org/" target="_blank" rel="noreferrer" className="hover:text-[var(--ink-main)]">TMDB</a>
-              <a href="https://www.justwatch.com/" target="_blank" rel="noreferrer" className="hover:text-[var(--ink-main)]">JustWatch</a>
-            </div>
-          </div>
-        ) : null}
       </div>
     </footer>
   );

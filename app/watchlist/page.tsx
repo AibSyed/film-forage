@@ -6,8 +6,8 @@ export default function WatchlistPage() {
     <PageShell
       pathname="/watchlist"
       eyebrow="Local watchlist"
-      title="Keep the movies you might actually watch."
-      intro="Save contenders, add one private note, and export a simple plan when it is time to pick."
+      title="Keep the movies you still want to watch."
+      intro="Save picks, add a private note, and copy a simple watchlist when it is time to choose."
     >
       <WatchlistExperience />
     </PageShell>

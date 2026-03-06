@@ -204,3 +204,20 @@
   - desktop `/` screenshot reviewed locally
   - mobile `/` screenshot reviewed locally
   - console clean
+
+## Final Cleanliness Sweep
+
+### Checklist
+- [completed] Re-verify code quality, tests, docs, and security after final nav contrast updates.
+- [completed] Re-run dead-code/unused-dependency scan.
+- [completed] Re-check browser console cleanliness and active-nav contrast behavior.
+
+### Verification Log
+- `pnpm run check`
+- `pnpm run test:e2e`
+- `pnpm run docs:check`
+- `pnpm run audit:high`
+- `pnpm dlx knip --no-progress`
+- Chrome DevTools MCP on `http://localhost:3000`:
+  - `/`, `/search`, `/watchlist`, `/sources` reload with no console errors
+  - active nav computed style for selected route verified as `color: rgb(10, 17, 24)` on `background-color: rgb(239, 182, 94)` (dark-on-amber)

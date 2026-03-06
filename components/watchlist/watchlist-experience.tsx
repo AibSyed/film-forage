@@ -41,8 +41,8 @@ export function WatchlistExperience() {
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="text-xs uppercase tracking-[0.26em] text-[var(--ink-muted)]">Watchlist</p>
-            <h2 className="mt-2 font-display text-3xl text-[var(--ink-strong)] md:text-4xl">Shortlist the titles worth a real decision.</h2>
-            <p className="mt-3 max-w-2xl text-[var(--ink-dim)]">Keep contenders, jot one private note, and export a clean watch plan when you are ready.</p>
+            <h2 className="mt-2 font-display text-3xl text-[var(--ink-strong)] md:text-4xl">Save picks you actually want to revisit.</h2>
+            <p className="mt-3 max-w-2xl text-[var(--ink-dim)]">Keep your likely movies in one place, add a private note, and copy a clean list when you are ready.</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <Button variant="secondary" size="sm" onClick={copyPlan} disabled={savedMovies.length === 0}><ClipboardList size={15} /> Copy plan</Button>
@@ -55,7 +55,7 @@ export function WatchlistExperience() {
 
         {savedMovies.length === 0 ? (
           <div className="mt-6 rounded-[1.75rem] border border-dashed border-[var(--line-strong)] bg-[var(--panel-muted)] p-8 text-sm text-[var(--ink-dim)]">
-            Nothing is saved yet. Save a few finalists from Home or Search and they will show up here.
+            Nothing is saved yet. Save a few picks from Home or Search and they will show up here.
           </div>
         ) : (
           <div className="mt-6 grid gap-4">
@@ -96,9 +96,9 @@ export function WatchlistExperience() {
         <h2 className="font-display text-3xl text-[var(--ink-strong)]">Local-only by design</h2>
         <ul className="mt-4 space-y-3 text-sm leading-7 text-[var(--ink-dim)]">
           <li>Saved picks and notes never leave this browser.</li>
-          <li>Hidden titles are excluded from future shortlist refreshes.</li>
+          <li>Hidden titles are excluded from future refreshes.</li>
           <li>Recent search history stays local so you can revisit likely options quickly.</li>
-          <li>Copy plan turns your saved titles into a plain text shortlist for messages or notes.</li>
+          <li>Copy plan turns your saved titles into a plain text list for messages or notes.</li>
         </ul>
       </aside>
     </section>

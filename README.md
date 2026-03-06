@@ -2,18 +2,18 @@
 
 Film Forage is a practical movie-picking tool built for one job: help you decide what to watch tonight without spiraling through tabs, streaming apps, and half-remembered titles.
 
-It uses TMDB for live movie discovery, title lookup, detail pages, recommendations, and watch-provider data. Saved picks, notes, hidden titles, and recent searches stay local in the browser for this phase.
+It uses TMDB for live movie discovery, title search, detail pages, recommendations, and watch-provider data. Saved picks, notes, hidden titles, and recent searches stay local in the browser for this phase.
 
 ## Product Value
 - `Home picker` for region, runtime, service, genre, and vibe filtering.
 - `Short movie list` that stays focused instead of turning into another endless feed.
 - `Direct title search` for when you already know the neighborhood.
 - `Local-first watchlist` with private notes and clean export.
-- `Source guide` that explains live data, regional limits, and Film Forage fallback picks plainly.
+- `Source guide` that explains live data, regional limits, and Film Forage backup picks plainly.
 
 ## Routes
 - `/` home picker
-- `/search` title lookup
+- `/search` title search
 - `/movie/[id]` live movie detail
 - `/watchlist` local saved picks and notes
 - `/sources` provenance, attribution, and limits
@@ -39,7 +39,7 @@ flowchart LR
 - Live movie data comes from TMDB.
 - Watch availability comes from TMDB's JustWatch-backed provider data.
 - The app does not invent confidence scores or fake curator rationale.
-- If live data is unavailable, Film Forage explicitly switches to its own fallback picks and marks availability as unknown.
+- If live data is unavailable, Film Forage explicitly switches to its own backup picks and marks availability as unknown.
 
 ## Environment
 Copy `.env.example` to `.env.local`.

@@ -30,30 +30,23 @@ export function PageShell({
 
       <main id="main-content" className="mx-auto flex w-full max-w-[118rem] flex-col gap-6 px-4 pb-20 pt-4 md:px-8 md:pb-20 md:pt-8">
         {mode === "home" ? (
-          <section className="grid gap-5 rounded-[2rem] border border-[var(--line-soft)] bg-[linear-gradient(135deg,rgba(13,19,28,0.98),rgba(8,13,19,0.98))] p-5 shadow-[0_34px_100px_rgba(0,0,0,0.34)] md:p-7 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] lg:items-end">
+          <section className="grid gap-4 rounded-[1.8rem] border border-[var(--line-soft)] bg-[linear-gradient(135deg,rgba(13,19,28,0.98),rgba(8,13,19,0.98))] p-5 shadow-[0_34px_100px_rgba(0,0,0,0.34)] md:p-7">
             <div className="space-y-4">
               <p className="inline-flex w-fit items-center rounded-full border border-[var(--line-strong)] bg-[var(--accent-pale)] px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-[var(--accent-soft)]">
                 {eyebrow}
               </p>
               <h1 className="max-w-4xl font-display text-[2.9rem] leading-[0.92] text-[var(--ink-strong)] md:text-[4.6rem]">{title}</h1>
-              <p className="max-w-3xl text-base leading-8 text-[var(--ink-soft)]">{intro}</p>
+              <p className="max-w-3xl text-base leading-7 text-[var(--ink-soft)]">{intro}</p>
               <div className="flex flex-wrap gap-2 lg:hidden">
                 <span className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[rgba(255,255,255,0.04)] px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-[var(--ink-dim)]">Region-aware</span>
                 <span className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[rgba(255,255,255,0.04)] px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-[var(--ink-dim)]">Service checks</span>
                 <span className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[rgba(255,255,255,0.04)] px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-[var(--ink-dim)]">Local watchlist</span>
               </div>
             </div>
-            <div className="hidden gap-3 lg:grid lg:grid-cols-1">
-              {[
-                ["Pick by service", "See what is available where you live before you lose time debating."],
-                ["Keep the list short", "Film Forage favors a small group of good options instead of another endless feed."],
-                ["Save the finalists", "Keep a local watchlist and one private note without creating an account."],
-              ].map(([label, copy]) => (
-                <div key={label} className="rounded-[1.4rem] border border-[var(--line-soft)] bg-[rgba(255,255,255,0.04)] p-4">
-                  <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--ink-muted)]">{label}</p>
-                  <p className="mt-2 text-sm leading-7 text-[var(--ink-main)]">{copy}</p>
-                </div>
-              ))}
+            <div className="hidden flex-wrap gap-2 lg:flex">
+              <span className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[rgba(255,255,255,0.04)] px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-[var(--ink-dim)]">Region-aware</span>
+              <span className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[rgba(255,255,255,0.04)] px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-[var(--ink-dim)]">Service checks</span>
+              <span className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[rgba(255,255,255,0.04)] px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-[var(--ink-dim)]">Local watchlist</span>
             </div>
           </section>
         ) : (

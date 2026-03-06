@@ -16,12 +16,12 @@
   --line-soft: rgba(214, 230, 244, 0.14);
   --line-strong: rgba(239, 182, 94, 0.38);
   --ink: #e7ecf1;
-  --ink-main: #dde5eb;
+  --ink-main: #e5edf3;
   --ink-strong: #fff8ef;
-  --ink-dim: #b1c0cb;
-  --ink-muted: #8b9cab;
-  --ink-soft: #ccd7df;
-  --ink-faint: #718292;
+  --ink-dim: #c3d0db;
+  --ink-muted: #9baebd;
+  --ink-soft: #d8e2e9;
+  --ink-faint: #8294a5;
   --accent-ink: #f3c987;
   --accent-strong: #efb65e;
   --accent-soft: #ffd9a0;
@@ -67,6 +67,15 @@ a {
 .font-display {
   font-family: var(--font-display), serif;
   letter-spacing: -0.03em;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .skip-link {

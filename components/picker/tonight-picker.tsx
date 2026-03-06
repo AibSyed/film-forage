@@ -164,23 +164,20 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
   return (
     <section className="space-y-6">
       <article className="rounded-[1.8rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.24)] md:p-6 lg:p-7">
-        <div className="grid gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] lg:items-start">
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(260px,0.7fr)] lg:items-end">
           <div className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">What matters tonight?</p>
-            <h2 className="font-display text-[2.2rem] leading-[0.95] text-[var(--ink-strong)] md:text-[3.2rem]">Tell Film Forage what you have to work with.</h2>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Filters</p>
+            <h2 className="font-display text-[2.1rem] leading-[0.95] text-[var(--ink-strong)] md:text-[2.8rem]">Set your filters, then pick from the list.</h2>
             <p className="max-w-2xl text-sm leading-7 text-[var(--ink-dim)]">
-              Start with region and availability. Add genre, mood, or services only when you need to tighten the list.
+              Start with region and availability. Add genre, mood, or services only when you need to narrow the results.
             </p>
           </div>
-          <div className="grid gap-3 rounded-[1.4rem] border border-[var(--line-soft)] bg-[rgba(255,255,255,0.04)] p-4 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="grid gap-3 rounded-[1.2rem] border border-[var(--line-soft)] bg-[rgba(255,255,255,0.04)] p-4">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.22em] text-[var(--ink-muted)]">Data source</p>
+              <p className="text-[10px] uppercase tracking-[0.22em] text-[var(--ink-muted)]">Current data</p>
               <p className="mt-1 text-sm font-semibold text-[var(--ink-main)]">{getSourceLabel(pick.meta.source)}</p>
             </div>
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.22em] text-[var(--ink-muted)]">How to use it</p>
-              <p className="mt-1 text-sm leading-6 text-[var(--ink-dim)]">Run a pass, save the titles that survive the conversation, and check the full detail before pressing play.</p>
-            </div>
+            <p className="text-sm leading-6 text-[var(--ink-dim)]">Save promising picks and hide obvious misses as you go.</p>
           </div>
         </div>
 
@@ -290,16 +287,16 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
       <section className="space-y-4 rounded-[1.8rem] border border-[var(--line-soft)] bg-[linear-gradient(160deg,rgba(14,22,31,0.99),rgba(8,13,20,0.99))] p-4 shadow-[0_26px_80px_rgba(0,0,0,0.28)] md:p-6 lg:p-7">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Top matches</p>
-            <h3 className="font-display text-[2.1rem] leading-[0.95] text-[var(--ink-strong)] md:text-[3rem]">Start with this list.</h3>
-            <p className="max-w-3xl text-sm leading-7 text-[var(--ink-dim)]">These titles fit the filters you picked. Save the contenders and hide the obvious misses.</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Pick now</p>
+            <h3 className="font-display text-[2.1rem] leading-[0.95] text-[var(--ink-strong)] md:text-[3rem]">Best matches for this pass.</h3>
+            <p className="max-w-3xl text-sm leading-7 text-[var(--ink-dim)]">These titles match your current filters.</p>
           </div>
           <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">{getSourceLabel(pick.meta.source)}</p>
         </div>
 
         {pick.meta.source === "editorial_reserve" ? (
           <div className="rounded-[1.15rem] border border-[var(--line-strong)] bg-[var(--panel-muted)] px-4 py-3 text-sm leading-7 text-[var(--ink-dim)]">
-            Live movie data is unavailable right now. Film Forage is showing fallback picks, so streaming availability may be missing until TMDB returns.
+            Live movie data is unavailable right now. Film Forage is showing backup picks, so streaming availability may be missing until TMDB returns.
           </div>
         ) : null}
 
@@ -325,8 +322,8 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
         <section className="space-y-4 rounded-[1.8rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.18)] md:p-5 lg:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h3 className="font-display text-[1.9rem] leading-[0.98] text-[var(--ink-strong)] md:text-[2.5rem]">More to consider</h3>
-              <p className="text-sm text-[var(--ink-dim)]">A few more options if the first group does not land.</p>
+              <h3 className="font-display text-[1.9rem] leading-[0.98] text-[var(--ink-strong)] md:text-[2.5rem]">More options</h3>
+              <p className="text-sm text-[var(--ink-dim)]">More matches if you want a wider short list.</p>
             </div>
             <Link href={("/watchlist" as Route)} className="text-sm font-semibold text-[var(--ink-main)] hover:text-[var(--ink-strong)]">View watchlist</Link>
           </div>
@@ -341,8 +338,8 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
       <section className="rounded-[1.8rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.18)] md:p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h3 className="font-display text-[1.9rem] leading-[0.98] text-[var(--ink-strong)] md:text-[2.4rem]">Need a different angle?</h3>
-            <p className="text-sm text-[var(--ink-dim)]">Change the filters, search by title, or open the watchlist to compare what already survived.</p>
+            <h3 className="font-display text-[1.9rem] leading-[0.98] text-[var(--ink-strong)] md:text-[2.4rem]">Adjust the search</h3>
+            <p className="text-sm text-[var(--ink-dim)]">Change filters, search by title, or compare your saved list.</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Button variant="secondary" onClick={() => setFiltersOpen(true)}>Open more filters</Button>
