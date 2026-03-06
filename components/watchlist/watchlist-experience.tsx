@@ -1,10 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { ClipboardList, RotateCcw, Trash2 } from "lucide-react";
 import { buildWatchPlanText } from "@/features/workspace/copy-plan";
 import {
   clearDismissedMovies,
+  createWorkspaceDefaults,
   clearWorkspace,
   readWorkspace,
   removeSavedMovie,
@@ -15,10 +17,12 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
 export function WatchlistExperience() {
-  const [workspace, setWorkspace] = useState(() => readWorkspace());
+  const [workspace, setWorkspace] = useState(() => readWorkspace() ?? createWorkspaceDefaults());
   const [status, setStatus] = useState("");
 
-  useEffect(() => subscribeToWorkspace(() => setWorkspace(readWorkspace())), []);
+  useEffect(() => {
+    return subscribeToWorkspace(() => setWorkspace(readWorkspace()));
+  }, []);
 
   const savedMovies = useMemo(() => workspace.savedMovies, [workspace.savedMovies]);
 
@@ -32,13 +36,13 @@ export function WatchlistExperience() {
   }
 
   return (
-    <section className="grid gap-6 lg:grid-cols-[1fr_0.78fr]">
-      <article className="rounded-[1.75rem] border border-[var(--line-soft)] bg-white/92 p-5 shadow-[0_20px_60px_rgba(44,33,20,0.08)] md:p-6">
+    <section className="grid gap-6 xl:grid-cols-[1.14fr_0.86fr]">
+      <article className="rounded-[2rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.22)] md:p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="text-xs uppercase tracking-[0.26em] text-[var(--ink-muted)]">Local-first planning</p>
-            <h2 className="mt-2 font-display text-4xl text-[var(--ink-strong)] md:text-5xl">Your watchlist</h2>
-            <p className="mt-3 max-w-2xl text-[var(--ink-dim)]">Keep the picks worth revisiting. Notes stay local in this browser.</p>
+            <p className="text-xs uppercase tracking-[0.26em] text-[var(--ink-muted)]">Watchlist</p>
+            <h2 className="mt-2 font-display text-3xl text-[var(--ink-strong)] md:text-4xl">Shortlist the titles worth a real decision.</h2>
+            <p className="mt-3 max-w-2xl text-[var(--ink-dim)]">Keep contenders, jot one private note, and export a clean watch plan when you are ready.</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <Button variant="secondary" size="sm" onClick={copyPlan} disabled={savedMovies.length === 0}><ClipboardList size={15} /> Copy plan</Button>
@@ -50,13 +54,22 @@ export function WatchlistExperience() {
         {status ? <p className="mt-4 text-sm text-[var(--ink-dim)]">{status}</p> : null}
 
         {savedMovies.length === 0 ? (
-          <div className="mt-6 rounded-[1.5rem] border border-dashed border-[var(--line-strong)] bg-[var(--panel-muted)] p-8 text-sm text-[var(--ink-dim)]">
+          <div className="mt-6 rounded-[1.75rem] border border-dashed border-[var(--line-strong)] bg-[var(--panel-muted)] p-8 text-sm text-[var(--ink-dim)]">
             Nothing is saved yet. Save a few finalists from Tonight or Search and they will show up here.
           </div>
         ) : (
           <div className="mt-6 grid gap-4">
             {savedMovies.map((movie) => (
-              <article key={movie.id} className="rounded-[1.5rem] border border-[var(--line-soft)] bg-[var(--panel)] p-4">
+              <article key={movie.id} className="overflow-hidden rounded-[1.75rem] border border-[var(--line-soft)] bg-[var(--panel)] shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
+                <div className="grid gap-0 md:grid-cols-[160px_1fr]">
+                  <div className="relative min-h-44 bg-[linear-gradient(135deg,rgba(192,153,86,0.35),rgba(69,89,110,0.55))]">
+                    {movie.posterUrl ? (
+                      <Image src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes="160px" />
+                    ) : (
+                      <div className="flex h-full items-end p-4 text-xs uppercase tracking-[0.24em] text-[var(--ink-muted)]">Poster unavailable</div>
+                    )}
+                  </div>
+                  <div className="p-4 md:p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <h3 className="font-display text-3xl text-[var(--ink-strong)]">{movie.title}</h3>
@@ -71,17 +84,19 @@ export function WatchlistExperience() {
                     <Textarea value={movie.note} onChange={(event) => updateMovieNote(movie.id, event.target.value)} placeholder="Why did this stay on the list?" />
                   </label>
                 </div>
+                  </div>
+                </div>
               </article>
             ))}
           </div>
         )}
       </article>
 
-      <aside className="rounded-[1.75rem] border border-[var(--line-soft)] bg-[var(--panel)] p-5 md:p-6">
-        <h2 className="font-display text-3xl text-[var(--ink-strong)]">What stays local</h2>
+      <aside className="rounded-[2rem] border border-[var(--line-soft)] bg-[var(--surface)] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.18)] md:p-6">
+        <h2 className="font-display text-3xl text-[var(--ink-strong)]">Local-only by design</h2>
         <ul className="mt-4 space-y-3 text-sm leading-7 text-[var(--ink-dim)]">
           <li>Saved picks and notes never leave this browser.</li>
-          <li>Hidden titles are excluded from future tonight-picker results.</li>
+          <li>Hidden titles are excluded from future Film Forage picks.</li>
           <li>Recent search history stays local so you can revisit likely options quickly.</li>
           <li>Copy plan turns your saved titles into a plain text shortlist for messages or notes.</li>
         </ul>

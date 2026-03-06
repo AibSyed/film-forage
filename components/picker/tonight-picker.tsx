@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { Route } from "next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Film, Search, Sparkles } from "lucide-react";
+import { ChevronDown, Film, Search, Sparkles, SlidersHorizontal } from "lucide-react";
 import {
   availabilityModes,
   genreOptions,
@@ -17,7 +17,6 @@ import {
 import { defaultPickRequest } from "@/features/picker/defaults";
 import {
   getPickerStatusMessage,
-  getProviderFallbackMessage,
   getSourceLabel,
 } from "@/features/picker/presentation";
 import {
@@ -29,6 +28,7 @@ import { MovieCard } from "@/components/movie/movie-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SelectField } from "@/components/ui/select";
+import { cn } from "@/lib/utils/cn";
 
 async function requestJson<T>(url: string, init?: RequestInit) {
   const response = await fetch(url, init);
@@ -52,6 +52,7 @@ export function TonightPicker({
   const [status, setStatus] = useState("");
   const [searchPrompt, setSearchPrompt] = useState("");
   const [filters, setFilters] = useState(defaultPickRequest);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const submitPick = useCallback(async (nextFilters: typeof filters, userInitiated = true) => {
     setPending(true);
@@ -120,6 +121,11 @@ export function TonightPicker({
   }, [filters.providers]);
 
   const topProviders = useMemo(() => providerCatalog.providers.slice(0, 12), [providerCatalog.providers]);
+  const quickFacts = [
+    launchRegions.find((region) => region.code === filters.region)?.label ?? filters.region,
+    availabilityModes.find((mode) => mode.value === filters.availabilityMode)?.label ?? filters.availabilityMode,
+    `${filters.runtimeMax} min cap`,
+  ];
 
   function toggleProvider(id: number) {
     setFilters((current) => ({
@@ -131,149 +137,44 @@ export function TonightPicker({
   }
 
   return (
-    <section className="grid gap-6 lg:grid-cols-[0.96fr_1.04fr]">
-      <article className="rounded-[1.75rem] border border-[var(--line-soft)] bg-white/92 p-5 shadow-[0_20px_60px_rgba(44,33,20,0.08)] md:p-6">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-xs uppercase tracking-[0.24em] text-[var(--ink-muted)]">Tonight picker</p>
-            <h2 className="mt-2 font-display text-4xl text-[var(--ink-strong)] md:text-5xl">Find one movie worth committing to.</h2>
-          </div>
-          <div className="rounded-2xl border border-[var(--line-soft)] bg-[var(--panel-muted)] px-3 py-2 text-right text-xs uppercase tracking-[0.2em] text-[var(--ink-muted)]">
-            <p>{getSourceLabel(pick.meta.source)}</p>
-            <p className="mt-1 text-[10px] tracking-[0.18em]">{filters.region}</p>
-          </div>
-        </div>
-
-        {pick.meta.source === "editorial_reserve" ? (
-          <div className="mt-5 rounded-[1.25rem] border border-[var(--line-strong)] bg-[var(--panel-muted)] px-4 py-3 text-sm text-[var(--ink-dim)]">
-            Live movie data is unavailable right now. You are browsing the reserve shelf, so service availability may be unknown until TMDB returns.
-          </div>
-        ) : null}
-
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
-          <label className="space-y-2 text-sm text-[var(--ink-main)]">
-            <span>Region</span>
-            <SelectField value={filters.region} onChange={(event) => setFilters((current) => ({ ...current, region: event.target.value, providers: [] }))}>
-              {launchRegions.map((region) => (
-                <option key={region.code} value={region.code}>{region.label}</option>
-              ))}
-            </SelectField>
-          </label>
-          <label className="space-y-2 text-sm text-[var(--ink-main)]">
-            <span>Availability</span>
-            <SelectField value={filters.availabilityMode} onChange={(event) => setFilters((current) => ({ ...current, availabilityMode: event.target.value as typeof current.availabilityMode }))}>
-              {availabilityModes.map((mode) => (
-                <option key={mode.value} value={mode.value}>{mode.label}</option>
-              ))}
-            </SelectField>
-          </label>
-          <label className="space-y-2 text-sm text-[var(--ink-main)]">
-            <span>Genre</span>
-            <SelectField value={filters.genre} onChange={(event) => setFilters((current) => ({ ...current, genre: event.target.value as typeof current.genre }))}>
-              {genreOptions.map((genre) => (
-                <option key={genre.value} value={genre.value}>{genre.label}</option>
-              ))}
-            </SelectField>
-          </label>
-          <label className="space-y-2 text-sm text-[var(--ink-main)]">
-            <span>Vibe</span>
-            <SelectField value={filters.vibe} onChange={(event) => setFilters((current) => ({ ...current, vibe: event.target.value as typeof current.vibe }))}>
-              {vibeOptions.map((vibe) => (
-                <option key={vibe.value} value={vibe.value}>{vibe.label}</option>
-              ))}
-            </SelectField>
-          </label>
-        </div>
-
-        <div className="mt-5 space-y-3">
-          <div className="flex items-center justify-between gap-3">
-            <label htmlFor="runtime" className="text-sm font-medium text-[var(--ink-main)]">Runtime cap</label>
-            <span className="text-sm text-[var(--ink-dim)]">{filters.runtimeMax} min</span>
-          </div>
-          <input
-            id="runtime"
-            type="range"
-            min={80}
-            max={240}
-            step={5}
-            value={filters.runtimeMax}
-            onChange={(event) => setFilters((current) => ({ ...current, runtimeMax: Number(event.target.value) }))}
-            className="w-full accent-[var(--accent-strong)]"
-          />
-        </div>
-
-        <div className="mt-5 space-y-3">
-          <div className="flex items-center justify-between gap-3">
-            <p className="text-sm font-medium text-[var(--ink-main)]">Services</p>
-            <p className="text-xs uppercase tracking-[0.18em] text-[var(--ink-muted)]">Optional</p>
-          </div>
-          {providerCatalog.source === "unavailable" ? (
-            <p className="rounded-2xl border border-dashed border-[var(--line-strong)] bg-[var(--panel-muted)] px-4 py-3 text-sm text-[var(--ink-dim)]">
-              {getProviderFallbackMessage()}
-            </p>
-          ) : (
-            <div className="flex flex-wrap gap-2">
-              {topProviders.map((provider) => {
-                const selected = filters.providers.includes(provider.id);
-                return (
-                  <button
-                    key={provider.id}
-                    type="button"
-                    onClick={() => toggleProvider(provider.id)}
-                    className={`rounded-full border px-3 py-2 text-sm transition ${selected ? "border-[var(--accent-strong)] bg-[var(--accent-pale)] text-[var(--ink-strong)]" : "border-[var(--line-soft)] bg-white text-[var(--ink-dim)] hover:border-[var(--line-strong)] hover:text-[var(--ink-main)]"}`}
-                  >
-                    {provider.name}
-                  </button>
-                );
-              })}
+    <section className="grid gap-5 xl:grid-cols-[1.14fr_0.86fr]">
+      <div className="order-1 space-y-5">
+        <article className="space-y-4 rounded-[2rem] border border-[var(--line-soft)] bg-[linear-gradient(160deg,rgba(15,31,40,0.96),rgba(9,20,28,0.94))] p-4 shadow-[0_28px_90px_rgba(0,0,0,0.26)] md:p-5">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-sm font-semibold text-[var(--ink-main)]">
+                <Sparkles size={16} className="text-[var(--accent-strong)]" /> Best match
+              </div>
+              <p className="max-w-xl text-sm leading-7 text-[var(--ink-dim)]">
+                Start with one viable movie, then keep the alternates close if the room changes direction.
+              </p>
             </div>
-          )}
-        </div>
-
-        <div className="mt-5 grid gap-3 md:grid-cols-[1fr_auto]">
-          <label className="space-y-2 text-sm text-[var(--ink-main)]">
-            <span>Know part of the title?</span>
-            <Input value={searchPrompt} onChange={(event) => setSearchPrompt(event.target.value)} placeholder="Try: Arrival, Spider-Man, Mission" />
-          </label>
-          <div className="flex items-end">
-            <Button
-              variant="secondary"
-              className="w-full md:w-auto"
-              onClick={() => router.push(`/search?q=${encodeURIComponent(searchPrompt)}&region=${filters.region}` as Route)}
-              disabled={searchPrompt.trim().length < 2}
-            >
-              <Search size={16} /> Search title
-            </Button>
+            <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">Start here</p>
           </div>
-        </div>
-
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Button onClick={() => submitPick(filters)} disabled={pending}>
-            <Film size={16} /> {pending ? "Refreshing..." : "Find a movie"}
-          </Button>
-          <Button variant="secondary" onClick={() => router.push("/watchlist" as Route)}>Open watchlist</Button>
-        </div>
-
-        {status ? <p className="mt-4 text-sm text-[var(--ink-dim)]">{status}</p> : null}
-      </article>
-
-      <div className="space-y-6">
-        <article className="space-y-4 rounded-[1.75rem] border border-[var(--line-soft)] bg-[var(--panel)] p-4 md:p-5">
-          <div className="flex items-center gap-2 text-sm font-semibold text-[var(--ink-main)]">
-            <Sparkles size={16} className="text-[var(--accent-strong)]" /> Best match
+          <div className="flex flex-wrap gap-2">
+            {quickFacts.map((fact) => (
+              <span key={fact} className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[var(--panel-muted)] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-[var(--ink-dim)]">
+                {fact}
+              </span>
+            ))}
           </div>
           {pick.bestMatch ? (
             <div data-testid="best-match-card">
+              {pick.bestMatch.fitReasons[0] ? (
+                <p className="mb-3 rounded-[1.2rem] border border-[var(--line-soft)] bg-[rgba(6,18,25,0.34)] px-4 py-3 text-sm text-[var(--ink-main)]">
+                  Tonight&apos;s lead because it is <span className="text-[var(--ink-strong)]">{pick.bestMatch.fitReasons[0].toLowerCase()}</span>.
+                </p>
+              ) : null}
               <MovieCard movie={pick.bestMatch} onDismissed={(id) => setPick((current) => ({ ...current, bestMatch: current.bestMatch?.id === id ? null : current.bestMatch }))} />
             </div>
           ) : (
-            <div className="rounded-[1.5rem] border border-dashed border-[var(--line-strong)] bg-white/70 p-8 text-sm text-[var(--ink-dim)]">
+            <div className="rounded-[1.5rem] border border-dashed border-[var(--line-strong)] bg-[var(--surface-soft)] p-8 text-sm text-[var(--ink-dim)]">
               No strong live match yet. Try widening the runtime or removing a service filter.
             </div>
           )}
         </article>
 
-        <section className="space-y-4 rounded-[1.75rem] border border-[var(--line-soft)] bg-white/92 p-4 md:p-5">
+        <section className="space-y-4 rounded-[2rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.18)] md:p-5">
           <div className="flex items-center justify-between gap-3">
             <div>
               <h3 className="font-display text-3xl text-[var(--ink-strong)]">Good backups</h3>
@@ -289,7 +190,7 @@ export function TonightPicker({
         </section>
 
         {pick.alternateLane.length > 0 ? (
-          <section className="space-y-4 rounded-[1.75rem] border border-[var(--line-soft)] bg-white/92 p-4 md:p-5">
+          <section className="space-y-4 rounded-[2rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.18)] md:p-5">
             <div>
               <h3 className="font-display text-3xl text-[var(--ink-strong)]">Try a different lane</h3>
               <p className="text-sm text-[var(--ink-dim)]">If your current services are thin tonight, these looser picks are still worth a look.</p>
@@ -301,6 +202,162 @@ export function TonightPicker({
             </div>
           </section>
         ) : null}
+      </div>
+
+      <div className="order-2">
+        <article className="rounded-[2rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.24)] md:p-6 xl:sticky xl:top-6">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-xs uppercase tracking-[0.24em] text-[var(--ink-muted)]">Tonight filters</p>
+              <h2 className="mt-2 font-display text-3xl text-[var(--ink-strong)] md:text-[2.4rem]">Tune the lane, then move.</h2>
+              <p className="mt-2 max-w-lg text-sm leading-7 text-[var(--ink-dim)]">
+                Keep the decision surface simple. Search directly if you already know the title, or adjust a few filters and rerun.
+              </p>
+            </div>
+            <div className="rounded-[1.25rem] border border-[var(--line)] bg-[var(--panel-muted)] px-3 py-2 text-right text-xs uppercase tracking-[0.2em] text-[var(--ink-muted)]">
+              <p>{getSourceLabel(pick.meta.source)}</p>
+              <p className="mt-1 text-[10px] tracking-[0.18em]">{filters.region}</p>
+            </div>
+          </div>
+
+          <div className="mt-5 grid gap-3 sm:grid-cols-[1fr_180px]">
+            <label className="space-y-2 text-sm text-[var(--ink-main)]">
+              <span>Know part of the title?</span>
+              <Input value={searchPrompt} onChange={(event) => setSearchPrompt(event.target.value)} placeholder="Try: Arrival, Spider-Man, Mission" />
+            </label>
+            <label className="space-y-2 text-sm text-[var(--ink-main)]">
+              <span>Region</span>
+              <SelectField value={filters.region} onChange={(event) => setFilters((current) => ({ ...current, region: event.target.value, providers: [] }))}>
+                {launchRegions.map((region) => (
+                  <option key={region.code} value={region.code}>{region.label}</option>
+                ))}
+              </SelectField>
+            </label>
+          </div>
+
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Button onClick={() => submitPick(filters)} disabled={pending}>
+              <Film size={16} /> {pending ? "Refreshing..." : "Find a movie"}
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => router.push(`/search?q=${encodeURIComponent(searchPrompt)}&region=${filters.region}` as Route)}
+              disabled={searchPrompt.trim().length < 2}
+            >
+              <Search size={16} /> Search title
+            </Button>
+            <Button variant="secondary" onClick={() => router.push("/watchlist" as Route)}>Watchlist</Button>
+          </div>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            {quickFacts.map((fact) => (
+              <span key={fact} className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[var(--panel)] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-[var(--ink-dim)]">
+                {fact}
+              </span>
+            ))}
+          </div>
+
+          {pick.meta.source === "editorial_reserve" ? (
+            <div className="mt-5 rounded-[1.25rem] border border-[var(--line-strong)] bg-[var(--panel-muted)] px-4 py-3 text-sm leading-7 text-[var(--ink-dim)]">
+              TMDB is unavailable right now. The reserve shelf still gives you workable movie options, but streaming availability is currently unknown.
+            </div>
+          ) : null}
+
+          <div className="mt-5 md:hidden">
+            <button
+              type="button"
+              onClick={() => setFiltersOpen((current) => !current)}
+              className="inline-flex w-full items-center justify-between rounded-[1.2rem] border border-[var(--line-soft)] bg-[var(--surface-soft)] px-4 py-3 text-left text-sm font-medium text-[var(--ink-main)]"
+              aria-expanded={filtersOpen}
+            >
+              <span className="inline-flex items-center gap-2">
+                <SlidersHorizontal size={16} /> More filters
+              </span>
+              <ChevronDown size={16} className={cn("transition", filtersOpen ? "rotate-180" : "")} />
+            </button>
+          </div>
+
+          <div className={cn("mt-5 space-y-5", filtersOpen ? "block" : "hidden md:block")}>
+            <div className="grid gap-4 md:grid-cols-2">
+              <label className="space-y-2 text-sm text-[var(--ink-main)]">
+                <span>Availability</span>
+                <SelectField value={filters.availabilityMode} onChange={(event) => setFilters((current) => ({ ...current, availabilityMode: event.target.value as typeof current.availabilityMode }))}>
+                  {availabilityModes.map((mode) => (
+                    <option key={mode.value} value={mode.value}>{mode.label}</option>
+                  ))}
+                </SelectField>
+              </label>
+              <label className="space-y-2 text-sm text-[var(--ink-main)]">
+                <span>Genre</span>
+                <SelectField value={filters.genre} onChange={(event) => setFilters((current) => ({ ...current, genre: event.target.value as typeof current.genre }))}>
+                  {genreOptions.map((genre) => (
+                    <option key={genre.value} value={genre.value}>{genre.label}</option>
+                  ))}
+                </SelectField>
+              </label>
+              <label className="space-y-2 text-sm text-[var(--ink-main)] md:col-span-2">
+                <span>Vibe</span>
+                <SelectField value={filters.vibe} onChange={(event) => setFilters((current) => ({ ...current, vibe: event.target.value as typeof current.vibe }))}>
+                  {vibeOptions.map((vibe) => (
+                    <option key={vibe.value} value={vibe.value}>{vibe.label}</option>
+                  ))}
+                </SelectField>
+              </label>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center justify-between gap-3">
+                <label htmlFor="runtime" className="text-sm font-medium text-[var(--ink-main)]">Runtime cap</label>
+                <span className="text-sm text-[var(--ink-dim)]">{filters.runtimeMax} min</span>
+              </div>
+              <input
+                id="runtime"
+                type="range"
+                min={80}
+                max={240}
+                step={5}
+                value={filters.runtimeMax}
+                onChange={(event) => setFilters((current) => ({ ...current, runtimeMax: Number(event.target.value) }))}
+                className="w-full accent-[var(--accent-strong)]"
+              />
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-sm font-medium text-[var(--ink-main)]">Services</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-[var(--ink-muted)]">Optional</p>
+              </div>
+              {providerCatalog.source === "unavailable" ? (
+                <p className="rounded-2xl border border-dashed border-[var(--line-strong)] bg-[var(--panel-muted)] px-4 py-3 text-sm text-[var(--ink-dim)]">
+                  Provider filters are offline right now, so service-specific narrowing is temporarily unavailable.
+                </p>
+              ) : (
+                <div className="flex flex-wrap gap-2">
+                  {topProviders.map((provider) => {
+                    const selected = filters.providers.includes(provider.id);
+                    return (
+                      <button
+                        key={provider.id}
+                        type="button"
+                        onClick={() => toggleProvider(provider.id)}
+                        className={cn(
+                          "rounded-full border px-3 py-2 text-sm transition",
+                          selected
+                            ? "border-[var(--accent-strong)] bg-[var(--accent-pale)] text-[var(--ink-strong)]"
+                            : "border-[var(--line-soft)] bg-[var(--surface-soft)] text-[var(--ink-dim)] hover:border-[var(--line-strong)] hover:text-[var(--ink-main)]"
+                        )}
+                      >
+                        {provider.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {status ? <p className="mt-4 text-sm text-[var(--ink-dim)]">{status}</p> : null}
+        </article>
       </div>
     </section>
   );

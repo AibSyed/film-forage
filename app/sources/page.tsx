@@ -6,8 +6,8 @@ export default function SourcesPage() {
     <PageShell
       pathname="/sources"
       eyebrow="Sources and limits"
-      title="Know what is live, what is local, and what is reserve."
-      intro="This page explains the app's live TMDB data, region-sensitive provider coverage, and what the reserve shelf means when upstream data is unavailable."
+      title="Know what comes from TMDB, and what does not."
+      intro="This page explains live movie data, region-sensitive provider coverage, and what the reserve shelf means when upstream data is unavailable."
     >
       <SourceGuide />
     </PageShell>

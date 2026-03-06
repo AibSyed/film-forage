@@ -31,7 +31,7 @@ export default function OpenGraphImage() {
           </div>
         </div>
         <div style={{ display: "flex", gap: 18, fontSize: 24, color: "#4c3a2b" }}>
-          <div>Tonight picker</div>
+          <div>Film Forage</div>
           <div>Title search</div>
           <div>Local watchlist</div>
         </div>

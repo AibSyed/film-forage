@@ -39,10 +39,10 @@ export default async function MoviePage({
         title="This title is not available right now."
         intro="The live movie detail fetch failed and there is no reserve profile for this id. Try the picker again or search a different title."
       >
-        <div className="rounded-[1.75rem] border border-dashed border-[var(--line-strong)] bg-white/92 p-8 text-sm text-[var(--ink-dim)]">
-          <p>Try another title or go back to the tonight picker.</p>
+        <div className="rounded-[1.75rem] border border-dashed border-[var(--line-strong)] bg-[var(--surface-soft)] p-8 text-sm text-[var(--ink-dim)]">
+          <p>Try another title or go back to Film Forage.</p>
           <div className="mt-4 flex gap-3">
-            <Link href={"/" as Route} className="text-sm font-semibold text-[var(--ink-main)] hover:text-[var(--ink-strong)]">Back to tonight picker</Link>
+            <Link href={"/" as Route} className="text-sm font-semibold text-[var(--ink-main)] hover:text-[var(--ink-strong)]">Back to Film Forage</Link>
             <Link href={"/search" as Route} className="text-sm font-semibold text-[var(--ink-main)] hover:text-[var(--ink-strong)]">Open title search</Link>
           </div>
         </div>

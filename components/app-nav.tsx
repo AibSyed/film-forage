@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Route } from "next";
-import { Film, Search, Bookmark, CircleHelp } from "lucide-react";
+import { Bookmark, CircleHelp, Film, Search } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 
 const navItems = [
@@ -10,29 +10,62 @@ const navItems = [
   { href: "/sources" as Route, label: "Sources", icon: CircleHelp },
 ];
 
+function isActive(pathname: string, href: Route) {
+  return href === "/" ? pathname === "/" : pathname.startsWith(href);
+}
+
 export function AppNav({ pathname }: { pathname: string }) {
   return (
-    <nav aria-label="Primary" className="overflow-x-auto">
-      <div className="flex min-w-max gap-2 rounded-full border border-[var(--line-soft)] bg-white/70 p-1 shadow-[0_18px_50px_rgba(44,33,20,0.08)]">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const active = pathname === item.href;
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm transition",
-                active
-                  ? "bg-[var(--ink-strong)] text-[var(--paper)]"
-                  : "text-[var(--ink-dim)] hover:bg-white hover:text-[var(--ink-main)]"
-              )}
-            >
-              <Icon size={15} /> {item.label}
-            </Link>
-          );
-        })}
-      </div>
-    </nav>
+    <>
+      <nav aria-label="Primary" className="hidden md:block">
+        <div className="flex items-center gap-2 rounded-full border border-[var(--line-soft)] bg-[var(--surface-soft)] p-1.5 shadow-[0_16px_44px_rgba(0,0,0,0.2)] backdrop-blur">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const active = isActive(pathname, item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium transition",
+                  active
+                    ? "bg-[linear-gradient(135deg,var(--accent-soft),var(--accent-strong))] text-[#12202a]"
+                    : "text-[var(--ink-dim)] hover:bg-[var(--panel-muted)] hover:text-[var(--ink-main)]"
+                )}
+              >
+                <Icon size={15} /> {item.label}
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
+
+      <nav
+        aria-label="Primary mobile"
+        className="fixed inset-x-4 bottom-4 z-40 md:hidden"
+      >
+        <div className="grid grid-cols-4 rounded-[1.75rem] border border-[var(--line-soft)] bg-[rgba(6,18,25,0.92)] p-2 shadow-[0_22px_70px_rgba(0,0,0,0.35)] backdrop-blur">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const active = isActive(pathname, item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex flex-col items-center justify-center gap-1 rounded-[1.1rem] px-2 py-2 text-[11px] font-medium transition",
+                  active
+                    ? "bg-[var(--accent-pale)] text-[var(--ink-strong)]"
+                    : "text-[var(--ink-muted)] hover:text-[var(--ink-main)]"
+                )}
+              >
+                <Icon size={16} />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
+    </>
   );
 }

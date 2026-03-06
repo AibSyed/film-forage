@@ -6,24 +6,24 @@ import { workspaceSchema, type WorkspaceVM } from "@/features/workspace/contract
 const STORAGE_KEY = "film-forage:v4:workspace";
 const EVENT_NAME = "film-forage:workspace-updated";
 
-function defaultWorkspace(): WorkspaceVM {
+export function createWorkspaceDefaults(): WorkspaceVM {
   return workspaceSchema.parse({ version: 4 });
 }
 
 export function readWorkspace(): WorkspaceVM {
   if (typeof window === "undefined") {
-    return defaultWorkspace();
+    return createWorkspaceDefaults();
   }
 
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) {
-      return defaultWorkspace();
+      return createWorkspaceDefaults();
     }
 
     return workspaceSchema.parse(JSON.parse(raw));
   } catch {
-    return defaultWorkspace();
+    return createWorkspaceDefaults();
   }
 }
 
@@ -130,5 +130,5 @@ export function clearRecentSearches() {
 }
 
 export function clearWorkspace() {
-  writeWorkspace(defaultWorkspace());
+  writeWorkspace(createWorkspaceDefaults());
 }

@@ -6,8 +6,8 @@ export default function WatchlistPage() {
     <PageShell
       pathname="/watchlist"
       eyebrow="Local-first planning"
-      title="Keep the picks that survive the first round."
-      intro="This watchlist is for final contenders, private notes, and one clean export when you are ready to send a real plan."
+      title="Keep your finalists close."
+      intro="Use the watchlist to hold contenders, capture one private note, and export a clean shortlist when the group is ready."
     >
       <WatchlistExperience />
     </PageShell>

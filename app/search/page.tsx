@@ -17,8 +17,8 @@ export default async function SearchPage({
     <PageShell
       pathname="/search"
       eyebrow="Direct lookup"
-      title="Search the title when you already know the neighborhood."
-      intro="Use this route when the decision problem is not what to watch, but whether a specific movie is the right fit tonight."
+      title="Already have a title in mind?"
+      intro="Use Search when the question is not what to watch in general, but whether one specific movie is worth tonight."
     >
       <SearchStudio initialQuery={query} initialRegion={region} initialResults={initialResults} />
     </PageShell>

@@ -6,7 +6,7 @@ export function getSourceLabel(source: SourceLabel) {
 
 export function getPickerStatusMessage(source: SourceLabel) {
   return source === "live_tmdb"
-    ? "Tonight picker refreshed."
+    ? "Film Forage refreshed."
     : "Live movie data is unavailable right now. Showing the reserve shelf instead.";
 }
 
