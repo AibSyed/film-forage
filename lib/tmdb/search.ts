@@ -56,7 +56,21 @@ export async function searchMovies(request: SearchRequestVM) {
     });
 
     const ids = raw.results.slice(0, 8).map((movie) => movie.id);
-    const items = await Promise.all(ids.map((id) => hydrateSearchCard(id, request.region)));
+    const hydrated = await Promise.allSettled(ids.map((id) => hydrateSearchCard(id, request.region)));
+    const items = hydrated
+      .filter((result): result is PromiseFulfilledResult<Awaited<ReturnType<typeof hydrateSearchCard>>> => result.status === "fulfilled")
+      .map((result) => result.value);
+
+    if (items.length === 0 && ids.length > 0) {
+      return searchResponseSchema.parse({
+        query: request.query,
+        items: searchReserveCards(request.query, request.region),
+        meta: {
+          region: request.region,
+          source: "editorial_reserve",
+        },
+      });
+    }
 
     return searchResponseSchema.parse({
       query: request.query,
