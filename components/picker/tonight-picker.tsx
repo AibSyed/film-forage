@@ -132,7 +132,7 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
     return facts;
   }, [filters]);
 
-  const watchNow = useMemo(() => {
+  const topMatches = useMemo(() => {
     const cards: MovieMatchCardVM[] = [];
     if (pick.bestMatch) {
       cards.push(pick.bestMatch);
@@ -140,7 +140,8 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
     cards.push(...pick.backups.slice(0, 2));
     return cards;
   }, [pick.bestMatch, pick.backups]);
-  const worthALook = useMemo(() => [...pick.backups.slice(2), ...pick.alternateLane], [pick.backups, pick.alternateLane]);
+
+  const moreMatches = useMemo(() => [...pick.backups.slice(2), ...pick.alternateLane], [pick.backups, pick.alternateLane]);
 
   function toggleProvider(id: number) {
     setFilters((current) => ({
@@ -151,25 +152,42 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
     }));
   }
 
+  function dismissMovie(id: number) {
+    setPick((current) => ({
+      ...current,
+      bestMatch: current.bestMatch?.id === id ? null : current.bestMatch,
+      backups: current.backups.filter((entry) => entry.id !== id),
+      alternateLane: current.alternateLane.filter((entry) => entry.id !== id),
+    }));
+  }
+
   return (
-    <section className="space-y-5">
-      <article className="rounded-[1.5rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.22)] md:p-6">
-        <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--line-soft)] pb-4">
-          <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Filters</p>
-            <h2 className="font-display text-[2rem] uppercase tracking-[0.03em] text-[var(--ink-strong)] md:text-[2.7rem]">Start with a few simple filters.</h2>
-            <p className="max-w-2xl text-sm leading-7 text-[var(--ink-dim)]">Choose region and availability first. Open more filters only if you need to tighten the short list.</p>
+    <section className="space-y-6">
+      <article className="rounded-[1.8rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.24)] md:p-6 lg:p-7">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] lg:items-start">
+          <div className="space-y-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">What matters tonight?</p>
+            <h2 className="font-display text-[2.2rem] leading-[0.95] text-[var(--ink-strong)] md:text-[3.2rem]">Tell Film Forage what you have to work with.</h2>
+            <p className="max-w-2xl text-sm leading-7 text-[var(--ink-dim)]">
+              Start with region and availability. Add genre, mood, or services only when you need to tighten the list.
+            </p>
           </div>
-          <div className="rounded-[1rem] border border-[var(--line-soft)] bg-[var(--panel)] px-4 py-3 text-right">
-            <p className="text-[10px] uppercase tracking-[0.22em] text-[var(--ink-muted)]">Source</p>
-            <p className="mt-1 text-sm font-semibold text-[var(--ink-main)]">{getSourceLabel(pick.meta.source)}</p>
+          <div className="grid gap-3 rounded-[1.4rem] border border-[var(--line-soft)] bg-[rgba(255,255,255,0.04)] p-4 sm:grid-cols-2 lg:grid-cols-1">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.22em] text-[var(--ink-muted)]">Data source</p>
+              <p className="mt-1 text-sm font-semibold text-[var(--ink-main)]">{getSourceLabel(pick.meta.source)}</p>
+            </div>
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.22em] text-[var(--ink-muted)]">How to use it</p>
+              <p className="mt-1 text-sm leading-6 text-[var(--ink-dim)]">Run a pass, save the titles that survive the conversation, and check the full detail before pressing play.</p>
+            </div>
           </div>
         </div>
 
-        <div className="mt-4 grid gap-3 xl:grid-cols-[minmax(0,1.4fr)_200px_220px_auto] xl:items-end">
-          <label className="space-y-2 text-sm text-[var(--ink-main)] xl:col-span-1">
+        <div className="mt-5 grid gap-3 xl:grid-cols-[minmax(0,1.5fr)_220px_220px_auto] xl:items-end">
+          <label className="space-y-2 text-sm text-[var(--ink-main)]">
             <span>Know part of the title?</span>
-            <Input value={searchPrompt} onChange={(event) => setSearchPrompt(event.target.value)} placeholder="Try Arrival, Princess Bride, Spider-Verse" />
+            <Input value={searchPrompt} onChange={(event) => setSearchPrompt(event.target.value)} placeholder="Try Arrival, Princess Bride, or Spider-Verse" />
           </label>
           <label className="space-y-2 text-sm text-[var(--ink-main)]">
             <span>Region</span>
@@ -189,7 +207,7 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
           </label>
           <div className="grid gap-3 sm:grid-cols-2 xl:flex xl:flex-wrap xl:justify-end">
             <Button onClick={() => submitPick(filters)} disabled={pending}>
-              <Film size={16} /> {pending ? "Finding..." : "Find movies"}
+              <Film size={16} /> {pending ? "Finding..." : "Find a movie"}
             </Button>
             <Button variant="secondary" onClick={() => router.push(`/search?q=${encodeURIComponent(searchPrompt)}&region=${filters.region}` as Route)} disabled={searchPrompt.trim().length < 2}>
               <Search size={16} /> Search title
@@ -208,8 +226,8 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
           <Button variant="ghost" size="sm" onClick={() => router.push("/watchlist" as Route)}>Watchlist</Button>
         </div>
 
-        <div className={cn("overflow-hidden transition-[max-height,opacity] duration-300", filtersOpen ? "mt-4 max-h-[48rem] opacity-100" : "max-h-0 opacity-0")}>
-          <div className="grid gap-4 rounded-[1.3rem] border border-[var(--line-soft)] bg-[rgba(255,255,255,0.03)] p-4 md:grid-cols-2 xl:grid-cols-[200px_220px_1fr]">
+        <div className={cn("overflow-hidden transition-[max-height,opacity] duration-300", filtersOpen ? "mt-4 max-h-[52rem] opacity-100" : "max-h-0 opacity-0")}>
+          <div className="grid gap-4 rounded-[1.4rem] border border-[var(--line-soft)] bg-[rgba(255,255,255,0.03)] p-4 md:grid-cols-2 xl:grid-cols-[220px_220px_1fr]">
             <label className="space-y-2 text-sm text-[var(--ink-main)]">
               <span>Genre</span>
               <SelectField value={filters.genre} onChange={(event) => setFilters((current) => ({ ...current, genre: event.target.value as typeof current.genre }))}>
@@ -269,57 +287,62 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
         {status ? <p className="mt-4 text-sm text-[var(--ink-dim)]">{status}</p> : null}
       </article>
 
-      <section className="space-y-4 rounded-[1.5rem] border border-[var(--line-soft)] bg-[linear-gradient(160deg,rgba(17,26,34,0.98),rgba(12,19,24,0.98))] p-4 shadow-[0_26px_80px_rgba(0,0,0,0.24)] md:p-6">
+      <section className="space-y-4 rounded-[1.8rem] border border-[var(--line-soft)] bg-[linear-gradient(160deg,rgba(14,22,31,0.99),rgba(8,13,20,0.99))] p-4 shadow-[0_26px_80px_rgba(0,0,0,0.28)] md:p-6 lg:p-7">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Tonight&apos;s shortlist</p>
-            <h3 className="font-display text-[2rem] uppercase tracking-[0.03em] text-[var(--ink-strong)] md:text-[2.7rem]">Watch now</h3>
-            <p className="max-w-3xl text-sm leading-7 text-[var(--ink-dim)]">These are the strongest matches for what you picked.</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Top matches</p>
+            <h3 className="font-display text-[2.1rem] leading-[0.95] text-[var(--ink-strong)] md:text-[3rem]">Start with this list.</h3>
+            <p className="max-w-3xl text-sm leading-7 text-[var(--ink-dim)]">These titles fit the filters you picked. Save the contenders and hide the obvious misses.</p>
           </div>
           <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">{getSourceLabel(pick.meta.source)}</p>
         </div>
 
         {pick.meta.source === "editorial_reserve" ? (
           <div className="rounded-[1.15rem] border border-[var(--line-strong)] bg-[var(--panel-muted)] px-4 py-3 text-sm leading-7 text-[var(--ink-dim)]">
-            Live movie data is unavailable right now. Film Forage is using the fallback list, so streaming availability may be missing until TMDB returns.
+            Live movie data is unavailable right now. Film Forage is showing fallback picks, so streaming availability may be missing until TMDB returns.
           </div>
         ) : null}
 
-        {watchNow.length > 0 ? (
-          <div className="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
-            {watchNow.map((movie, index) => (
-              <div key={movie.id} data-testid={index === 0 ? "best-match-card" : undefined} className={cn(index === 0 ? "2xl:col-span-2" : "") }>
-                <MovieCard movie={movie} compact={index !== 0} onDismissed={(id) => setPick((current) => ({ ...current, bestMatch: current.bestMatch?.id === id ? null : current.bestMatch, backups: current.backups.filter((entry) => entry.id !== id) }))} />
-              </div>
-            ))}
+        {topMatches.length > 0 ? (
+          <div className="grid gap-4 xl:grid-cols-[minmax(0,1.35fr)_minmax(360px,0.9fr)] xl:items-start">
+            <div data-testid="best-match-card">
+              <MovieCard movie={topMatches[0]} onDismissed={dismissMovie} />
+            </div>
+            <div className="grid gap-4">
+              {topMatches.slice(1).map((movie) => (
+                <MovieCard key={movie.id} movie={movie} compact onDismissed={dismissMovie} />
+              ))}
+            </div>
           </div>
         ) : (
-          <div className="rounded-[1.25rem] border border-dashed border-[var(--line-strong)] bg-[var(--surface-soft)] p-8 text-sm text-[var(--ink-dim)]">No strong matches yet. Widen the runtime, loosen the availability filter, or search directly.</div>
+          <div className="rounded-[1.25rem] border border-dashed border-[var(--line-strong)] bg-[var(--surface-soft)] p-8 text-sm text-[var(--ink-dim)]">
+            No strong matches yet. Widen the runtime, loosen the availability filter, or search directly for a title.
+          </div>
         )}
       </section>
 
-      {worthALook.length > 0 ? (
-        <section className="space-y-4 rounded-[1.5rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.18)] md:p-5">
-          <div className="flex items-center justify-between gap-3">
+      {moreMatches.length > 0 ? (
+        <section className="space-y-4 rounded-[1.8rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.18)] md:p-5 lg:p-6">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h3 className="font-display text-[1.8rem] uppercase tracking-[0.03em] text-[var(--ink-strong)] md:text-[2.2rem]">Also worth a look</h3>
-              <p className="text-sm text-[var(--ink-dim)]">A few more matches if the first row does not land.</p>
+              <h3 className="font-display text-[1.9rem] leading-[0.98] text-[var(--ink-strong)] md:text-[2.5rem]">More to consider</h3>
+              <p className="text-sm text-[var(--ink-dim)]">A few more options if the first group does not land.</p>
             </div>
             <Link href={("/watchlist" as Route)} className="text-sm font-semibold text-[var(--ink-main)] hover:text-[var(--ink-strong)]">View watchlist</Link>
           </div>
-          <div className="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
-            {worthALook.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} compact onDismissed={(id) => setPick((current) => ({ ...current, backups: current.backups.filter((entry) => entry.id !== id), alternateLane: current.alternateLane.filter((entry) => entry.id !== id) }))} />
+          <div className="grid gap-4 lg:grid-cols-2">
+            {moreMatches.map((movie) => (
+              <MovieCard key={movie.id} movie={movie} compact onDismissed={dismissMovie} />
             ))}
           </div>
         </section>
       ) : null}
 
-      <section className="rounded-[1.5rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.18)] md:p-5">
+      <section className="rounded-[1.8rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.18)] md:p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h3 className="font-display text-[1.8rem] uppercase tracking-[0.03em] text-[var(--ink-strong)] md:text-[2.2rem]">Not finding it?</h3>
-            <p className="text-sm text-[var(--ink-dim)]">Try a direct title search or open more filters to change the mood, genre, or runtime.</p>
+            <h3 className="font-display text-[1.9rem] leading-[0.98] text-[var(--ink-strong)] md:text-[2.4rem]">Need a different angle?</h3>
+            <p className="text-sm text-[var(--ink-dim)]">Change the filters, search by title, or open the watchlist to compare what already survived.</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Button variant="secondary" onClick={() => setFiltersOpen(true)}>Open more filters</Button>

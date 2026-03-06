@@ -8,14 +8,14 @@ import {
 
 describe("picker presentation helpers", () => {
   it("maps source labels to user-facing copy", () => {
-    expect(getSourceLabel("live_tmdb")).toBe("Live data");
-    expect(getSourceLabel("editorial_reserve")).toBe("Fallback list");
+    expect(getSourceLabel("live_tmdb")).toBe("Live movie data");
+    expect(getSourceLabel("editorial_reserve")).toBe("Fallback picks");
   });
 
   it("uses fallback copy that explains the fallback plainly", () => {
     expect(getPickerStatusMessage("live_tmdb")).toBe("Results updated.");
-    expect(getPickerStatusMessage("editorial_reserve")).toContain("fallback list");
+    expect(getPickerStatusMessage("editorial_reserve")).toContain("fallback picks");
     expect(getProviderFallbackMessage()).toContain("Service filters");
-    expect(getSearchFallbackMessage()).toContain("fallback list");
+    expect(getSearchFallbackMessage()).toContain("fallback picks");
   });
 });

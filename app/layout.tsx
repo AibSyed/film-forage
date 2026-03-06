@@ -1,27 +1,30 @@
 import type { Metadata } from "next";
-import { Inter_Tight, Oswald } from "next/font/google";
+import { Bodoni_Moda, Manrope } from "next/font/google";
 import "@/app/globals.css";
 
-const display = Oswald({ subsets: ["latin"], variable: "--font-display", weight: ["500", "600", "700"] });
-const body = Inter_Tight({ subsets: ["latin"], variable: "--font-body" });
+const display = Bodoni_Moda({ subsets: ["latin"], variable: "--font-display" });
+const body = Manrope({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Film Forage | Find a Movie to Watch Tonight",
-  description: "Film Forage helps you filter by region, services, runtime, and mood so you can find a movie to watch tonight without the endless scroll.",
+  title: "Film Forage | Find a Movie Worth Watching",
+  description:
+    "Film Forage helps you narrow a movie list by region, streaming services, runtime, and mood so you can choose something worth watching faster.",
   metadataBase: new URL("https://film-forage.vercel.app"),
   icons: {
     icon: "/icon",
     apple: "/apple-icon",
   },
   openGraph: {
-    title: "Film Forage | Find a Movie to Watch Tonight",
-    description: "Film Forage helps you filter by region, services, runtime, and mood so you can find a movie to watch tonight without the endless scroll.",
+    title: "Film Forage | Find a Movie Worth Watching",
+    description:
+      "Film Forage helps you narrow a movie list by region, streaming services, runtime, and mood so you can choose something worth watching faster.",
     images: "/opengraph-image",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Film Forage | Find a Movie to Watch Tonight",
-    description: "Film Forage helps you filter by region, services, runtime, and mood so you can find a movie to watch tonight without the endless scroll.",
+    title: "Film Forage | Find a Movie Worth Watching",
+    description:
+      "Film Forage helps you narrow a movie list by region, streaming services, runtime, and mood so you can choose something worth watching faster.",
     images: "/twitter-image",
   },
 };

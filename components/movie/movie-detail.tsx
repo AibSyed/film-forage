@@ -66,7 +66,7 @@ export function MovieDetail({ detail }: { detail: MovieDetailResponseVM }) {
         </article>
 
         <article className="rounded-[1.75rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-5">
-          <h3 className="font-display text-3xl text-[var(--ink-strong)]">If this misses, try these next</h3>
+          <h3 className="font-display text-3xl text-[var(--ink-strong)]">More titles in the same neighborhood</h3>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             {[...movie.recommendations, ...movie.similar].slice(0, 6).map((entry) => (
               <Link key={`${entry.id}-${entry.title}`} href={`/movie/${entry.id}` as Route} className="rounded-[1.25rem] border border-[var(--line-soft)] bg-[var(--panel)] p-4 hover:border-[var(--line-strong)]">

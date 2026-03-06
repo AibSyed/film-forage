@@ -23,16 +23,16 @@ export default function OpenGraphImage() {
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ fontSize: 28, letterSpacing: 10, textTransform: "uppercase", color: "#ffb36c" }}>Film Forage</div>
+          <div style={{ fontSize: 28, letterSpacing: 10, textTransform: "uppercase", color: "#f0d3a7" }}>Film Forage</div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 76, fontWeight: 800, lineHeight: 0.92 }}>Find a movie to watch tonight.</div>
-          <div style={{ marginTop: 24, fontSize: 34, maxWidth: 920, color: "#d7e3e7" }}>
-            Filter by region, services, runtime, and mood. Get a short list that fits what you can actually watch.
+          <div style={{ fontSize: 76, fontWeight: 800, lineHeight: 0.92 }}>Find a movie worth watching.</div>
+          <div style={{ marginTop: 24, fontSize: 34, maxWidth: 920, color: "#e5dccd" }}>
+            Filter by region, services, runtime, and mood. Get a short list you can actually use.
           </div>
         </div>
-        <div style={{ display: "flex", gap: 18, fontSize: 24, color: "#bfcfd7" }}>
+        <div style={{ display: "flex", gap: 18, fontSize: 24, color: "#bcae9b" }}>
           <div>Region-aware</div>
-          <div>Short list</div>
+          <div>Service checks</div>
           <div>Local watchlist</div>
         </div>
       </div>
