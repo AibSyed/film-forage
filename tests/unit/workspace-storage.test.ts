@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   addRecentSearch,
+  clearRecentSearches,
   dismissMovie,
   readWorkspace,
   saveMovie,
@@ -44,5 +45,24 @@ describe("workspace storage", () => {
     expect(workspace.savedMovies[0]?.note).toBe("For after dinner.");
     expect(workspace.dismissedMovieIds).toContain(99);
     expect(workspace.recentSearches[0]?.query).toBe("Arrival");
+  });
+
+  it("preserves an existing note when a saved movie is re-saved", () => {
+    saveMovie(movie, "Keep this note.");
+    saveMovie({ ...movie, voteAverage: 8.1 });
+
+    const workspace = readWorkspace();
+    expect(workspace.savedMovies[0]?.note).toBe("Keep this note.");
+    expect(workspace.savedMovies[0]?.voteAverage).toBe(8.1);
+  });
+
+  it("can clear recent searches without touching saved movies", () => {
+    saveMovie(movie, "Still here.");
+    addRecentSearch("Arrival");
+    clearRecentSearches();
+
+    const workspace = readWorkspace();
+    expect(workspace.savedMovies).toHaveLength(1);
+    expect(workspace.recentSearches).toHaveLength(0);
   });
 });

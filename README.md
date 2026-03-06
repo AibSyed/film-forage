@@ -9,7 +9,7 @@ It uses TMDB for live movie discovery, title lookup, detail pages, recommendatio
 - `Best match` plus honest backup rows instead of an endless decorative deck.
 - `Direct title search` for when you already know the neighborhood.
 - `Local-first watchlist` with private notes and clean export.
-- `Source guide` that explains live data, regional limits, and reserve fallback behavior plainly.
+- `Source guide` that explains live data, regional limits, and reserve-shelf fallback behavior plainly.
 
 ## Routes
 - `/` tonight picker
@@ -32,19 +32,19 @@ flowchart LR
   SEARCH --> TMDB2["TMDB Search + Movie + Watch Providers"]
   UI --> LS["Local Workspace Store"]
   LS --> UI
-  PICK --> RES["Editorial Reserve"]
+  PICK --> RES["Reserve Shelf"]
 ```
 
 ## Data Truth
 - Live movie data comes from TMDB.
 - Watch availability comes from TMDB's JustWatch-backed provider data.
 - The app does not invent confidence scores or fake curator rationale.
-- If live data is unavailable, Film Forage explicitly switches to a small editorial reserve and marks availability as unknown.
+- If live data is unavailable, Film Forage explicitly switches to a small reserve shelf and marks availability as unknown.
 
 ## Environment
 Copy `.env.example` to `.env.local`.
 
-- `TMDB_ACCESS_TOKEN` required for live TMDB fetches.
+- `TMDB_ACCESS_TOKEN` required for live TMDB fetches. Without it, the app falls back to the reserve shelf.
 - `TMDB_BASE_URL` optional override.
 
 ## Local Development

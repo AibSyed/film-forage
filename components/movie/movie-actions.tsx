@@ -36,6 +36,7 @@ export function MovieActions({ movie, onDismissed }: { movie: MovieMatchCardVM; 
         variant={saved ? "secondary" : "primary"}
         size="sm"
         onClick={() => saveMovie(movie)}
+        disabled={saved}
       >
         {saved ? <BookmarkCheck size={15} /> : <BookmarkPlus size={15} />}
         {saved ? "Saved" : "Save"}

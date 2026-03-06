@@ -4,8 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Route } from "next";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Clock3, Star } from "lucide-react";
+import { ArrowUpRight, Star } from "lucide-react";
 import type { MovieMatchCardVM } from "@/features/picker/contracts";
+import { getSourceLabel } from "@/features/picker/presentation";
 import { MovieActions } from "@/components/movie/movie-actions";
 import { Badge } from "@/components/ui/badge";
 
@@ -63,7 +64,7 @@ export function MovieCard({
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="space-y-2">
               <div className="flex flex-wrap gap-2">
-                <Badge>{movie.provenance === "live_tmdb" ? "Live TMDB" : "Editorial reserve"}</Badge>
+                <Badge>{getSourceLabel(movie.provenance)}</Badge>
                 <Badge>{movie.year}</Badge>
                 {movie.runtimeMinutes ? <Badge>{movie.runtimeMinutes} min</Badge> : null}
               </div>

@@ -113,7 +113,7 @@ export async function getMovieDetail(id: number, region: string) {
           posterUrl: buildTmdbImageUrl(movie.poster_path, "w300"),
         })),
         provenanceNote: "Live movie facts, recommendations, and watch availability are fetched from TMDB for the selected region.",
-        tmdbUrl: detail.imdb_id ? `https://www.imdb.com/title/${detail.imdb_id}/` : undefined,
+        imdbUrl: detail.imdb_id ? `https://www.imdb.com/title/${detail.imdb_id}/` : undefined,
       },
       meta: {
         region,

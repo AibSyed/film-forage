@@ -148,7 +148,7 @@ const movieDetailSchema = z.object({
   recommendations: z.array(movieReferenceSchema),
   similar: z.array(movieReferenceSchema),
   provenanceNote: z.string().min(1),
-  tmdbUrl: z.string().url().optional(),
+  imdbUrl: z.string().url().optional(),
 });
 
 export const movieDetailResponseSchema = z.object({

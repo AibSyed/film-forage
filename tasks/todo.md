@@ -9,6 +9,7 @@
 - [completed] Add or refresh unit and e2e coverage for picking, search, detail, watchlist, and outage fallback.
 - [completed] Run `pnpm run lint`, `pnpm run typecheck`, `pnpm run test`, `pnpm run test:e2e`, `pnpm run build`, `pnpm run docs:check`, `pnpm run audit:high`.
 - [completed] Run Chrome DevTools QA for console cleanliness and responsive flow validation.
+- [completed] Polish reserve-mode copy, presentation labels, and user-facing fallback messaging.
 
 ## Acceptance Criteria
 - The home page helps a user choose a movie tonight instead of browsing a decorative discovery deck.
@@ -39,3 +40,29 @@
   - mobile `/watchlist` console clean
   - mobile `/sources` console clean
   - shared-shell navigation and footer verified on state pages
+
+
+## Follow-up Polish Pass
+
+### Checklist
+- [completed] Remove unnecessary client/provider refetch churn and preserve saved notes on repeat save actions.
+- [completed] Make recent-search persistence real in the search flow or remove copy that claims it.
+- [completed] Tighten reserve-mode messaging so the UI stays useful and honest when live TMDB is unavailable.
+- [completed] Re-run verification and production QA after the polish pass.
+
+### Acceptance Criteria
+- Toggling provider chips does not refetch the provider catalog unnecessarily.
+- Saving an already-saved movie does not erase its private note.
+- Search behavior matches local-history claims in the UI.
+- Reserve-mode copy is plain-language and user-facing, not internal jargon.
+- Verification and browser QA are refreshed after the follow-up edits.
+
+- Production Vercel alias currently serves the v4 tonight-picker UI but remains in reserve mode because TMDB provider data is unavailable.
+- Live production `GET /api/providers` returned `{ "source": "unavailable" }` during post-merge verification.
+
+- Follow-up polish verification:
+  - `pnpm run check`
+  - `pnpm run docs:check`
+  - `pnpm run audit:high`
+  - `pnpm dlx knip --no-progress`
+  - `pnpm run test:e2e`

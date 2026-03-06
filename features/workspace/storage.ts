@@ -62,8 +62,14 @@ export function setProviderPreference(providerIds: number[]) {
 
 export function saveMovie(movie: MovieMatchCardVM, note = "") {
   const current = readWorkspace();
+  const existing = current.savedMovies.find((entry) => entry.id === movie.id);
   const savedMovies = [
-    { ...movie, note, savedAt: new Date().toISOString(), dismissed: false },
+    {
+      ...movie,
+      note: note || existing?.note || "",
+      savedAt: existing?.savedAt ?? new Date().toISOString(),
+      dismissed: false,
+    },
     ...current.savedMovies.filter((entry) => entry.id !== movie.id),
   ];
 
@@ -116,6 +122,11 @@ export function addRecentSearch(query: string) {
   ].slice(0, 10);
 
   writeWorkspace({ ...current, recentSearches });
+}
+
+export function clearRecentSearches() {
+  const current = readWorkspace();
+  writeWorkspace({ ...current, recentSearches: [] });
 }
 
 export function clearWorkspace() {
