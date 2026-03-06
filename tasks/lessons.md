@@ -39,3 +39,15 @@
 - What went wrong: the first Film Forage relaunch kept Advicely-adjacent typography, card density, and shell structure, so the product felt like a reused template instead of its own tool.
 - Root cause: I treated copy cleanup and spacing fixes as sufficient polish instead of re-evaluating the entire visual system as a distinct product identity.
 - Prevention rule: for every portfolio-facing app relaunch, explicitly compare typography, spacing, and layout language against sibling apps and reject any surface that still feels like a template variant.
+
+- What went wrong: I kept using internal product language like lead picks, backups, and reserve shelf after the user made it clear Film Forage needs to read plainly to normal people.
+- Root cause: I was still describing the internal recommendation model instead of the user's actual job: find a movie to watch tonight.
+- Prevention rule: every new Film Forage heading, label, or helper sentence must pass a plain-language check: a first-time visitor should understand it without learning the product's internal model.
+
+- What went wrong: the first plain-language pass still preserved a squished card-heavy shell and internal selection-model language, so the app remained hard to read as a mainstream movie tool.
+- Root cause: I optimized for incremental copy cleanup instead of challenging the underlying layout, typography, and section model after the user rejected the overall experience.
+- Prevention rule: when a user says a product still feels wrong after one polish pass, reset the page structure and section naming before doing another round of micro-copy or spacing tweaks.
+
+- What went wrong: after the structural fix, the first refreshed visual system still leaned warm-editorial instead of the neo-noir identity the user actually wanted.
+- Root cause: I improved layout and copy before explicitly validating the intended visual genre, so the palette and font choice solved sibling-app drift but missed the requested tone.
+- Prevention rule: for a portfolio-facing redesign, confirm the intended visual genre early, then validate font and contrast choices against that target before calling the design pass complete.

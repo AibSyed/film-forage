@@ -138,3 +138,69 @@
   - desktop `/` console clean and captured in `tasks/live-home-desktop-final.png`
   - mobile `/` console clean and captured in `tasks/live-home-mobile-final.png`
   - form-field warning resolved on the redesigned picker
+
+
+## Plain-Language Shortlist Pass
+
+### Checklist
+- [completed] Replace lead/backups language with a plain shortlist model users can understand immediately.
+- [completed] Change the Film Forage type system so the app has its own utility-cinema identity instead of sharing a sibling-app feel.
+- [completed] Re-run verification and local browser QA after the plain-language/product-model rewrite.
+
+### Verification Log
+- `pnpm run check`
+- `pnpm run docs:check`
+- `pnpm run audit:high`
+- `pnpm dlx knip --no-progress`
+- `pnpm run test:e2e`
+- Chrome DevTools MCP on `http://127.0.0.1:32131`:
+  - mobile `/` console clean and rechecked after rebuild/restart
+  - desktop `/` screenshot captured in `tasks/local-home-desktop-plain.png`
+  - mobile `/` screenshot captured in `tasks/local-home-mobile-plain.png`
+## Distinct Product Identity Pass
+
+### Checklist
+- [completed] Replace the current lead/backups shortlist framing with a simpler browsing model users can understand immediately.
+- [completed] Rebuild the home layout so the app feels full-width and movie-led instead of a narrow filter panel stacked over cards.
+- [completed] Give Film Forage its own typography and tone so it stops reading like an Advicely sibling.
+- [completed] Tighten footer/nav/supporting copy so branding is Film Forage-first and plain language only.
+- [completed] Re-run verification and browser QA on desktop and mobile before merge.
+
+### Acceptance Criteria
+- The home page reads as a movie-finding tool, not an internal decision system.
+- Primary result sections use plain labels that a first-time visitor understands without explanation.
+- The visual system is clearly distinct from Advicely in typography, spacing, and layout behavior.
+- Mobile and desktop both use the available width cleanly without cramped card rails.
+
+### Verification Log
+- `pnpm run check`
+- `pnpm run test:e2e`
+- `pnpm run docs:check`
+- `pnpm run audit:high`
+- `pnpm dlx knip --no-progress`
+- Chrome DevTools MCP on `http://127.0.0.1:32142`:
+  - desktop `/` console clean after the neo-noir palette and typography pass
+  - mobile `/` rechecked with the compressed hero and fixed-width mobile nav
+
+## Neo-Noir Contrast Pass
+
+### Checklist
+- [completed] Shift Film Forage from the warm editorial palette to a higher-contrast neo-noir visual system.
+- [completed] Replace the display font with a sharper neo-noir type choice while keeping body copy readable.
+- [completed] Revalidate home layout, nav fit, and contrast in Chrome on desktop and mobile.
+
+### Acceptance Criteria
+- Film Forage reads as neo-noir rather than generic or sibling-app adjacent.
+- Text contrast stays readable across hero, controls, cards, and footer.
+- Mobile nav fits the viewport cleanly without horizontal clipping.
+
+### Verification Log
+- `pnpm run check`
+- `pnpm run test:e2e`
+- `pnpm run docs:check`
+- `pnpm run audit:high`
+- `pnpm dlx knip --no-progress`
+- Chrome DevTools MCP on `http://127.0.0.1:32142`:
+  - desktop `/` screenshot reviewed locally
+  - mobile `/` screenshot reviewed locally
+  - console clean

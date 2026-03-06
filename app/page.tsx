@@ -13,9 +13,9 @@ export default async function HomePage() {
   return (
     <PageShell
       pathname="/"
-      eyebrow="Film Forage"
-      title="Find the movie. Keep the shortlist."
-      intro="Pick one strong lead, keep a few credible backups nearby, and verify where they stream before the room loses patience."
+      eyebrow="Movie picker"
+      title="Find a movie worth watching."
+      intro="Choose your region, streaming services, runtime, and mood. Film Forage turns that into a short list you can actually use."
       mode="home"
     >
       <TonightPicker initialPick={initialPick} initialProviders={initialProviders} />

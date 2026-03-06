@@ -1,27 +1,30 @@
 import type { Metadata } from "next";
-import { Archivo, Manrope } from "next/font/google";
+import { Bodoni_Moda, Manrope } from "next/font/google";
 import "@/app/globals.css";
 
-const display = Archivo({ subsets: ["latin"], variable: "--font-display" });
-const body = Manrope({ subsets: ["latin"], variable: "--font-body" });
+const display = Bodoni_Moda({ subsets: ["latin"], variable: "--font-display" });
+const body = Manrope({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Film Forage | Find the Movie. Keep the Shortlist.",
-  description: "Film Forage helps you land on one strong movie, compare a few backups, and check live streaming availability by region.",
+  title: "Film Forage | Find a Movie Worth Watching",
+  description:
+    "Film Forage helps you narrow a movie list by region, streaming services, runtime, and mood so you can choose something worth watching faster.",
   metadataBase: new URL("https://film-forage.vercel.app"),
   icons: {
     icon: "/icon",
     apple: "/apple-icon",
   },
   openGraph: {
-    title: "Film Forage | Find the Movie. Keep the Shortlist.",
-    description: "Film Forage helps you land on one strong movie, compare a few backups, and check live streaming availability by region.",
+    title: "Film Forage | Find a Movie Worth Watching",
+    description:
+      "Film Forage helps you narrow a movie list by region, streaming services, runtime, and mood so you can choose something worth watching faster.",
     images: "/opengraph-image",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Film Forage | Find the Movie. Keep the Shortlist.",
-    description: "Film Forage helps you land on one strong movie, compare a few backups, and check live streaming availability by region.",
+    title: "Film Forage | Find a Movie Worth Watching",
+    description:
+      "Film Forage helps you narrow a movie list by region, streaming services, runtime, and mood so you can choose something worth watching faster.",
     images: "/twitter-image",
   },
 };

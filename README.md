@@ -1,4 +1,4 @@
-# Film Forage | Find Something Worth Watching
+# Film Forage | Find a Movie Worth Watching
 
 Film Forage is a practical movie-picking tool built for one job: help you decide what to watch tonight without spiraling through tabs, streaming apps, and half-remembered titles.
 
@@ -6,7 +6,7 @@ It uses TMDB for live movie discovery, title lookup, detail pages, recommendatio
 
 ## Product Value
 - `Home picker` for region, runtime, service, genre, and vibe filtering.
-- `Best match` plus honest backup rows instead of an endless decorative deck.
+- `Short movie list` that stays focused instead of turning into another endless feed.
 - `Direct title search` for when you already know the neighborhood.
 - `Local-first watchlist` with private notes and clean export.
 - `Source guide` that explains live data, regional limits, and Film Forage fallback picks plainly.

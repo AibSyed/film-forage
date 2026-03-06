@@ -119,7 +119,7 @@ export function SearchStudio({
               <h2 className="font-display text-4xl text-[var(--ink-strong)]">Search results</h2>
               <p className="text-sm text-[var(--ink-dim)]">{initialResults.items.length} title{initialResults.items.length === 1 ? "" : "s"} found for &quot;{initialResults.query}&quot;.</p>
             </div>
-            <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">Best for direct verification</p>
+            <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">Direct title lookup</p>
           </div>
           <div className="grid gap-4 lg:grid-cols-2">
             {initialResults.items.map((movie) => (
@@ -129,7 +129,7 @@ export function SearchStudio({
         </section>
       ) : (
         <section className="rounded-[2rem] border border-dashed border-[var(--line-strong)] bg-[var(--surface-soft)] p-8 text-sm leading-7 text-[var(--ink-dim)]">
-          Search a title when you know part of the answer already and just need a clean detail page, availability view, or a saveable fallback.
+          Search a title when you already know part of the answer and just need the detail page, service check, or a quick save.
         </section>
       )}
     </section>

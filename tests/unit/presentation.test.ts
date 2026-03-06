@@ -8,14 +8,14 @@ import {
 
 describe("picker presentation helpers", () => {
   it("maps source labels to user-facing copy", () => {
-    expect(getSourceLabel("live_tmdb")).toBe("Live TMDB");
-    expect(getSourceLabel("editorial_reserve")).toBe("Reserve shelf");
+    expect(getSourceLabel("live_tmdb")).toBe("Live movie data");
+    expect(getSourceLabel("editorial_reserve")).toBe("Fallback picks");
   });
 
   it("uses fallback copy that explains the fallback plainly", () => {
-    expect(getPickerStatusMessage("live_tmdb")).toBe("Film Forage refreshed the shortlist.");
-    expect(getPickerStatusMessage("editorial_reserve")).toContain("reserve shelf");
-    expect(getProviderFallbackMessage()).toContain("Provider filters");
-    expect(getSearchFallbackMessage()).toContain("reserve shelf");
+    expect(getPickerStatusMessage("live_tmdb")).toBe("Results updated.");
+    expect(getPickerStatusMessage("editorial_reserve")).toContain("fallback picks");
+    expect(getProviderFallbackMessage()).toContain("Service filters");
+    expect(getSearchFallbackMessage()).toContain("fallback picks");
   });
 });

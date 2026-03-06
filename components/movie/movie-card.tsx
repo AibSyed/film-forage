@@ -65,15 +65,15 @@ export function MovieCard({
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-      className="overflow-hidden rounded-[1.55rem] border border-[var(--line-soft)] bg-[linear-gradient(180deg,rgba(19,29,38,0.98),rgba(13,20,26,0.98))] shadow-[0_22px_70px_rgba(0,0,0,0.22)]"
+      className="overflow-hidden rounded-[1.7rem] border border-[var(--line-soft)] bg-[linear-gradient(180deg,rgba(15,24,34,0.98),rgba(10,16,24,0.98))] shadow-[0_22px_70px_rgba(0,0,0,0.24)]"
     >
-      <div className={compact ? "grid grid-cols-[132px_1fr] gap-0 sm:grid-cols-[148px_1fr]" : "grid grid-cols-[140px_1fr] gap-0 sm:grid-cols-[200px_1fr] lg:grid-cols-[240px_1fr]"}>
-        <div className="relative min-h-full bg-[linear-gradient(155deg,rgba(255,142,83,0.22),rgba(78,104,126,0.42))]">
+      <div className={compact ? "grid grid-cols-[118px_1fr] gap-0 sm:grid-cols-[140px_1fr]" : "grid grid-cols-[132px_1fr] gap-0 sm:grid-cols-[220px_1fr]"}>
+        <div className="relative min-h-full bg-[linear-gradient(155deg,rgba(239,182,94,0.16),rgba(56,86,126,0.34))]">
           {movie.posterUrl ? (
-            <Image src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes={compact ? "148px" : "240px"} />
+            <Image src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes={compact ? "140px" : "220px"} />
           ) : (
             <div className={compact ? "flex h-full flex-col justify-between p-3" : "flex h-full flex-col justify-between p-4"}>
-              <div className={compact ? "inline-flex h-10 w-10 items-center justify-center rounded-[1rem] border border-[var(--line-soft)] bg-[rgba(7,12,16,0.34)] font-display text-sm uppercase tracking-[-0.03em] text-[var(--ink-strong)]" : "inline-flex h-12 w-12 items-center justify-center rounded-[1rem] border border-[var(--line-soft)] bg-[rgba(7,12,16,0.34)] font-display text-lg uppercase tracking-[-0.03em] text-[var(--ink-strong)]"}>
+              <div className={compact ? "inline-flex h-10 w-10 items-center justify-center rounded-[1rem] border border-[var(--line-soft)] bg-[rgba(7,12,18,0.44)] font-display text-sm text-[var(--ink-strong)]" : "inline-flex h-12 w-12 items-center justify-center rounded-[1rem] border border-[var(--line-soft)] bg-[rgba(7,12,18,0.44)] font-display text-lg text-[var(--ink-strong)]"}>
                 {monogram}
               </div>
               <div className="space-y-2">
@@ -83,7 +83,7 @@ export function MovieCard({
             </div>
           )}
         </div>
-        <div className={compact ? "flex flex-col gap-3 p-4 sm:p-5" : "flex flex-col gap-4 p-4 sm:p-5 lg:p-6"}>
+        <div className={compact ? "flex flex-col gap-3 p-4 sm:p-5" : "flex flex-col gap-4 p-4 sm:p-6"}>
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="space-y-2">
               <div className="flex flex-wrap gap-2">
@@ -91,7 +91,7 @@ export function MovieCard({
                 <Badge>{movie.year}</Badge>
                 {movie.runtimeMinutes ? <Badge>{movie.runtimeMinutes} min</Badge> : null}
               </div>
-              <h2 className={compact ? "font-display text-[1.15rem] leading-[1.06] tracking-[-0.04em] text-[var(--ink-strong)] sm:text-[1.32rem]" : "font-display text-[1.7rem] leading-[0.96] tracking-[-0.06em] text-[var(--ink-strong)] md:text-[2.2rem]"}>
+              <h2 className={compact ? "font-display text-[1.35rem] leading-[1.02] text-[var(--ink-strong)] sm:text-[1.5rem]" : "font-display text-[2rem] leading-[0.96] text-[var(--ink-strong)] md:text-[2.6rem]"}>
                 {movie.title}
               </h2>
               <p className="text-sm text-[var(--ink-dim)]">{movie.genres.join(" · ")}</p>
@@ -103,7 +103,7 @@ export function MovieCard({
             ) : null}
           </div>
 
-          <p className={compact ? "line-clamp-4 text-[15px] leading-7 text-[var(--ink-main)]" : "text-[15px] leading-7 text-[var(--ink-main)]"}>
+          <p className={compact ? "line-clamp-4 text-[15px] leading-7 text-[var(--ink-main)]" : "line-clamp-4 text-[15px] leading-7 text-[var(--ink-main)]"}>
             {movie.overview}
           </p>
 
@@ -115,7 +115,7 @@ export function MovieCard({
             ))}
           </div>
 
-          <div className="rounded-[1.15rem] border border-[var(--line-soft)] bg-[rgba(7,12,16,0.34)] p-3">
+          <div className="rounded-[1.15rem] border border-[var(--line-soft)] bg-[rgba(7,12,18,0.36)] p-3">
             <ProviderRow movie={movie} />
           </div>
 

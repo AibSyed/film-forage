@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("renders the film-forage picker and supports save plus search flows", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page.getByRole("heading", { name: "Find the movie. Keep the shortlist." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Find a movie worth watching." })).toBeVisible();
   await expect(page.getByLabel("Region")).toBeVisible();
   await expect(page.getByLabel("Availability")).toBeVisible();
   await expect(page.getByRole("button", { name: /Find a movie|Finding.../ })).toBeVisible();
@@ -12,7 +12,7 @@ test("renders the film-forage picker and supports save plus search flows", async
   await page.getByRole("button", { name: /^Save$/ }).first().click();
   await page.getByLabel("Primary").getByRole("link", { name: "Watchlist" }).click();
   await expect(page).toHaveURL(/\/watchlist$/);
-  await expect(page.getByRole("heading", { name: "Keep your finalists close." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Keep the movies you might actually watch." })).toBeVisible();
   await expect(page.getByText(firstTitle)).toBeVisible();
 
   await page.getByLabel("Primary").getByRole("link", { name: "Search" }).click();
