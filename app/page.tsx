@@ -13,7 +13,7 @@ export default async function HomePage() {
   return (
     <PageShell
       pathname="/"
-      eyebrow="Movie picker"
+      eyebrow="Find tonight's movie"
       title="Find a movie worth watching."
       intro="Choose your region, streaming services, runtime, and mood. Film Forage turns that into a short list you can actually use."
       mode="home"

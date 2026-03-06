@@ -14,8 +14,8 @@ describe("picker presentation helpers", () => {
 
   it("uses fallback copy that explains the fallback plainly", () => {
     expect(getPickerStatusMessage("live_tmdb")).toBe("Results updated.");
-    expect(getPickerStatusMessage("editorial_reserve")).toContain("backup picks");
+    expect(getPickerStatusMessage("editorial_reserve")).toContain("reserve picks");
     expect(getProviderFallbackMessage()).toContain("Service filters");
-    expect(getSearchFallbackMessage()).toContain("backup picks");
+    expect(getSearchFallbackMessage()).toContain("reserve picks");
   });
 });

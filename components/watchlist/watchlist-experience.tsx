@@ -46,8 +46,6 @@ export function WatchlistExperience() {
           </div>
           <div className="flex flex-wrap gap-2">
             <Button variant="secondary" size="sm" onClick={copyPlan} disabled={savedMovies.length === 0}><ClipboardList size={15} /> Copy plan</Button>
-            <Button variant="subtle" size="sm" onClick={clearDismissedMovies}><RotateCcw size={15} /> Reset hidden picks</Button>
-            <Button variant="subtle" size="sm" onClick={clearWorkspace}><Trash2 size={15} /> Clear all local data</Button>
           </div>
         </div>
 
@@ -93,13 +91,30 @@ export function WatchlistExperience() {
       </article>
 
       <aside className="rounded-[2rem] border border-[var(--line-soft)] bg-[var(--surface)] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.18)] md:p-6">
-        <h2 className="font-display text-3xl text-[var(--ink-strong)]">Local-only by design</h2>
+        <h2 className="font-display text-3xl text-[var(--ink-strong)]">Saved only on this device</h2>
         <ul className="mt-4 space-y-3 text-sm leading-7 text-[var(--ink-dim)]">
           <li>Saved picks and notes never leave this browser.</li>
           <li>Hidden titles are excluded from future refreshes.</li>
           <li>Recent search history stays local so you can revisit likely options quickly.</li>
           <li>Copy plan turns your saved titles into a plain text list for messages or notes.</li>
         </ul>
+        <div className="mt-6 rounded-[1.2rem] border border-[var(--line-soft)] bg-[var(--panel)] p-4">
+          <p className="text-xs uppercase tracking-[0.18em] text-[var(--ink-muted)]">Manage local data</p>
+          <div className="mt-3 grid gap-2">
+            <Button variant="subtle" size="sm" onClick={clearDismissedMovies}><RotateCcw size={15} /> Reset hidden picks</Button>
+            <Button
+              variant="subtle"
+              size="sm"
+              onClick={() => {
+                if (window.confirm("Clear saved picks, notes, hidden titles, and search history on this device?")) {
+                  clearWorkspace();
+                }
+              }}
+            >
+              <Trash2 size={15} /> Clear all local data
+            </Button>
+          </div>
+        </div>
       </aside>
     </section>
   );

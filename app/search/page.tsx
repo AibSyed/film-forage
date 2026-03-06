@@ -16,7 +16,7 @@ export default async function SearchPage({
   return (
     <PageShell
       pathname="/search"
-      eyebrow="Title search"
+      eyebrow="Search by title"
       title="Know the movie already?"
       intro="Search one title directly when you already have something in mind and just need to check the details."
     >

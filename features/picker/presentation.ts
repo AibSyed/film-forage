@@ -5,7 +5,7 @@ export function getSourceLabel(source: "live_tmdb" | "editorial_reserve") {
 export function getPickerStatusMessage(source: "live_tmdb" | "editorial_reserve") {
   return source === "live_tmdb"
     ? "Results updated."
-    : "Live movie data is unavailable right now, so Film Forage switched to its own backup picks.";
+    : "Live movie data is unavailable right now, so Film Forage switched to reserve picks.";
 }
 
 export function getProviderFallbackMessage() {
@@ -13,5 +13,5 @@ export function getProviderFallbackMessage() {
 }
 
 export function getSearchFallbackMessage() {
-  return "Live search is unavailable right now. These results come from Film Forage backup picks instead.";
+  return "Live search is unavailable right now. These results come from Film Forage reserve picks instead.";
 }

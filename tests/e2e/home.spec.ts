@@ -16,7 +16,7 @@ test("renders the film-forage picker and supports save plus search flows", async
   await expect(page.getByText(firstTitle)).toBeVisible();
 
   await page.getByLabel("Primary").getByRole("link", { name: "Search" }).click();
-  await page.getByLabel("Title search").fill("Mad");
+  await page.getByLabel("Search by title").fill("Mad");
   await page.locator("form").getByRole("button", { name: "Search" }).click();
   await expect(page).toHaveURL(/\/search\?q=Mad/);
   await expect(page.getByRole("heading", { name: "Search results" })).toBeVisible();

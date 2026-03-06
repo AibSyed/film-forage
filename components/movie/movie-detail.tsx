@@ -23,7 +23,7 @@ export function MovieDetail({ detail }: { detail: MovieDetailResponseVM }) {
               {movie.card.runtimeMinutes ? ` · ${movie.card.runtimeMinutes} min` : ""}
             </p>
             <div>
-              <h2 className="font-display text-5xl leading-[0.96] text-[var(--ink-strong)] md:text-6xl">{movie.card.title}</h2>
+              <h2 className="font-display text-[2.4rem] leading-[1] text-[var(--ink-strong)] md:text-6xl">{movie.card.title}</h2>
               {movie.tagline ? <p className="mt-3 text-lg text-[var(--ink-dim)]">{movie.tagline}</p> : null}
             </div>
             <p className="text-[15px] leading-7 text-[var(--ink-main)]">{movie.card.overview}</p>
@@ -49,7 +49,7 @@ export function MovieDetail({ detail }: { detail: MovieDetailResponseVM }) {
 
       <section className="grid gap-6 lg:grid-cols-[0.92fr_1.08fr]">
         <article className="rounded-[1.75rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-5">
-          <h3 className="font-display text-3xl text-[var(--ink-strong)]">Current data status</h3>
+          <h3 className="font-display text-3xl text-[var(--ink-strong)]">Data source</h3>
           <p className="mt-3 text-sm leading-7 text-[var(--ink-dim)]">{movie.provenanceNote}</p>
           {movie.cast.length > 0 ? (
             <div className="mt-6">
@@ -64,7 +64,7 @@ export function MovieDetail({ detail }: { detail: MovieDetailResponseVM }) {
         </article>
 
         <article className="rounded-[1.75rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-5">
-          <h3 className="font-display text-3xl text-[var(--ink-strong)]">More titles in the same neighborhood</h3>
+          <h3 className="font-display text-3xl text-[var(--ink-strong)]">More like this</h3>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             {[...movie.recommendations, ...movie.similar].slice(0, 6).map((entry) => (
               <Link key={`${entry.id}-${entry.title}`} href={`/movie/${entry.id}` as Route} className="rounded-[1.25rem] border border-[var(--line-soft)] bg-[var(--panel)] p-4 hover:border-[var(--line-strong)]">

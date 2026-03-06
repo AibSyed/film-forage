@@ -55,3 +55,7 @@
 - What went wrong: after the structural fix, the first refreshed visual system still leaned warm-editorial instead of the neo-noir identity the user actually wanted.
 - Root cause: I improved layout and copy before explicitly validating the intended visual genre, so the palette and font choice solved sibling-app drift but missed the requested tone.
 - Prevention rule: for a portfolio-facing redesign, confirm the intended visual genre early, then validate font and contrast choices against that target before calling the design pass complete.
+
+- What went wrong: the home and supporting routes still leaked internal terms (`Data`, `backup picks`, system labels) and cluttered mobile with utility chrome.
+- Root cause: I validated component polish but did not run a full cross-route copy and action-hierarchy consistency pass before sign-off.
+- Prevention rule: before merge, run a route-by-route plain-language and mobile-hierarchy audit that normalizes labels (`Sources`, `Data source`, `Search by title`) and demotes destructive/secondary actions.

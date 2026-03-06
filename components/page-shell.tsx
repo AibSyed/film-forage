@@ -35,14 +35,14 @@ export function PageShell({
               <p className="inline-flex w-fit items-center rounded-md border border-[var(--line-strong)] bg-[var(--accent-pale)] px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-[var(--accent-soft)]">
                 {eyebrow}
               </p>
-              <h1 className="max-w-4xl font-display text-[2.9rem] leading-[0.92] text-[var(--ink-strong)] md:text-[4.6rem]">{title}</h1>
-              <p className="max-w-3xl text-base leading-7 text-[var(--ink-soft)]">{intro}</p>
+              <h1 className="max-w-4xl font-display text-[2.35rem] leading-[0.94] text-[var(--ink-strong)] md:text-[4.6rem]">{title}</h1>
+              <p className="max-w-3xl text-sm leading-7 text-[var(--ink-soft)] md:text-base">{intro}</p>
               <p className="text-xs uppercase tracking-[0.16em] text-[var(--ink-muted)] lg:hidden">
-                Region-aware • Service checks • Local watchlist
+                Choose a region • check services • save your shortlist
               </p>
             </div>
             <p className="hidden text-xs uppercase tracking-[0.16em] text-[var(--ink-muted)] lg:block">
-              Region-aware • Service checks • Local watchlist
+              Choose a region • check services • save your shortlist
             </p>
           </section>
         ) : (

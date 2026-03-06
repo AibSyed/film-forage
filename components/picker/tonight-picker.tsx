@@ -163,31 +163,24 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
   return (
     <section className="space-y-6">
       <article className="rounded-[1.8rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.24)] md:p-6 lg:p-7">
-        <div className="grid gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(260px,0.7fr)] lg:items-end">
+        <div className="grid gap-4 lg:grid-cols-1 lg:items-end">
           <div className="space-y-3">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Filters</p>
-            <h2 className="font-display text-[2.1rem] leading-[0.95] text-[var(--ink-strong)] md:text-[2.8rem]">Set your filters, then pick from the list.</h2>
+            <h2 className="font-display text-[1.85rem] leading-[1] text-[var(--ink-strong)] md:text-[2.5rem]">Set filters and get a shortlist.</h2>
             <p className="max-w-2xl text-sm leading-7 text-[var(--ink-dim)]">
               Start with region and availability. Add genre, mood, or services only when you need to narrow the results.
             </p>
-          </div>
-          <div className="grid gap-3 rounded-[1.2rem] border border-[var(--line-soft)] bg-[rgba(255,255,255,0.04)] p-4">
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.22em] text-[var(--ink-muted)]">Current data</p>
-              <p className="mt-1 text-sm font-semibold text-[var(--ink-main)]">{getSourceLabel(pick.meta.source)}</p>
-            </div>
-            <p className="text-sm leading-6 text-[var(--ink-dim)]">Save promising picks and hide obvious misses as you go.</p>
           </div>
         </div>
 
         <div className="mt-5 grid gap-3 xl:grid-cols-[minmax(0,1.5fr)_220px_220px_auto] xl:items-end">
           <label className="space-y-2 text-sm text-[var(--ink-main)]">
             <span>Know part of the title?</span>
-            <Input value={searchPrompt} onChange={(event) => setSearchPrompt(event.target.value)} placeholder="Try Arrival, Princess Bride, or Spider-Verse" />
+            <Input id="title-prompt" name="titlePrompt" value={searchPrompt} onChange={(event) => setSearchPrompt(event.target.value)} placeholder="Try Arrival, Princess Bride, or Spider-Verse" />
           </label>
           <label className="space-y-2 text-sm text-[var(--ink-main)]">
             <span>Region</span>
-            <SelectField value={filters.region} onChange={(event) => setFilters((current) => ({ ...current, region: event.target.value, providers: [] }))}>
+            <SelectField id="region" name="region" value={filters.region} onChange={(event) => setFilters((current) => ({ ...current, region: event.target.value, providers: [] }))}>
               {launchRegions.map((region) => (
                 <option key={region.code} value={region.code}>{region.label}</option>
               ))}
@@ -195,7 +188,7 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
           </label>
           <label className="space-y-2 text-sm text-[var(--ink-main)]">
             <span>Availability</span>
-            <SelectField value={filters.availabilityMode} onChange={(event) => setFilters((current) => ({ ...current, availabilityMode: event.target.value as typeof current.availabilityMode }))}>
+            <SelectField id="availability-mode" name="availabilityMode" value={filters.availabilityMode} onChange={(event) => setFilters((current) => ({ ...current, availabilityMode: event.target.value as typeof current.availabilityMode }))}>
               {availabilityModes.map((mode) => (
                 <option key={mode.value} value={mode.value}>{mode.label}</option>
               ))}
@@ -222,14 +215,13 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
             <SlidersHorizontal size={15} /> {filtersOpen ? "Hide extra filters" : "More filters"}
             <ChevronDown size={15} className={cn("transition", filtersOpen ? "rotate-180" : "")} />
           </Button>
-          <Button variant="ghost" size="sm" onClick={() => router.push("/watchlist" as Route)}>Watchlist</Button>
         </div>
 
         <div className={cn("overflow-hidden transition-[max-height,opacity] duration-300", filtersOpen ? "mt-4 max-h-[52rem] opacity-100" : "max-h-0 opacity-0")}>
           <div className="grid gap-4 rounded-[1.4rem] border border-[var(--line-soft)] bg-[rgba(255,255,255,0.03)] p-4 md:grid-cols-2 xl:grid-cols-[220px_220px_1fr]">
             <label className="space-y-2 text-sm text-[var(--ink-main)]">
               <span>Genre</span>
-              <SelectField value={filters.genre} onChange={(event) => setFilters((current) => ({ ...current, genre: event.target.value as typeof current.genre }))}>
+              <SelectField id="genre" name="genre" value={filters.genre} onChange={(event) => setFilters((current) => ({ ...current, genre: event.target.value as typeof current.genre }))}>
                 {genreOptions.map((genre) => (
                   <option key={genre.value} value={genre.value}>{genre.label}</option>
                 ))}
@@ -237,7 +229,7 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
             </label>
             <label className="space-y-2 text-sm text-[var(--ink-main)]">
               <span>Mood</span>
-              <SelectField value={filters.vibe} onChange={(event) => setFilters((current) => ({ ...current, vibe: event.target.value as typeof current.vibe }))}>
+              <SelectField id="mood" name="mood" value={filters.vibe} onChange={(event) => setFilters((current) => ({ ...current, vibe: event.target.value as typeof current.vibe }))}>
                 {vibeOptions.map((vibe) => (
                   <option key={vibe.value} value={vibe.value}>{vibe.label}</option>
                 ))}
@@ -248,7 +240,7 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
                 <label htmlFor="runtime" className="text-sm font-medium text-[var(--ink-main)]">Runtime</label>
                 <span className="text-sm text-[var(--ink-dim)]">{filters.runtimeMax} min</span>
               </div>
-              <input id="runtime" type="range" min={80} max={240} step={5} value={filters.runtimeMax} onChange={(event) => setFilters((current) => ({ ...current, runtimeMax: Number(event.target.value) }))} className="w-full accent-[var(--accent-strong)]" />
+              <input id="runtime" name="runtime" type="range" min={80} max={240} step={5} value={filters.runtimeMax} onChange={(event) => setFilters((current) => ({ ...current, runtimeMax: Number(event.target.value) }))} className="w-full accent-[var(--accent-strong)]" />
             </div>
             <div className="space-y-3 md:col-span-2 xl:col-span-3">
               <div className="flex items-center justify-between gap-3">
@@ -289,16 +281,16 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
       <section className="space-y-4 rounded-[1.8rem] border border-[var(--line-soft)] bg-[linear-gradient(160deg,rgba(14,22,31,0.99),rgba(8,13,20,0.99))] p-4 shadow-[0_26px_80px_rgba(0,0,0,0.28)] md:p-6 lg:p-7">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Pick now</p>
-            <h3 className="font-display text-[2.1rem] leading-[0.95] text-[var(--ink-strong)] md:text-[3rem]">Best matches for this pass.</h3>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Tonight&apos;s shortlist</p>
+            <h3 className="font-display text-[2.1rem] leading-[0.95] text-[var(--ink-strong)] md:text-[3rem]">Best matches for tonight.</h3>
             <p className="max-w-3xl text-sm leading-7 text-[var(--ink-dim)]">These titles match your current filters.</p>
           </div>
-          <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">{getSourceLabel(pick.meta.source)}</p>
+          <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">Data source: {getSourceLabel(pick.meta.source)}</p>
         </div>
 
         {pick.meta.source === "editorial_reserve" ? (
           <div className="rounded-[1.15rem] border border-[var(--line-strong)] bg-[var(--panel-muted)] px-4 py-3 text-sm leading-7 text-[var(--ink-dim)]">
-            Live movie data is unavailable right now. Film Forage is showing backup picks, so streaming availability may be missing until TMDB returns.
+            Live movie data is unavailable right now. Film Forage is showing reserve titles, so streaming availability may be missing until TMDB returns.
           </div>
         ) : null}
 
@@ -337,18 +329,20 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
         </section>
       ) : null}
 
-      <section className="rounded-[1.8rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.18)] md:p-5">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h3 className="font-display text-[1.9rem] leading-[0.98] text-[var(--ink-strong)] md:text-[2.4rem]">Adjust the search</h3>
-            <p className="text-sm text-[var(--ink-dim)]">Change filters, search by title, or compare your saved list.</p>
+      {topMatches.length === 0 ? (
+        <section className="rounded-[1.8rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.18)] md:p-5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h3 className="font-display text-[1.9rem] leading-[0.98] text-[var(--ink-strong)] md:text-[2.4rem]">No matches yet</h3>
+              <p className="text-sm text-[var(--ink-dim)]">Change filters or search by title to widen the shortlist.</p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Button variant="secondary" onClick={() => setFiltersOpen(true)}>Open more filters</Button>
+              <Button variant="ghost" onClick={() => router.push("/search" as Route)}>Search by title</Button>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <Button variant="secondary" onClick={() => setFiltersOpen(true)}>Open more filters</Button>
-            <Button variant="ghost" onClick={() => router.push("/search" as Route)}>Go to search</Button>
-          </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
     </section>
   );
 }
