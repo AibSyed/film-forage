@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { BookmarkPlus, BookmarkCheck, EyeOff } from "lucide-react";
+import { toast } from "sonner";
 import type { MovieMatchCardVM } from "@/features/picker/contracts";
 import {
   dismissMovie,
@@ -35,7 +36,10 @@ export function MovieActions({ movie, onDismissed }: { movie: MovieMatchCardVM; 
       <Button
         variant={saved ? "secondary" : "primary"}
         size="sm"
-        onClick={() => saveMovie(movie)}
+        onClick={() => {
+          saveMovie(movie);
+          toast.success(`Saved "${movie.title}" to Watchlist.`);
+        }}
         disabled={saved}
       >
         {saved ? <BookmarkCheck size={15} /> : <BookmarkPlus size={15} />}
@@ -47,6 +51,9 @@ export function MovieActions({ movie, onDismissed }: { movie: MovieMatchCardVM; 
         onClick={() => {
           dismissMovie(movie.id);
           onDismissed?.(movie.id);
+          toast("Hidden for now", {
+            description: `"${movie.title}" will stay out of this shortlist until you reset hidden picks.`,
+          });
         }}
       >
         <EyeOff size={15} /> Hide for now

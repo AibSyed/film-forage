@@ -59,3 +59,7 @@
 - What went wrong: the home and supporting routes still leaked internal terms (`Data`, `backup picks`, system labels) and cluttered mobile with utility chrome.
 - Root cause: I validated component polish but did not run a full cross-route copy and action-hierarchy consistency pass before sign-off.
 - Prevention rule: before merge, run a route-by-route plain-language and mobile-hierarchy audit that normalizes labels (`Sources`, `Data source`, `Search by title`) and demotes destructive/secondary actions.
+
+- What went wrong: adding success toasts caused an e2e selector collision because the toast repeated the same movie title text as the watchlist heading assertion.
+- Root cause: I changed UI feedback surfaces without re-checking strict Playwright text locators for ambiguity.
+- Prevention rule: when introducing toasts/snackbars, immediately tighten e2e assertions to role-based selectors (`heading`, `button`, etc.) instead of generic text matching.

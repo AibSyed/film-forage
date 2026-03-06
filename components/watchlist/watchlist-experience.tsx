@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { ClipboardList, RotateCcw, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 import { buildWatchPlanText } from "@/features/workspace/copy-plan";
 import {
   clearDismissedMovies,
@@ -18,7 +19,6 @@ import { Textarea } from "@/components/ui/textarea";
 
 export function WatchlistExperience() {
   const [workspace, setWorkspace] = useState(() => readWorkspace() ?? createWorkspaceDefaults());
-  const [status, setStatus] = useState("");
 
   useEffect(() => {
     return subscribeToWorkspace(() => setWorkspace(readWorkspace()));
@@ -29,9 +29,11 @@ export function WatchlistExperience() {
   async function copyPlan() {
     try {
       await navigator.clipboard.writeText(buildWatchPlanText(savedMovies));
-      setStatus("Watch plan copied.");
+      toast.success("Watch plan copied.");
     } catch {
-      setStatus("Clipboard access was blocked. Copy the plan from a browser tab with clipboard permission.");
+      toast.error("Clipboard access was blocked.", {
+        description: "Copy from a browser tab that allows clipboard access.",
+      });
     }
   }
 
@@ -48,8 +50,6 @@ export function WatchlistExperience() {
             <Button variant="secondary" size="sm" onClick={copyPlan} disabled={savedMovies.length === 0}><ClipboardList size={15} /> Copy plan</Button>
           </div>
         </div>
-
-        {status ? <p className="mt-4 text-sm text-[var(--ink-dim)]">{status}</p> : null}
 
         {savedMovies.length === 0 ? (
           <div className="mt-6 rounded-[1.75rem] border border-dashed border-[var(--line-strong)] bg-[var(--panel-muted)] p-8 text-sm text-[var(--ink-dim)]">
@@ -73,7 +73,16 @@ export function WatchlistExperience() {
                         <h3 className="font-display text-3xl text-[var(--ink-strong)]">{movie.title}</h3>
                         <p className="mt-1 text-sm text-[var(--ink-dim)]">{movie.year} · {movie.runtimeMinutes ? `${movie.runtimeMinutes} min` : "Runtime unavailable"} · {movie.providerSummary.note}</p>
                       </div>
-                      <Button variant="ghost" size="sm" onClick={() => removeSavedMovie(movie.id)}>Remove</Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          removeSavedMovie(movie.id);
+                          toast("Removed from Watchlist.", { description: movie.title });
+                        }}
+                      >
+                        Remove
+                      </Button>
                     </div>
                     <p className="mt-4 text-sm leading-7 text-[var(--ink-main)]">{movie.overview}</p>
                     <div className="mt-4">
@@ -101,13 +110,23 @@ export function WatchlistExperience() {
         <div className="mt-6 rounded-[1.2rem] border border-[var(--line-soft)] bg-[var(--panel)] p-4">
           <p className="text-xs uppercase tracking-[0.18em] text-[var(--ink-muted)]">Manage local data</p>
           <div className="mt-3 grid gap-2">
-            <Button variant="subtle" size="sm" onClick={clearDismissedMovies}><RotateCcw size={15} /> Reset hidden picks</Button>
+            <Button
+              variant="subtle"
+              size="sm"
+              onClick={() => {
+                clearDismissedMovies();
+                toast.success("Hidden picks reset.");
+              }}
+            >
+              <RotateCcw size={15} /> Reset hidden picks
+            </Button>
             <Button
               variant="subtle"
               size="sm"
               onClick={() => {
                 if (window.confirm("Clear saved picks, notes, hidden titles, and search history on this device?")) {
                   clearWorkspace();
+                  toast.success("Local watchlist data cleared.");
                 }
               }}
             >
