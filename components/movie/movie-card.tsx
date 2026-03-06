@@ -8,7 +8,6 @@ import { ArrowUpRight, Star } from "lucide-react";
 import type { MovieMatchCardVM } from "@/features/picker/contracts";
 import { getSourceLabel } from "@/features/picker/presentation";
 import { MovieActions } from "@/components/movie/movie-actions";
-import { Badge } from "@/components/ui/badge";
 
 function getPosterMonogram(title: string) {
   return title
@@ -29,19 +28,11 @@ function ProviderRow({ movie }: { movie: MovieMatchCardVM }) {
   return (
     <div className="space-y-2">
       <p className="text-sm leading-6 text-[var(--ink-main)]">{movie.providerSummary.note}</p>
-      <div className="flex flex-wrap gap-2">
-        {included.map((provider) => (
-          <Badge key={`included-${provider.id}`} className="bg-[var(--panel)] text-[var(--ink-main)]">
-            {provider.name}
-          </Badge>
-        ))}
-        {included.length === 0 &&
-          rent.map((provider) => (
-            <Badge key={`rent-${provider.id}`} className="bg-[var(--panel)] text-[var(--ink-main)]">
-              Rent: {provider.name}
-            </Badge>
-          ))}
-      </div>
+      {included.length > 0 ? (
+        <p className="text-sm text-[var(--ink-dim)]">{included.map((provider) => provider.name).join(" • ")}</p>
+      ) : rent.length > 0 ? (
+        <p className="text-sm text-[var(--ink-dim)]">Rent on {rent.map((provider) => provider.name).join(" • ")}</p>
+      ) : null}
     </div>
   );
 }
@@ -74,9 +65,9 @@ export function MovieCard({
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-        className="overflow-hidden rounded-[1.45rem] border border-[var(--line-soft)] bg-[linear-gradient(180deg,rgba(15,24,34,0.98),rgba(10,16,24,0.98))] shadow-[0_18px_50px_rgba(0,0,0,0.24)]"
+        className="overflow-hidden rounded-[1.45rem] border border-[var(--line-soft)] bg-[linear-gradient(180deg,rgba(13,21,31,0.98),rgba(9,14,22,0.98))] shadow-[0_18px_50px_rgba(0,0,0,0.24)]"
       >
-        <div className="grid grid-cols-[96px_1fr] gap-0">
+        <div className="grid grid-cols-[112px_1fr] gap-0">
           <div className="relative min-h-full bg-[linear-gradient(155deg,rgba(239,182,94,0.16),rgba(56,86,126,0.34))]">
             {movie.posterUrl ? (
               <Image src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes="96px" />
@@ -89,7 +80,7 @@ export function MovieCard({
               </div>
             )}
           </div>
-          <div className="flex flex-col gap-2.5 p-4">
+          <div className="flex flex-col gap-3 p-4">
             <div className="flex items-start justify-between gap-2">
               <div>
                 <h2 className="font-display text-[1.35rem] leading-[1.02] text-[var(--ink-strong)]">{movie.title}</h2>
@@ -105,13 +96,7 @@ export function MovieCard({
               ) : null}
             </div>
             <p className="line-clamp-2 text-sm leading-6 text-[var(--ink-main)]">{movie.overview}</p>
-            <div className="flex flex-wrap gap-2">
-              {fitReasons.slice(0, 1).map((reason) => (
-                <Badge key={reason} className="border-[var(--accent-muted)] bg-[var(--accent-pale)] text-[var(--ink-main)]">
-                  {reason}
-                </Badge>
-              ))}
-            </div>
+            {fitReasons[0] ? <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--accent-ink)]">{fitReasons[0]}</p> : null}
             <CompactProviderLine movie={movie} />
             <div className="mt-1 flex flex-wrap items-center justify-between gap-2">
               <MovieActions movie={movie} onDismissed={onDismissed} />
@@ -131,9 +116,9 @@ export function MovieCard({
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-      className="overflow-hidden rounded-[1.7rem] border border-[var(--line-soft)] bg-[linear-gradient(180deg,rgba(15,24,34,0.98),rgba(10,16,24,0.98))] shadow-[0_22px_70px_rgba(0,0,0,0.24)]"
+      className="overflow-hidden rounded-[1.7rem] border border-[var(--line-soft)] bg-[linear-gradient(180deg,rgba(13,21,31,0.98),rgba(9,14,22,0.98))] shadow-[0_22px_70px_rgba(0,0,0,0.24)]"
     >
-      <div className="grid grid-cols-[132px_1fr] gap-0 sm:grid-cols-[220px_1fr]">
+      <div className="grid grid-cols-[132px_1fr] gap-0 sm:grid-cols-[minmax(230px,34%)_1fr]">
         <div className="relative min-h-full bg-[linear-gradient(155deg,rgba(239,182,94,0.16),rgba(56,86,126,0.34))]">
           {movie.posterUrl ? (
             <Image src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes={compact ? "140px" : "220px"} />
@@ -152,18 +137,18 @@ export function MovieCard({
         <div className="flex flex-col gap-4 p-4 sm:p-6">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="space-y-2">
-              <div className="flex flex-wrap gap-2">
-                {movie.provenance !== "live_tmdb" ? <Badge>{getSourceLabel(movie.provenance)}</Badge> : null}
-                <Badge>{movie.year}</Badge>
-                {movie.runtimeMinutes ? <Badge>{movie.runtimeMinutes} min</Badge> : null}
-              </div>
+              <p className="text-xs uppercase tracking-[0.13em] text-[var(--ink-muted)]">
+                {movie.provenance !== "live_tmdb" ? `${getSourceLabel(movie.provenance)} · ` : ""}
+                {movie.year}
+                {movie.runtimeMinutes ? ` · ${movie.runtimeMinutes} min` : ""}
+              </p>
               <h2 className="font-display text-[2rem] leading-[0.96] text-[var(--ink-strong)] md:text-[2.6rem]">
                 {movie.title}
               </h2>
               <p className="text-sm text-[var(--ink-dim)]">{movie.genres.join(" · ")}</p>
             </div>
             {movie.voteAverage ? (
-              <p className="inline-flex items-center gap-2 rounded-full border border-[var(--line-soft)] bg-[var(--panel-muted)] px-3 py-2 text-sm text-[var(--ink-main)]">
+              <p className="inline-flex items-center gap-2 rounded-md border border-[var(--line-soft)] bg-[var(--surface-soft)] px-3 py-2 text-sm text-[var(--ink-main)]">
                 <Star size={15} className="text-[var(--accent-strong)]" /> {movie.voteAverage.toFixed(1)}
               </p>
             ) : null}
@@ -173,13 +158,13 @@ export function MovieCard({
             {movie.overview}
           </p>
 
-          <div className="flex flex-wrap gap-2">
-            {fitReasons.map((reason) => (
-              <Badge key={reason} className="border-[var(--accent-muted)] bg-[var(--accent-pale)] text-[var(--ink-main)]">
-                {reason}
-              </Badge>
-            ))}
-          </div>
+          {fitReasons.length > 0 ? (
+            <ul className="flex flex-wrap gap-x-4 gap-y-1 text-xs font-semibold uppercase tracking-[0.1em] text-[var(--accent-ink)]">
+              {fitReasons.map((reason) => (
+                <li key={reason}>{reason}</li>
+              ))}
+            </ul>
+          ) : null}
 
           <div className="rounded-[1.15rem] border border-[var(--line-soft)] bg-[rgba(7,12,18,0.36)] p-3">
             <ProviderRow movie={movie} />

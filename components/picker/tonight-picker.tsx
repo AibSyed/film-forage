@@ -19,7 +19,6 @@ import { defaultPickRequest } from "@/features/picker/defaults";
 import { getPickerStatusMessage, getProviderFallbackMessage, getSourceLabel } from "@/features/picker/presentation";
 import { readWorkspace, setProviderPreference, setRegionPreference } from "@/features/workspace/storage";
 import { MovieCard } from "@/components/movie/movie-card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SelectField } from "@/components/ui/select";
@@ -212,9 +211,12 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
           </div>
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center gap-2">
-          {summaryFacts.map((fact) => (
-            <Badge key={fact} className="bg-[var(--panel)] text-[var(--ink-main)]">{fact}</Badge>
+        <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--ink-muted)]">
+          {summaryFacts.map((fact, index) => (
+            <span key={fact} className="inline-flex items-center gap-2">
+              {index > 0 ? <span className="text-[var(--ink-faint)]">/</span> : null}
+              <span>{fact}</span>
+            </span>
           ))}
           <Button variant="ghost" size="sm" onClick={() => setFiltersOpen((current) => !current)} className="ml-auto">
             <SlidersHorizontal size={15} /> {filtersOpen ? "Hide extra filters" : "More filters"}
@@ -265,7 +267,7 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
                         type="button"
                         onClick={() => toggleProvider(provider.id)}
                         className={cn(
-                          "rounded-full border px-3 py-2 text-sm transition",
+                          "rounded-md border px-3 py-2 text-sm transition",
                           selected
                             ? "border-[var(--accent-strong)] bg-[var(--accent-pale)] text-[var(--ink-strong)]"
                             : "border-[var(--line-soft)] bg-[var(--surface-soft)] text-[var(--ink-dim)] hover:border-[var(--line-strong)] hover:text-[var(--ink-main)]"

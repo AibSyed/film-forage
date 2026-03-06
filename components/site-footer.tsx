@@ -14,11 +14,9 @@ export function SiteFooter({ compact = false }: { compact?: boolean }) {
           </p>
           <p className="mt-3 text-sm text-[var(--ink-muted)]">&copy; {year} Film Forage by Shoaib (Aib) Syed.</p>
           {!compact ? (
-            <div className="mt-4 flex flex-wrap gap-2">
-              <span className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[var(--panel)] px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-[var(--ink-dim)]">Region-aware</span>
-              <span className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[var(--panel)] px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-[var(--ink-dim)]">Service checks</span>
-              <span className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[var(--panel)] px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-[var(--ink-dim)]">Local watchlist</span>
-            </div>
+            <p className="mt-4 text-xs uppercase tracking-[0.16em] text-[var(--ink-muted)]">
+              Region-aware • Service checks • Local watchlist
+            </p>
           ) : null}
         </div>
 
