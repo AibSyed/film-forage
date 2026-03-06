@@ -20,7 +20,7 @@
 - Root cause: I stopped after the structural rewrite passed verification instead of running a separate reviewer-style visual pass that challenged hierarchy, contrast, and above-the-fold usefulness.
 - Prevention rule: for every non-trivial UI relaunch, require one explicit reviewer pass plus local desktop/mobile screenshots before declaring the UX complete.
 
-- What went wrong: helper labels like "Tonight picker" started overshadowing the actual product name and made the app feel like an internal concept instead of Film Forage.
+- What went wrong: helper labels like "movie picker" started overshadowing the actual product name and made the app feel like an internal concept instead of Film Forage.
 - Root cause: I let implementation-era feature naming leak into the core product framing instead of checking whether the identity still centered the brand the user is presenting publicly.
 - Prevention rule: when product branding matters, make the branded noun the primary UI label and demote helper phrases to supporting copy only.
 
@@ -45,7 +45,7 @@
 - Prevention rule: for every portfolio-facing app relaunch, explicitly compare typography, spacing, and layout language against sibling apps and reject any surface that still feels like a template variant.
 
 - What went wrong: I kept using internal product language like lead picks, backups, and reserve shelf after the user made it clear Film Forage needs to read plainly to normal people.
-- Root cause: I was still describing the internal recommendation model instead of the user's actual job: find a movie to watch tonight.
+- Root cause: I was still describing the internal recommendation model instead of the user's actual job: quickly find a movie to watch.
 - Prevention rule: every new Film Forage heading, label, or helper sentence must pass a plain-language check: a first-time visitor should understand it without learning the product's internal model.
 
 - What went wrong: the first plain-language pass still preserved a squished card-heavy shell and internal selection-model language, so the app remained hard to read as a mainstream movie tool.

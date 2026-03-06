@@ -12,7 +12,7 @@
 - [completed] Polish reserve-mode copy, presentation labels, and user-facing fallback messaging.
 
 ## Acceptance Criteria
-- The home page helps a user choose a movie tonight instead of browsing a decorative discovery deck.
+- The home page helps a user choose a movie instead of browsing a decorative discovery deck.
 - Result cards only claim facts traceable to TMDB data or explicit user filters.
 - Movie detail pages are backed by live TMDB ids, not static catalog ids.
 - Watchlist state is local-first, versioned, and limited to saved movies, notes, recent searches, dismissed ids, and provider preferences.

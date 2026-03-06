@@ -1,6 +1,6 @@
 # Film Forage | Find a Movie Worth Watching
 
-Film Forage is a practical movie-picking tool built for one job: help you decide what to watch tonight without spiraling through tabs, streaming apps, and half-remembered titles.
+Film Forage is a practical movie-picking tool built for one job: help you decide what to watch without spiraling through tabs, streaming apps, and half-remembered titles.
 
 It uses TMDB for live movie discovery, title search, detail pages, recommendations, and watch-provider data. Saved picks, notes, hidden titles, and recent searches stay local in the browser for this phase.
 

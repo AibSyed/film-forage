@@ -137,7 +137,7 @@ async function discoverCandidates(request: PickRequestVM, loosen = false) {
   }));
 }
 
-export async function pickTonight(request: PickRequestVM) {
+export async function pickMovies(request: PickRequestVM) {
   try {
     const primaryCandidates = await discoverCandidates(request);
     if (primaryCandidates.length === 0) {
