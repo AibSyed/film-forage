@@ -65,10 +65,10 @@ export function MovieCard({
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-        className="overflow-hidden rounded-[1.45rem] border border-[var(--line-soft)] bg-[linear-gradient(180deg,rgba(13,21,31,0.98),rgba(9,14,22,0.98))] shadow-[0_18px_50px_rgba(0,0,0,0.24)]"
+        className="overflow-hidden rounded-[1.2rem] border border-[var(--line-soft)] bg-[linear-gradient(180deg,rgba(13,21,31,0.98),rgba(9,14,22,0.98))] shadow-[0_18px_50px_rgba(0,0,0,0.24)]"
       >
         <div className="grid grid-cols-[112px_1fr] gap-0">
-          <div className="relative min-h-full bg-[linear-gradient(155deg,rgba(239,182,94,0.16),rgba(56,86,126,0.34))]">
+          <div className="relative min-h-full bg-[linear-gradient(155deg,rgba(201,148,71,0.16),rgba(47,75,116,0.32))]">
             {movie.posterUrl ? (
               <Image src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes="96px" />
             ) : (
@@ -116,12 +116,12 @@ export function MovieCard({
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-      className="overflow-hidden rounded-[1.7rem] border border-[var(--line-soft)] bg-[linear-gradient(180deg,rgba(13,21,31,0.98),rgba(9,14,22,0.98))] shadow-[0_22px_70px_rgba(0,0,0,0.24)]"
+      className="overflow-hidden rounded-[1.3rem] border border-[var(--line-soft)] bg-[linear-gradient(180deg,rgba(13,21,31,0.98),rgba(9,14,22,0.98))] shadow-[0_22px_70px_rgba(0,0,0,0.24)]"
     >
-      <div className="grid grid-cols-[132px_1fr] gap-0 sm:grid-cols-[minmax(230px,34%)_1fr]">
-        <div className="relative min-h-full bg-[linear-gradient(155deg,rgba(239,182,94,0.16),rgba(56,86,126,0.34))]">
+      <div className="grid grid-cols-1 gap-0 md:grid-cols-[minmax(220px,38%)_1fr]">
+        <div className="relative min-h-[17rem] bg-[linear-gradient(155deg,rgba(201,148,71,0.16),rgba(47,75,116,0.32))] md:min-h-full">
           {movie.posterUrl ? (
-            <Image src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes={compact ? "140px" : "220px"} />
+            <Image src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes="(min-width: 768px) 38vw, 100vw" />
           ) : (
             <div className="flex h-full flex-col justify-between p-4">
               <div className="inline-flex h-12 w-12 items-center justify-center rounded-[1rem] border border-[var(--line-soft)] bg-[rgba(7,12,18,0.44)] font-display text-lg text-[var(--ink-strong)]">
@@ -134,7 +134,7 @@ export function MovieCard({
             </div>
           )}
         </div>
-        <div className="flex flex-col gap-4 p-4 sm:p-6">
+        <div className="flex flex-col gap-4 p-4 md:p-6">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="space-y-2">
               <p className="text-xs uppercase tracking-[0.13em] text-[var(--ink-muted)]">
@@ -142,7 +142,7 @@ export function MovieCard({
                 {movie.year}
                 {movie.runtimeMinutes ? ` · ${movie.runtimeMinutes} min` : ""}
               </p>
-              <h2 className="font-display text-[2rem] leading-[0.96] text-[var(--ink-strong)] md:text-[2.6rem]">
+              <h2 className="font-display text-[2.15rem] leading-[0.94] text-[var(--ink-strong)] md:text-[2.7rem]">
                 {movie.title}
               </h2>
               <p className="text-sm text-[var(--ink-dim)]">{movie.genres.join(" · ")}</p>

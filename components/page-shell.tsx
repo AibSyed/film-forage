@@ -32,7 +32,7 @@ export function PageShell({
         {mode === "home" ? (
           <section className="grid gap-4 rounded-[1.8rem] border border-[var(--line-soft)] bg-[linear-gradient(135deg,rgba(13,19,28,0.98),rgba(8,13,19,0.98))] p-5 shadow-[0_34px_100px_rgba(0,0,0,0.34)] md:p-7">
             <div className="space-y-4">
-              <p className="inline-flex w-fit items-center rounded-full border border-[var(--line-strong)] bg-[var(--accent-pale)] px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-[var(--accent-soft)]">
+              <p className="inline-flex w-fit items-center rounded-md border border-[var(--line-strong)] bg-[var(--accent-pale)] px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-[var(--accent-soft)]">
                 {eyebrow}
               </p>
               <h1 className="max-w-4xl font-display text-[2.9rem] leading-[0.92] text-[var(--ink-strong)] md:text-[4.6rem]">{title}</h1>

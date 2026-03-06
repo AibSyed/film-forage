@@ -4,7 +4,6 @@ import type { Route } from "next";
 import type { MovieDetailResponseVM } from "@/features/picker/contracts";
 import { getSourceLabel } from "@/features/picker/presentation";
 import { MovieActions } from "@/components/movie/movie-actions";
-import { Badge } from "@/components/ui/badge";
 
 export function MovieDetail({ detail }: { detail: MovieDetailResponseVM }) {
   const movie = detail.movie;
@@ -19,21 +18,20 @@ export function MovieDetail({ detail }: { detail: MovieDetailResponseVM }) {
             ) : null}
           </div>
           <div className="space-y-5 p-5 md:p-7">
-            <div className="flex flex-wrap gap-2">
-              <Badge>{getSourceLabel(detail.meta.source)}</Badge>
-              <Badge>{detail.meta.region}</Badge>
-              {movie.card.runtimeMinutes ? <Badge>{movie.card.runtimeMinutes} min</Badge> : null}
-            </div>
+            <p className="text-xs uppercase tracking-[0.13em] text-[var(--ink-muted)]">
+              {getSourceLabel(detail.meta.source)} · {detail.meta.region}
+              {movie.card.runtimeMinutes ? ` · ${movie.card.runtimeMinutes} min` : ""}
+            </p>
             <div>
               <h2 className="font-display text-5xl leading-[0.96] text-[var(--ink-strong)] md:text-6xl">{movie.card.title}</h2>
               {movie.tagline ? <p className="mt-3 text-lg text-[var(--ink-dim)]">{movie.tagline}</p> : null}
             </div>
             <p className="text-[15px] leading-7 text-[var(--ink-main)]">{movie.card.overview}</p>
-            <div className="flex flex-wrap gap-2">
+            <ul className="flex flex-wrap gap-x-4 gap-y-1 text-xs font-semibold uppercase tracking-[0.1em] text-[var(--accent-ink)]">
               {movie.card.fitReasons.map((reason) => (
-                <Badge key={reason} className="border-[var(--accent-muted)] bg-[var(--accent-pale)] text-[var(--ink-main)]">{reason}</Badge>
+                <li key={reason}>{reason}</li>
               ))}
-            </div>
+            </ul>
             <p className="text-sm text-[var(--ink-dim)]">{movie.card.providerSummary.note}</p>
             <MovieActions movie={movie.card} />
             <div className="flex flex-wrap gap-3 text-sm text-[var(--ink-dim)]">
