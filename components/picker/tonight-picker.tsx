@@ -16,6 +16,11 @@ import {
 } from "@/features/picker/contracts";
 import { defaultPickRequest } from "@/features/picker/defaults";
 import {
+  getPickerStatusMessage,
+  getProviderFallbackMessage,
+  getSourceLabel,
+} from "@/features/picker/presentation";
+import {
   readWorkspace,
   setProviderPreference,
   setRegionPreference,
@@ -62,7 +67,7 @@ export function TonightPicker({
 
       setPick(nextPick);
       if (userInitiated) {
-        setStatus(nextPick.meta.source === "live_tmdb" ? "Tonight picker refreshed." : "Live TMDB data is down. Showing the editorial reserve.");
+        setStatus(getPickerStatusMessage(nextPick.meta.source));
       }
     } catch (error) {
       setStatus(error instanceof Error ? error.message : "Could not refresh tonight's picks.");
@@ -104,12 +109,15 @@ export function TonightPicker({
 
     void loadProviders();
     setRegionPreference(filters.region);
-    setProviderPreference(filters.providers);
 
     return () => {
       active = false;
     };
-  }, [filters.region, filters.providers]);
+  }, [filters.region]);
+
+  useEffect(() => {
+    setProviderPreference(filters.providers);
+  }, [filters.providers]);
 
   const topProviders = useMemo(() => providerCatalog.providers.slice(0, 12), [providerCatalog.providers]);
 
@@ -131,10 +139,16 @@ export function TonightPicker({
             <h2 className="mt-2 font-display text-4xl text-[var(--ink-strong)] md:text-5xl">Find one movie worth committing to.</h2>
           </div>
           <div className="rounded-2xl border border-[var(--line-soft)] bg-[var(--panel-muted)] px-3 py-2 text-right text-xs uppercase tracking-[0.2em] text-[var(--ink-muted)]">
-            <p>{pick.meta.source === "live_tmdb" ? "Live TMDB" : "Editorial reserve"}</p>
+            <p>{getSourceLabel(pick.meta.source)}</p>
             <p className="mt-1 text-[10px] tracking-[0.18em]">{filters.region}</p>
           </div>
         </div>
+
+        {pick.meta.source === "editorial_reserve" ? (
+          <div className="mt-5 rounded-[1.25rem] border border-[var(--line-strong)] bg-[var(--panel-muted)] px-4 py-3 text-sm text-[var(--ink-dim)]">
+            Live movie data is unavailable right now. You are browsing the reserve shelf, so service availability may be unknown until TMDB returns.
+          </div>
+        ) : null}
 
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           <label className="space-y-2 text-sm text-[var(--ink-main)]">
@@ -195,7 +209,7 @@ export function TonightPicker({
           </div>
           {providerCatalog.source === "unavailable" ? (
             <p className="rounded-2xl border border-dashed border-[var(--line-strong)] bg-[var(--panel-muted)] px-4 py-3 text-sm text-[var(--ink-dim)]">
-              Provider filters are unavailable until live TMDB data returns. The picker still works without them.
+              {getProviderFallbackMessage()}
             </p>
           ) : (
             <div className="flex flex-wrap gap-2">

@@ -7,3 +7,7 @@
 - What went wrong: duplicate partial-rewrite modules in `app`, `components`, `features`, and `lib` survived long enough to create stale imports and misleading type errors.
 - Root cause: the branch already contained an overlapping rewrite surface, and I did not sweep the full tree for competing entrypoints before the first verification run.
 - Prevention rule: after any large rewrite, run a whole-tree import sweep and an unused-code pass before the first lint/typecheck so only one architecture survives.
+
+- What went wrong: user-facing copy still leaked internal fallback language and placeholder product phrasing after the first rewrite landed.
+- Root cause: I validated the architecture and truthfulness rules, but I did not do a second pass that asked whether the copy still made sense to a normal viewer.
+- Prevention rule: after any major rewrite, run a dedicated user-language sweep that replaces internal product terms with plain labels and back it with at least one regression test or tracked checklist item.

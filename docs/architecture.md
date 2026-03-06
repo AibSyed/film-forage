@@ -19,7 +19,7 @@ flowchart LR
   HYDRATE --> TMDB2["TMDB Watch Providers"]
   SEARCH --> TMDB3["TMDB Search Movie"]
   MOVIE --> TMDB4["TMDB Detail + Credits + Videos + Related"]
-  PICK --> RES["Editorial Reserve"]
+  PICK --> RES["Reserve Shelf"]
   UI --> WS["Local Workspace Store"]
   WS --> UI
 ```
@@ -65,7 +65,7 @@ flowchart LR
 - No synthetic confidence percentages.
 - No fake curator rationale.
 - Missing provider data is shown as unknown, not inferred.
-- Editorial reserve cards are explicitly labeled and never presented as live availability.
+- Reserve-shelf cards are explicitly labeled and never presented as live availability.
 
 ## Caching and Revalidation
 - TMDB discover and search requests revalidate on short windows.
@@ -74,5 +74,6 @@ flowchart LR
 
 ## Security Notes
 - `TMDB_ACCESS_TOKEN` remains server-only.
+- If `TMDB_ACCESS_TOKEN` is missing or invalid, the picker and detail flows degrade to the reserve shelf instead of guessing live availability.
 - CSP and security headers are enforced globally.
 - No `NEXT_PUBLIC_` secrets are used.

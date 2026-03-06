@@ -23,8 +23,12 @@ export function WatchlistExperience() {
   const savedMovies = useMemo(() => workspace.savedMovies, [workspace.savedMovies]);
 
   async function copyPlan() {
-    await navigator.clipboard.writeText(buildWatchPlanText(savedMovies));
-    setStatus("Watch plan copied.");
+    try {
+      await navigator.clipboard.writeText(buildWatchPlanText(savedMovies));
+      setStatus("Watch plan copied.");
+    } catch {
+      setStatus("Clipboard access was blocked. Copy the plan from a browser tab with clipboard permission.");
+    }
   }
 
   return (
@@ -34,7 +38,7 @@ export function WatchlistExperience() {
           <div>
             <p className="text-xs uppercase tracking-[0.26em] text-[var(--ink-muted)]">Local-first planning</p>
             <h2 className="mt-2 font-display text-4xl text-[var(--ink-strong)] md:text-5xl">Your watchlist</h2>
-            <p className="mt-3 max-w-2xl text-[var(--ink-dim)]">Keep the picks that survived the group chat. Notes stay local in this browser.</p>
+            <p className="mt-3 max-w-2xl text-[var(--ink-dim)]">Keep the picks worth revisiting. Notes stay local in this browser.</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <Button variant="secondary" size="sm" onClick={copyPlan} disabled={savedMovies.length === 0}><ClipboardList size={15} /> Copy plan</Button>
@@ -47,7 +51,7 @@ export function WatchlistExperience() {
 
         {savedMovies.length === 0 ? (
           <div className="mt-6 rounded-[1.5rem] border border-dashed border-[var(--line-strong)] bg-[var(--panel-muted)] p-8 text-sm text-[var(--ink-dim)]">
-            Nothing is saved yet. Use the tonight picker or title search to build a short, practical watchlist.
+            Nothing is saved yet. Save a few finalists from Tonight or Search and they will show up here.
           </div>
         ) : (
           <div className="mt-6 grid gap-4">
@@ -79,7 +83,7 @@ export function WatchlistExperience() {
           <li>Saved picks and notes never leave this browser.</li>
           <li>Hidden titles are excluded from future tonight-picker results.</li>
           <li>Recent search history stays local so you can revisit likely options quickly.</li>
-          <li>Copy plan exports a clean text list for text threads or notes, not a fake share layer.</li>
+          <li>Copy plan turns your saved titles into a plain text shortlist for messages or notes.</li>
         </ul>
       </aside>
     </section>

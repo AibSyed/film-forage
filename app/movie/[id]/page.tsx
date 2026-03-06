@@ -55,7 +55,7 @@ export default async function MoviePage({
       pathname="/movie"
       eyebrow="Movie detail"
       title={detail.movie.card.title}
-      intro="One reliable page for the overview, the availability, and the next obvious movies to compare if this one misses."
+      intro="See the overview, availability, and a few nearby alternatives in one place."
     >
       <MovieDetail detail={detail} />
     </PageShell>
