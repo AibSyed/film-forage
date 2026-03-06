@@ -1,5 +1,9 @@
 # Lessons
 
+- What went wrong: active navigation used low-legibility light text on the amber active pill and was hard to read.
+- Root cause: I changed nav styling for brand tone without a contrast-focused regression check on the active state.
+- Prevention rule: every nav/button state change must include an explicit contrast check for active/hover/focus states in mobile and desktop browser QA before sign-off.
+
 - What went wrong: v3 spent design effort on cinematic theater language instead of helping the user make a cleaner movie decision.
 - Root cause: the product surface was shaped around mood branding and invented rationale instead of the real TMDB data available to the app.
 - Prevention rule: any Film Forage copy or UI state that explains why a movie fits must map directly to user-selected filters or returned provider/movie facts, and the tests should enforce that.

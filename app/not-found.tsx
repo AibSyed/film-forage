@@ -8,7 +8,7 @@ export default function NotFound() {
       pathname="/"
       eyebrow="Not found"
       title="That movie path does not exist."
-      intro="Film Forage only supports the rebuilt shortlist flow. Use the home route or direct title search to keep moving."
+      intro="Use Home to browse picks or Search to jump to a specific movie."
     >
       <div className="rounded-[1.75rem] border border-dashed border-[var(--line-strong)] bg-[var(--surface-soft)] p-8 text-sm text-[var(--ink-dim)]">
         <div className="flex flex-wrap gap-4">

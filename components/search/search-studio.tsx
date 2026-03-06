@@ -60,7 +60,7 @@ export function SearchStudio({
           }}
         >
           <label className="space-y-2 text-sm text-[var(--ink-main)]">
-            <span>Title lookup</span>
+            <span>Title search</span>
             <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by movie title" />
           </label>
           <label className="space-y-2 text-sm text-[var(--ink-main)]">
@@ -119,7 +119,7 @@ export function SearchStudio({
               <h2 className="font-display text-4xl text-[var(--ink-strong)]">Search results</h2>
               <p className="text-sm text-[var(--ink-dim)]">{initialResults.items.length} title{initialResults.items.length === 1 ? "" : "s"} found for &quot;{initialResults.query}&quot;.</p>
             </div>
-            <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">Direct title lookup</p>
+            <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">Direct title search</p>
           </div>
           <div className="grid gap-4 lg:grid-cols-2">
             {initialResults.items.map((movie) => (
@@ -129,7 +129,7 @@ export function SearchStudio({
         </section>
       ) : (
         <section className="rounded-[2rem] border border-dashed border-[var(--line-strong)] bg-[var(--surface-soft)] p-8 text-sm leading-7 text-[var(--ink-dim)]">
-          Search a title when you already know part of the answer and just need the detail page, service check, or a quick save.
+          Search when you already have a title in mind and want details, streaming options, or a quick save.
         </section>
       )}
     </section>

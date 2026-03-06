@@ -12,11 +12,11 @@ test("renders the film-forage picker and supports save plus search flows", async
   await page.getByRole("button", { name: /^Save$/ }).first().click();
   await page.getByLabel("Primary").getByRole("link", { name: "Watchlist" }).click();
   await expect(page).toHaveURL(/\/watchlist$/);
-  await expect(page.getByRole("heading", { name: "Keep the movies you might actually watch." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Keep the movies you still want to watch." })).toBeVisible();
   await expect(page.getByText(firstTitle)).toBeVisible();
 
   await page.getByLabel("Primary").getByRole("link", { name: "Search" }).click();
-  await page.getByLabel("Title lookup").fill("Mad");
+  await page.getByLabel("Title search").fill("Mad");
   await page.locator("form").getByRole("button", { name: "Search" }).click();
   await expect(page).toHaveURL(/\/search\?q=Mad/);
   await expect(page.getByRole("heading", { name: "Search results" })).toBeVisible();

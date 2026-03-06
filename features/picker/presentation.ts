@@ -1,11 +1,11 @@
 export function getSourceLabel(source: "live_tmdb" | "editorial_reserve") {
-  return source === "live_tmdb" ? "Live movie data" : "Fallback picks";
+  return source === "live_tmdb" ? "Live movie data" : "Film Forage picks";
 }
 
 export function getPickerStatusMessage(source: "live_tmdb" | "editorial_reserve") {
   return source === "live_tmdb"
     ? "Results updated."
-    : "Live movie data is unavailable right now, so Film Forage switched to fallback picks.";
+    : "Live movie data is unavailable right now, so Film Forage switched to its own backup picks.";
 }
 
 export function getProviderFallbackMessage() {
@@ -13,5 +13,5 @@ export function getProviderFallbackMessage() {
 }
 
 export function getSearchFallbackMessage() {
-  return "Live search is unavailable right now. These results come from fallback picks instead.";
+  return "Live search is unavailable right now. These results come from Film Forage backup picks instead.";
 }
