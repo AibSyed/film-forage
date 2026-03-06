@@ -1,4 +1,4 @@
-import { searchResponseSchema, type SearchRequestVM } from "@/features/picker/contracts";
+import { movieMatchCardSchema, searchResponseSchema, type SearchRequestVM } from "@/features/picker/contracts";
 import { buildFitReasons } from "@/features/picker/fit-reasons";
 import { searchReserveCards } from "@/lib/reserve/catalog";
 import { requestTmdb, TmdbUnavailableError } from "@/lib/tmdb/client";
@@ -57,9 +57,13 @@ export async function searchMovies(request: SearchRequestVM) {
 
     const ids = raw.results.slice(0, 8).map((movie) => movie.id);
     const hydrated = await Promise.allSettled(ids.map((id) => hydrateSearchCard(id, request.region)));
-    const items = hydrated
+    const candidateItems = hydrated
       .filter((result): result is PromiseFulfilledResult<Awaited<ReturnType<typeof hydrateSearchCard>>> => result.status === "fulfilled")
       .map((result) => result.value);
+    const items = candidateItems
+      .map((item) => movieMatchCardSchema.safeParse(item))
+      .filter((parsed): parsed is { success: true; data: Awaited<ReturnType<typeof hydrateSearchCard>> } => parsed.success)
+      .map((parsed) => parsed.data);
 
     if (items.length === 0 && ids.length > 0) {
       return searchResponseSchema.parse({
