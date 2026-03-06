@@ -1,40 +1,78 @@
-# Film Forage Architecture v3
+# Film Forage Architecture v4
 
 ## Runtime Boundaries
-- Next.js App Router + TypeScript strict mode.
-- Tailwind + Radix + CVA primitives for UI composition.
-- TanStack Query for feed caching and refetch control.
-- Route contracts validated with Zod.
+- Next.js App Router with server components by default.
+- Client components only for picker interactions, local watchlist actions, and selective motion.
+- Zod contracts at all internal API boundaries.
+- Local-first browser storage for watchlist state and recent user context.
 
 ## Topology
 ```mermaid
 flowchart LR
-  UI["Discovery Experience"] --> API["GET /api/discovery"]
-  API --> DOM["Discovery Domain Service"]
-  DOM --> TMDB["TMDB Provider"]
-  DOM --> FALL["Curated Fallback Provider"]
-  DOM --> VM["Zod-normalized DiscoveryResponse"]
-  VM --> UI
-  UI --> SL["Local Shortlist Store"]
+  UI["Tonight Picker and Search UI"] --> PICK["POST /api/pick"]
+  UI --> SEARCH["GET /api/search"]
+  UI --> MOVIE["GET /api/movie/[id]"]
+  UI --> PROVIDERS["GET /api/providers"]
+  PICK --> DISC["Discover Candidate IDs"]
+  DISC --> HYDRATE["Hydrate Top Candidates"]
+  HYDRATE --> TMDB1["TMDB Movie Detail"]
+  HYDRATE --> TMDB2["TMDB Watch Providers"]
+  SEARCH --> TMDB3["TMDB Search Movie"]
+  MOVIE --> TMDB4["TMDB Detail + Credits + Videos + Related"]
+  PICK --> RES["Editorial Reserve"]
+  UI --> WS["Local Workspace Store"]
+  WS --> UI
 ```
 
 ## Core Contracts
-- `DiscoveryResponse`
-  - `items[]`
-  - `meta.source`
-  - `meta.fallbackUsed`
-  - `meta.confidence`
-  - `meta.freshnessHours`
-  - `meta.partialData`
-  - `meta.generatedAt`
+- `PickRequestVM`
+  - `region`
+  - `providers[]`
+  - `runtimeMax`
+  - `genre`
+  - `vibe`
+  - `availabilityMode`
+  - `excludeIds[]`
+- `MovieMatchCardVM`
+  - `id`
+  - `title`
+  - `year`
+  - `runtimeMinutes`
+  - `genres[]`
+  - `overview`
+  - `providerSummary`
+  - `fitReasons[]`
+  - `provenance`
+- `MovieDetailVM`
+  - `card`
+  - `tagline`
+  - `releaseDate`
+  - `spokenLanguages[]`
+  - `trailerUrl`
+  - `cast[]`
+  - `recommendations[]`
+  - `similar[]`
+  - `provenanceNote`
+- `WorkspaceVM`
+  - `savedMovies[]`
+  - `dismissedMovieIds[]`
+  - `recentSearches[]`
+  - `region`
+  - `providerIds[]`
 
-## Error and Failure Semantics
-- `unavailable`: live adapter unavailable, fallback path engaged.
-- `invalid_payload`: provider payload rejected by schema parser.
-- `partial`: subset of item fields available.
-- `stale`: freshness threshold exceeded.
-- `rate_limited`: upstream provider throttling.
+## Truthfulness Rules
+- Card claims must trace to selected filters or live TMDB fields.
+- No synthetic confidence percentages.
+- No fake curator rationale.
+- Missing provider data is shown as unknown, not inferred.
+- Editorial reserve cards are explicitly labeled and never presented as live availability.
+
+## Caching and Revalidation
+- TMDB discover and search requests revalidate on short windows.
+- Movie details and provider summaries revalidate on longer windows.
+- Local watchlist state is browser-only and not synchronized server-side.
 
 ## Security Notes
-- TMDB token is never exposed to the client bundle.
-- Global CSP and security headers enforced.
+- `TMDB_ACCESS_TOKEN` remains server-only.
+- CSP and security headers are enforced globally.
+- No `NEXT_PUBLIC_` secrets are used.
