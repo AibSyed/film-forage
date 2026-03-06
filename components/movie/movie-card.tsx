@@ -23,19 +23,24 @@ function ProviderRow({ movie }: { movie: MovieMatchCardVM }) {
   const rent = movie.providerSummary.rent.slice(0, 2);
 
   if (movie.providerSummary.status === "unknown") {
-    return <p className="text-sm text-[var(--ink-dim)]">Availability is currently unknown for this title.</p>;
+    return <p className="text-sm leading-6 text-[var(--ink-dim)]">Availability is currently unknown for this title.</p>;
   }
 
   return (
     <div className="space-y-2">
-      <p className="text-sm text-[var(--ink-main)]">{movie.providerSummary.note}</p>
+      <p className="text-sm leading-6 text-[var(--ink-main)]">{movie.providerSummary.note}</p>
       <div className="flex flex-wrap gap-2">
         {included.map((provider) => (
-          <Badge key={`included-${provider.id}`} className="bg-[var(--panel)] text-[var(--ink-main)]">{provider.name}</Badge>
+          <Badge key={`included-${provider.id}`} className="bg-[var(--panel)] text-[var(--ink-main)]">
+            {provider.name}
+          </Badge>
         ))}
-        {included.length === 0 && rent.map((provider) => (
-          <Badge key={`rent-${provider.id}`} className="bg-[var(--panel)] text-[var(--ink-main)]">Rent: {provider.name}</Badge>
-        ))}
+        {included.length === 0 &&
+          rent.map((provider) => (
+            <Badge key={`rent-${provider.id}`} className="bg-[var(--panel)] text-[var(--ink-main)]">
+              Rent: {provider.name}
+            </Badge>
+          ))}
       </div>
     </div>
   );
@@ -59,16 +64,16 @@ export function MovieCard({
       layout
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-      className="overflow-hidden rounded-[1.9rem] border border-[var(--line-soft)] bg-[linear-gradient(180deg,rgba(16,31,40,0.98),rgba(11,22,30,0.96))] shadow-[0_24px_80px_rgba(0,0,0,0.22)]"
+      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+      className="overflow-hidden rounded-[1.55rem] border border-[var(--line-soft)] bg-[linear-gradient(180deg,rgba(19,29,38,0.98),rgba(13,20,26,0.98))] shadow-[0_22px_70px_rgba(0,0,0,0.22)]"
     >
-      <div className={compact ? "grid grid-cols-[90px_1fr] gap-0 sm:grid-cols-[104px_1fr] xl:grid-cols-[120px_1fr]" : "grid grid-cols-[110px_1fr] gap-0 sm:grid-cols-[148px_1fr] lg:grid-cols-[188px_1fr]"}>
-        <div className={compact ? "relative min-h-full bg-[linear-gradient(160deg,rgba(216,159,84,0.22),rgba(57,86,110,0.48))]" : "relative min-h-full bg-[linear-gradient(160deg,rgba(216,159,84,0.24),rgba(57,86,110,0.52))]"}>
+      <div className={compact ? "grid grid-cols-[132px_1fr] gap-0 sm:grid-cols-[148px_1fr]" : "grid grid-cols-[140px_1fr] gap-0 sm:grid-cols-[200px_1fr] lg:grid-cols-[240px_1fr]"}>
+        <div className="relative min-h-full bg-[linear-gradient(155deg,rgba(255,142,83,0.22),rgba(78,104,126,0.42))]">
           {movie.posterUrl ? (
-            <Image src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes={compact ? "120px" : "188px"} />
+            <Image src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes={compact ? "148px" : "240px"} />
           ) : (
             <div className={compact ? "flex h-full flex-col justify-between p-3" : "flex h-full flex-col justify-between p-4"}>
-              <div className={compact ? "inline-flex h-9 w-9 items-center justify-center rounded-2xl border border-[var(--line-soft)] bg-[rgba(6,18,25,0.28)] font-display text-sm text-[var(--ink-strong)]" : "inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--line-soft)] bg-[rgba(6,18,25,0.28)] font-display text-lg text-[var(--ink-strong)]"}>
+              <div className={compact ? "inline-flex h-10 w-10 items-center justify-center rounded-[1rem] border border-[var(--line-soft)] bg-[rgba(7,12,16,0.34)] font-display text-sm uppercase tracking-[-0.03em] text-[var(--ink-strong)]" : "inline-flex h-12 w-12 items-center justify-center rounded-[1rem] border border-[var(--line-soft)] bg-[rgba(7,12,16,0.34)] font-display text-lg uppercase tracking-[-0.03em] text-[var(--ink-strong)]"}>
                 {monogram}
               </div>
               <div className="space-y-2">
@@ -86,7 +91,9 @@ export function MovieCard({
                 <Badge>{movie.year}</Badge>
                 {movie.runtimeMinutes ? <Badge>{movie.runtimeMinutes} min</Badge> : null}
               </div>
-              <h2 className={compact ? "font-display text-[1.45rem] leading-[1.02] text-[var(--ink-strong)] sm:text-[1.7rem]" : "font-display text-[1.75rem] leading-[0.96] text-[var(--ink-strong)] md:text-[2.3rem]"}>{movie.title}</h2>
+              <h2 className={compact ? "font-display text-[1.15rem] leading-[1.06] tracking-[-0.04em] text-[var(--ink-strong)] sm:text-[1.32rem]" : "font-display text-[1.7rem] leading-[0.96] tracking-[-0.06em] text-[var(--ink-strong)] md:text-[2.2rem]"}>
+                {movie.title}
+              </h2>
               <p className="text-sm text-[var(--ink-dim)]">{movie.genres.join(" · ")}</p>
             </div>
             {movie.voteAverage ? (
@@ -96,15 +103,19 @@ export function MovieCard({
             ) : null}
           </div>
 
-          <p className="text-[15px] leading-7 text-[var(--ink-main)]">{movie.overview}</p>
+          <p className={compact ? "line-clamp-4 text-[15px] leading-7 text-[var(--ink-main)]" : "text-[15px] leading-7 text-[var(--ink-main)]"}>
+            {movie.overview}
+          </p>
 
           <div className="flex flex-wrap gap-2">
             {fitReasons.map((reason) => (
-              <Badge key={reason} className="border-[var(--accent-muted)] bg-[var(--accent-pale)] text-[var(--ink-main)]">{reason}</Badge>
+              <Badge key={reason} className="border-[var(--accent-muted)] bg-[var(--accent-pale)] text-[var(--ink-main)]">
+                {reason}
+              </Badge>
             ))}
           </div>
 
-          <div className="rounded-[1.35rem] border border-[var(--line-soft)] bg-[rgba(6,18,25,0.34)] p-3">
+          <div className="rounded-[1.15rem] border border-[var(--line-soft)] bg-[rgba(7,12,16,0.34)] p-3">
             <ProviderRow movie={movie} />
           </div>
 

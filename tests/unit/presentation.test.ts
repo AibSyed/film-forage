@@ -9,13 +9,13 @@ import {
 describe("picker presentation helpers", () => {
   it("maps source labels to user-facing copy", () => {
     expect(getSourceLabel("live_tmdb")).toBe("Live TMDB");
-    expect(getSourceLabel("editorial_reserve")).toBe("Forage reserve");
+    expect(getSourceLabel("editorial_reserve")).toBe("Reserve shelf");
   });
 
   it("uses fallback copy that explains the fallback plainly", () => {
-    expect(getPickerStatusMessage("live_tmdb")).toBe("Film Forage refreshed.");
-    expect(getPickerStatusMessage("editorial_reserve")).toContain("reserve picks");
-    expect(getProviderFallbackMessage()).toContain("provider filters");
-    expect(getSearchFallbackMessage()).toContain("reserve picks");
+    expect(getPickerStatusMessage("live_tmdb")).toBe("Film Forage refreshed the shortlist.");
+    expect(getPickerStatusMessage("editorial_reserve")).toContain("reserve shelf");
+    expect(getProviderFallbackMessage()).toContain("Provider filters");
+    expect(getSearchFallbackMessage()).toContain("reserve shelf");
   });
 });

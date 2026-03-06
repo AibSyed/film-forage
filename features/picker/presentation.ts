@@ -1,19 +1,17 @@
-type SourceLabel = "live_tmdb" | "editorial_reserve";
-
-export function getSourceLabel(source: SourceLabel) {
-  return source === "live_tmdb" ? "Live TMDB" : "Forage reserve";
+export function getSourceLabel(source: "live_tmdb" | "editorial_reserve") {
+  return source === "live_tmdb" ? "Live TMDB" : "Reserve shelf";
 }
 
-export function getPickerStatusMessage(source: SourceLabel) {
+export function getPickerStatusMessage(source: "live_tmdb" | "editorial_reserve") {
   return source === "live_tmdb"
-    ? "Film Forage refreshed."
-    : "Live movie data is unavailable right now. Film Forage is showing reserve picks instead.";
+    ? "Film Forage refreshed the shortlist."
+    : "Live data is down right now, so Film Forage switched to the reserve shelf.";
 }
 
 export function getProviderFallbackMessage() {
-  return "Live provider filters are unavailable right now. You can still browse picks, but service availability may be unknown until TMDB returns.";
+  return "Provider filters are unavailable right now, so Film Forage is only using runtime and genre filters until live service data returns.";
 }
 
 export function getSearchFallbackMessage() {
-  return "Live title lookup is unavailable right now. These results come from Film Forage's reserve picks, so current service availability may be missing.";
+  return "Live search is unavailable right now. These results come from the reserve shelf instead.";
 }

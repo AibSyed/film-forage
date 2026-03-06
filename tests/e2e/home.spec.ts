@@ -1,12 +1,12 @@
 import { expect, test } from "@playwright/test";
 
-test("renders the tonight picker and supports save plus search flows", async ({ page }) => {
+test("renders the film-forage picker and supports save plus search flows", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page.getByRole("heading", { name: "Find something worth watching, then stop scrolling." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Find the movie. Keep the shortlist." })).toBeVisible();
   await expect(page.getByLabel("Region")).toBeVisible();
   await expect(page.getByLabel("Availability")).toBeVisible();
-  await expect(page.getByRole("button", { name: /Refresh picks|Refreshing.../ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Find a movie|Finding.../ })).toBeVisible();
 
   const firstTitle = (await page.getByTestId("best-match-card").locator("h2").textContent())?.trim() ?? "";
   await page.getByRole("button", { name: /^Save$/ }).first().click();

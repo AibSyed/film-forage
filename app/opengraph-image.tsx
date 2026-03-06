@@ -18,22 +18,22 @@ export default function OpenGraphImage() {
           width: "100%",
           height: "100%",
           padding: "64px",
-          background: "linear-gradient(135deg, #fbf6ec, #ead6b2)",
-          color: "#24180f",
+          background: "linear-gradient(135deg, #141d24, #0a1015 72%)",
+          color: "#fff8ee",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ fontSize: 28, letterSpacing: 10, textTransform: "uppercase", color: "#6f5d49" }}>Film Forage</div>
+        <div style={{ fontSize: 28, letterSpacing: 10, textTransform: "uppercase", color: "#ffb36c" }}>Film Forage</div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 80, fontWeight: 700, lineHeight: 1 }}>Find one good movie faster.</div>
-          <div style={{ marginTop: 24, fontSize: 34, maxWidth: 880, color: "#4c3a2b" }}>
-            Real watch availability, cleaner filters, and a local-first watchlist.
+          <div style={{ fontSize: 76, fontWeight: 800, lineHeight: 0.92 }}>Find the movie. Keep the shortlist.</div>
+          <div style={{ marginTop: 24, fontSize: 34, maxWidth: 920, color: "#d7e3e7" }}>
+            One strong lead, a few credible backups, and live streaming availability by region.
           </div>
         </div>
-        <div style={{ display: "flex", gap: 18, fontSize: 24, color: "#4c3a2b" }}>
-          <div>Film Forage</div>
-          <div>Title search</div>
-          <div>Local watchlist</div>
+        <div style={{ display: "flex", gap: 18, fontSize: 24, color: "#bfcfd7" }}>
+          <div>Lead first</div>
+          <div>Backups nearby</div>
+          <div>Providers by region</div>
         </div>
       </div>
     ),

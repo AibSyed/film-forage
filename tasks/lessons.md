@@ -31,3 +31,11 @@
 - What went wrong: I pushed Film Forage polish while the live-data path was still broken, which made the UI review misleading because the product was stuck in reserve mode.
 - Root cause: I treated layout polish and production data recovery as separate validation tracks instead of requiring a reviewer pass against the real live-data state.
 - Prevention rule: never sign off on a data-driven product UI until either the live integration is working in production or an explicit fixture-based visual mode is used and documented for the review.
+
+- What went wrong: I kept trying to polish Film Forage with local copy and spacing tweaks even though the core type system and home layout still looked like a generic shared app shell.
+- Root cause: I optimized for preserving the existing component structure instead of stepping back and giving Film Forage its own visual system and wider decision-first layout.
+- Prevention rule: if a product-specific UI still reads like a sibling app after one polish pass, reset the typography and primary layout before spending more time on micro-copy.
+
+- What went wrong: the first Film Forage relaunch kept Advicely-adjacent typography, card density, and shell structure, so the product felt like a reused template instead of its own tool.
+- Root cause: I treated copy cleanup and spacing fixes as sufficient polish instead of re-evaluating the entire visual system as a distinct product identity.
+- Prevention rule: for every portfolio-facing app relaunch, explicitly compare typography, spacing, and layout language against sibling apps and reject any surface that still feels like a template variant.
