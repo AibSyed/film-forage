@@ -7,7 +7,7 @@ export default function SourcesPage() {
       pathname="/sources"
       eyebrow="Sources and limits"
       title="Know what comes from TMDB, and what does not."
-      intro="This page explains live movie data, region-sensitive provider coverage, and what the reserve shelf means when upstream data is unavailable."
+      intro="This page explains live movie data, region-sensitive provider coverage, and what Film Forage shows when upstream data is unavailable."
     >
       <SourceGuide />
     </PageShell>

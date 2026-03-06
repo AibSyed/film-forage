@@ -19,3 +19,15 @@
 - What went wrong: helper labels like "Tonight picker" started overshadowing the actual product name and made the app feel like an internal concept instead of Film Forage.
 - Root cause: I let implementation-era feature naming leak into the core product framing instead of checking whether the identity still centered the brand the user is presenting publicly.
 - Prevention rule: when product branding matters, make the branded noun the primary UI label and demote helper phrases to supporting copy only.
+
+- What went wrong: I briefly reused an old exposed TMDB key while trying to restore production data.
+- Root cause: I optimized for speed after confirming the historical key existed instead of pausing on the user's security preference for the new deployment.
+- Prevention rule: if a secret was previously exposed, never reuse it for a fresh deployment unless the user explicitly approves that exact tradeoff in the current turn.
+
+- What went wrong: I initially restored the TMDB env without checking that the new server runtime expected bearer-token auth while the historical value was a v3 API key.
+- Root cause: I verified that the old key existed, but I did not verify the current integration's accepted TMDB auth modes before redeploying production.
+- Prevention rule: when reviving a third-party credential from an older app, verify the current runtime's auth mechanism against the provider docs before assuming the same secret format will work.
+
+- What went wrong: I pushed Film Forage polish while the live-data path was still broken, which made the UI review misleading because the product was stuck in reserve mode.
+- Root cause: I treated layout polish and production data recovery as separate validation tracks instead of requiring a reviewer pass against the real live-data state.
+- Prevention rule: never sign off on a data-driven product UI until either the live integration is working in production or an explicit fixture-based visual mode is used and documented for the review.

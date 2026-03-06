@@ -81,3 +81,6 @@ export const tmdbMovieRecommendationsSchema = z.object({
 export const tmdbProviderCatalogSchema = z.object({
   results: z.array(tmdbProviderEntrySchema),
 });
+
+export type TmdbMovieDetail = z.infer<typeof tmdbMovieDetailSchema>;
+export type TmdbRegionalWatchProviders = z.infer<typeof tmdbWatchProvidersSchema>["results"][string];

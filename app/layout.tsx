@@ -6,22 +6,22 @@ const display = Fraunces({ subsets: ["latin"], variable: "--font-display" });
 const body = Sora({ subsets: ["latin"], variable: "--font-body" });
 
 export const metadata: Metadata = {
-  title: "Film Forage | Pick Tonight's Movie",
-  description: "Choose one movie for tonight with cleaner filters, real watch availability, and a local-first watchlist.",
+  title: "Film Forage | Find Something Worth Watching",
+  description: "Filter by runtime, mood, and streaming services to land on one movie worth watching without the endless scroll.",
   metadataBase: new URL("https://film-forage.vercel.app"),
   icons: {
     icon: "/icon",
     apple: "/apple-icon",
   },
   openGraph: {
-    title: "Film Forage | Pick Tonight's Movie",
-    description: "Choose a movie with real watch availability, honest fit reasons, and a local-first watchlist.",
+    title: "Film Forage | Find Something Worth Watching",
+    description: "Filter by runtime, mood, and streaming services to land on one movie worth watching without the endless scroll.",
     images: "/opengraph-image",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Film Forage | Pick Tonight's Movie",
-    description: "Choose a movie with real watch availability, honest fit reasons, and a local-first watchlist.",
+    title: "Film Forage | Find Something Worth Watching",
+    description: "Filter by runtime, mood, and streaming services to land on one movie worth watching without the endless scroll.",
     images: "/twitter-image",
   },
 };

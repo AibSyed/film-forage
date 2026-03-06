@@ -1,4 +1,4 @@
-# Film Forage | Pick Tonight's Movie
+# Film Forage | Find Something Worth Watching
 
 Film Forage is a practical movie-picking tool built for one job: help you decide what to watch tonight without spiraling through tabs, streaming apps, and half-remembered titles.
 
@@ -9,7 +9,7 @@ It uses TMDB for live movie discovery, title lookup, detail pages, recommendatio
 - `Best match` plus honest backup rows instead of an endless decorative deck.
 - `Direct title search` for when you already know the neighborhood.
 - `Local-first watchlist` with private notes and clean export.
-- `Source guide` that explains live data, regional limits, and reserve-shelf fallback behavior plainly.
+- `Source guide` that explains live data, regional limits, and Film Forage fallback picks plainly.
 
 ## Routes
 - `/` home picker
@@ -32,19 +32,20 @@ flowchart LR
   SEARCH --> TMDB2["TMDB Search + Movie + Watch Providers"]
   UI --> LS["Local Workspace Store"]
   LS --> UI
-  PICK --> RES["Reserve Shelf"]
+  PICK --> RES["Film Forage Fallback Picks"]
 ```
 
 ## Data Truth
 - Live movie data comes from TMDB.
 - Watch availability comes from TMDB's JustWatch-backed provider data.
 - The app does not invent confidence scores or fake curator rationale.
-- If live data is unavailable, Film Forage explicitly switches to a small reserve shelf and marks availability as unknown.
+- If live data is unavailable, Film Forage explicitly switches to its own fallback picks and marks availability as unknown.
 
 ## Environment
 Copy `.env.example` to `.env.local`.
 
-- `TMDB_ACCESS_TOKEN` required for live TMDB fetches. Without it, the app falls back to the reserve shelf.
+- `TMDB_ACCESS_TOKEN` required for live TMDB fetches. It may hold either a TMDB read-access bearer token or a TMDB v3 API key.
+- `TMDB_API_KEY` is also supported as an optional alternative env name when the project is using TMDB's v3 API-key auth mode.
 - `TMDB_BASE_URL` optional override.
 
 ## Local Development
