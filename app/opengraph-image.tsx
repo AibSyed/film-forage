@@ -1,15 +1,40 @@
 import { ImageResponse } from "next/og";
 
-export const size = { width: 1200, height: 630 };
+export const size = {
+  width: 1200,
+  height: 630,
+};
+
 export const contentType = "image/png";
-export const alt = "Film Forage — Neo-noir Discovery";
 
 export default function OpenGraphImage() {
   return new ImageResponse(
     (
-      <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", background: "linear-gradient(160deg, #111111, #1f2937 55%, #78350f)", color: "#fef3c7", padding: "60px" }}>
-        <div style={{ letterSpacing: "0.4em", fontSize: 28 }}>FILM FORAGE</div>
-        <div style={{ fontSize: 90, lineHeight: 1 }}>Neo-noir Discovery Engine</div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          width: "100%",
+          height: "100%",
+          padding: "64px",
+          background: "linear-gradient(135deg, #fbf6ec, #ead6b2)",
+          color: "#24180f",
+          fontFamily: "sans-serif",
+        }}
+      >
+        <div style={{ fontSize: 28, letterSpacing: 10, textTransform: "uppercase", color: "#6f5d49" }}>Film Forage</div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ fontSize: 88, fontWeight: 700, lineHeight: 1 }}>Pick tonight&apos;s movie.</div>
+          <div style={{ marginTop: 24, fontSize: 34, maxWidth: 880, color: "#4c3a2b" }}>
+            Real watch availability, cleaner filters, and a local-first watchlist.
+          </div>
+        </div>
+        <div style={{ display: "flex", gap: 18, fontSize: 24, color: "#4c3a2b" }}>
+          <div>Tonight picker</div>
+          <div>Title search</div>
+          <div>Local watchlist</div>
+        </div>
       </div>
     ),
     size

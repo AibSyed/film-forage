@@ -1,47 +1,50 @@
-# Film Forage - Neo-Noir Editorial Discovery
+# Film Forage | Pick Tonight's Movie
 
-Film Forage is a premium cinematic discovery experience rebuilt with a zero-legacy architecture: intent-driven filtering, card-based exploration, and a ranked shortlist loop.
+Film Forage is a practical movie-picking tool built for one job: help you decide what to watch tonight without spiraling through tabs, streaming apps, and half-remembered titles.
+
+It uses TMDB for live movie discovery, title lookup, detail pages, recommendations, and watch-provider data. Saved picks, notes, hidden titles, and recent searches stay local in the browser for this phase.
 
 ## Product Value
-- Emotional intent filters (`mood`, `genre`, `runtime`) that shape recommendation lanes.
-- Embla-driven discovery deck with save-to-shortlist momentum.
-- Drag-rank shortlist board for planning watch order.
-- Editorial collection pages and title briefings tied to normalized contracts.
+- `Tonight picker` for region, runtime, service, genre, and vibe filtering.
+- `Best match` plus honest backup rows instead of an endless decorative deck.
+- `Direct title search` for when you already know the neighborhood.
+- `Local-first watchlist` with private notes and clean export.
+- `Source guide` that explains live data, regional limits, and reserve fallback behavior plainly.
 
-## Experience Map
-- `/` discovery stage
-- `/title/[id]` title briefing
-- `/shortlist` ranked shortlist hub
-- `/collections/[slug]` curated collection narrative
+## Routes
+- `/` tonight picker
+- `/search` title lookup
+- `/movie/[id]` live movie detail
+- `/watchlist` local saved picks and notes
+- `/sources` provenance, attribution, and limits
 
 ## Architecture
 ```mermaid
 flowchart LR
-  U["Viewer"] --> UI["Neo-noir Discovery UI"]
-  UI --> Q["TanStack Query Cache"]
-  Q --> RH["/app/api/discovery Route Handler"]
-  RH --> ORCH["Discovery Orchestrator"]
-  ORCH --> TMDB["TMDB Adapter"]
-  ORCH --> CUR["Curated Catalog Adapter"]
-  ORCH --> Z["Zod Contract Validation"]
-  Z --> UI
-  UI --> LS["Local Shortlist Store"]
+  U["Viewer"] --> UI["Tonight Picker UI"]
+  UI --> RH1["POST /api/pick"]
+  UI --> RH2["GET /api/search"]
+  UI --> RH3["GET /api/providers"]
+  RH1 --> PICK["Picker Service"]
+  RH2 --> SEARCH["Search Service"]
+  RH3 --> PROV["Provider Catalog Service"]
+  PICK --> TMDB1["TMDB Discover + Movie + Watch Providers"]
+  SEARCH --> TMDB2["TMDB Search + Movie + Watch Providers"]
+  UI --> LS["Local Workspace Store"]
+  LS --> UI
+  PICK --> RES["Editorial Reserve"]
 ```
 
-## Deployment Model
-- Platform: Vercel
-- Production branch: `master`
-- PR branches: preview deployments when Git integration is connected
-
-## Security Posture
-- `TMDB_ACCESS_TOKEN` is server-only.
-- No `NEXT_PUBLIC_` secrets.
-- CSP and security headers enforced in [`next.config.ts`](/Users/aib/Desktop/Development/Projects/_rewrites/film-forage/next.config.ts).
+## Data Truth
+- Live movie data comes from TMDB.
+- Watch availability comes from TMDB's JustWatch-backed provider data.
+- The app does not invent confidence scores or fake curator rationale.
+- If live data is unavailable, Film Forage explicitly switches to a small editorial reserve and marks availability as unknown.
 
 ## Environment
 Copy `.env.example` to `.env.local`.
 
-- `TMDB_ACCESS_TOKEN` required for live discovery.
+- `TMDB_ACCESS_TOKEN` required for live TMDB fetches.
 - `TMDB_BASE_URL` optional override.
 
 ## Local Development
@@ -58,7 +61,11 @@ pnpm run audit:high
 pnpm run docs:check
 ```
 
-## Troubleshooting
-- If TMDB fails, curated fallback should continue delivering cards.
-- If shortlist state appears stale, clear local storage and refresh.
-- If docs checks fail, run `pnpm run docs:check` and correct markdown/Mermaid syntax.
+## Operations Notes
+- The launch region defaults to `US` and is user-editable.
+- Provider filters can disappear temporarily when TMDB provider data is unavailable.
+- Local notes, hidden picks, saved movies, and recent searches stay in-browser only for this phase.
+
+## Attribution
+- [TMDB](https://www.themoviedb.org/)
+- [JustWatch](https://www.justwatch.com/)
