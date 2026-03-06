@@ -10,7 +10,7 @@ export function SiteFooter({ compact = false }: { compact?: boolean }) {
           <p className="mt-3 max-w-xl text-sm leading-7 text-[var(--ink-dim)]">
             A focused movie-picking tool for the moment when a group needs one real option, not another scroll spiral.
           </p>
-          <p className="mt-3 text-sm text-[var(--ink-muted)]">Created by Shoaib (Aib) Syed.</p>
+          <p className="mt-3 text-sm text-[var(--ink-muted)]">Film Forage by Shoaib (Aib) Syed.</p>
           {!compact ? (
             <div className="mt-4 flex flex-wrap gap-2">
               <span className="inline-flex items-center rounded-full border border-[var(--line-soft)] bg-[var(--panel)] px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-[var(--ink-dim)]">

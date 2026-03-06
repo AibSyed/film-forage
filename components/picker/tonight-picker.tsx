@@ -137,7 +137,7 @@ export function TonightPicker({
   }
 
   return (
-    <section className="grid gap-5 xl:grid-cols-[1.14fr_0.86fr]">
+    <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_22rem] 2xl:grid-cols-[minmax(0,1.08fr)_24rem]">
       <div className="order-1 space-y-5">
         <article className="space-y-4 rounded-[2rem] border border-[var(--line-soft)] bg-[linear-gradient(160deg,rgba(15,31,40,0.96),rgba(9,20,28,0.94))] p-4 shadow-[0_28px_90px_rgba(0,0,0,0.26)] md:p-5">
           <div className="flex flex-wrap items-start justify-between gap-3">
@@ -146,7 +146,7 @@ export function TonightPicker({
                 <Sparkles size={16} className="text-[var(--accent-strong)]" /> Best match
               </div>
               <p className="max-w-xl text-sm leading-7 text-[var(--ink-dim)]">
-                Start with one viable movie, then keep the alternates close if the room changes direction.
+                Start with one usable answer from Film Forage, then keep the alternates nearby if the room changes direction.
               </p>
             </div>
             <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">Start here</p>
@@ -182,7 +182,7 @@ export function TonightPicker({
             </div>
             <Link href={"/watchlist" as Route} className="text-sm font-semibold text-[var(--ink-main)] hover:text-[var(--ink-strong)]">View watchlist</Link>
           </div>
-          <div className="grid gap-4 xl:grid-cols-2">
+          <div className="grid gap-4 2xl:grid-cols-2">
             {pick.backups.map((movie) => (
               <MovieCard key={movie.id} movie={movie} compact onDismissed={(id) => setPick((current) => ({ ...current, backups: current.backups.filter((entry) => entry.id !== id) }))} />
             ))}
@@ -195,7 +195,7 @@ export function TonightPicker({
               <h3 className="font-display text-3xl text-[var(--ink-strong)]">Try a different lane</h3>
               <p className="text-sm text-[var(--ink-dim)]">If your current services are thin tonight, these looser picks are still worth a look.</p>
             </div>
-            <div className="grid gap-4 xl:grid-cols-2">
+            <div className="grid gap-4 2xl:grid-cols-2">
               {pick.alternateLane.map((movie) => (
                 <MovieCard key={movie.id} movie={movie} compact onDismissed={(id) => setPick((current) => ({ ...current, alternateLane: current.alternateLane.filter((entry) => entry.id !== id) }))} />
               ))}
@@ -208,8 +208,8 @@ export function TonightPicker({
         <article className="rounded-[2rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.24)] md:p-6 xl:sticky xl:top-6">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs uppercase tracking-[0.24em] text-[var(--ink-muted)]">Tonight filters</p>
-              <h2 className="mt-2 font-display text-3xl text-[var(--ink-strong)] md:text-[2.4rem]">Tune the lane, then move.</h2>
+              <p className="text-xs uppercase tracking-[0.24em] text-[var(--ink-muted)]">Forage controls</p>
+              <h2 className="mt-2 font-display text-3xl text-[var(--ink-strong)] md:text-[2.4rem]">Tune the forage, then commit.</h2>
               <p className="mt-2 max-w-lg text-sm leading-7 text-[var(--ink-dim)]">
                 Keep the decision surface simple. Search directly if you already know the title, or adjust a few filters and rerun.
               </p>

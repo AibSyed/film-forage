@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("renders the tonight picker and supports save plus search flows", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page.getByRole("heading", { name: "Pick tonight's movie before the tabs take over." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Film Forage helps you land one movie worth tonight." })).toBeVisible();
   await expect(page.getByLabel("Region")).toBeVisible();
   await expect(page.getByLabel("Availability")).toBeVisible();
   await expect(page.getByRole("button", { name: /Find a movie|Refreshing.../ })).toBeVisible();
