@@ -33,7 +33,7 @@ async function requestJson<T>(url: string, init?: RequestInit) {
   return (await response.json()) as T;
 }
 
-export function TonightPicker({ initialPick, initialProviders }: { initialPick: PickResponseVM; initialProviders: ProviderCatalogResponseVM }) {
+export function PickerStudio({ initialPick, initialProviders }: { initialPick: PickResponseVM; initialProviders: ProviderCatalogResponseVM }) {
   const router = useRouter();
   const [pick, setPick] = useState(initialPick);
   const [providerCatalog, setProviderCatalog] = useState(initialProviders);
@@ -281,8 +281,8 @@ export function TonightPicker({ initialPick, initialProviders }: { initialPick: 
       <section className="space-y-4 rounded-[1.8rem] border border-[var(--line-soft)] bg-[linear-gradient(160deg,rgba(14,22,31,0.99),rgba(8,13,20,0.99))] p-4 shadow-[0_26px_80px_rgba(0,0,0,0.28)] md:p-6 lg:p-7">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Tonight&apos;s shortlist</p>
-            <h3 className="font-display text-[2.1rem] leading-[0.95] text-[var(--ink-strong)] md:text-[3rem]">Best matches for tonight.</h3>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Shortlist</p>
+            <h3 className="font-display text-[2.1rem] leading-[0.95] text-[var(--ink-strong)] md:text-[3rem]">Best matches for your filters.</h3>
             <p className="max-w-3xl text-sm leading-7 text-[var(--ink-dim)]">These titles match your current filters.</p>
           </div>
           <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">Data source: {getSourceLabel(pick.meta.source)}</p>

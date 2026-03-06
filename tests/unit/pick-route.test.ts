@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/tmdb/picker", () => ({
-  pickTonight: vi.fn(async () => ({
+  pickMovies: vi.fn(async () => ({
     bestMatch: null,
     backups: [],
     alternateLane: [],
