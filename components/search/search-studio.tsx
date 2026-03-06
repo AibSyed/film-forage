@@ -91,7 +91,7 @@ export function SearchStudio({
                   setQuery(entry.query);
                   router.push(`/search?q=${encodeURIComponent(entry.query)}&region=${region}` as Route);
                 }}
-                className="rounded-full border border-[var(--line-soft)] bg-[var(--panel)] px-3 py-2 text-sm text-[var(--ink-main)] transition hover:border-[var(--line-strong)] hover:text-[var(--ink-strong)]"
+                className="rounded-md border border-[var(--line-soft)] bg-[var(--panel)] px-3 py-2 text-sm text-[var(--ink-main)] transition hover:border-[var(--line-strong)] hover:text-[var(--ink-strong)]"
               >
                 {entry.query}
               </button>
