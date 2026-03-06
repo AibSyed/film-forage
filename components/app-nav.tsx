@@ -7,7 +7,7 @@ const navItems = [
   { href: "/" as Route, label: "Home", icon: Film },
   { href: "/search" as Route, label: "Search", icon: Search },
   { href: "/watchlist" as Route, label: "Watchlist", icon: Bookmark },
-  { href: "/sources" as Route, label: "Data", icon: CircleHelp },
+  { href: "/sources" as Route, label: "Sources", icon: CircleHelp },
 ];
 
 function isActive(pathname: string, href: Route) {

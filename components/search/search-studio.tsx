@@ -60,12 +60,12 @@ export function SearchStudio({
           }}
         >
           <label className="space-y-2 text-sm text-[var(--ink-main)]">
-            <span>Title search</span>
-            <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by movie title" />
+            <span>Search by title</span>
+            <Input id="title-query" name="titleQuery" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by movie title" />
           </label>
           <label className="space-y-2 text-sm text-[var(--ink-main)]">
             <span>Region</span>
-            <SelectField value={region} onChange={(event) => setRegion(event.target.value)}>
+            <SelectField id="search-region" name="searchRegion" value={region} onChange={(event) => setRegion(event.target.value)}>
               {launchRegions.map((option) => (
                 <option key={option.code} value={option.code}>{option.label}</option>
               ))}
@@ -119,7 +119,7 @@ export function SearchStudio({
               <h2 className="font-display text-4xl text-[var(--ink-strong)]">Search results</h2>
               <p className="text-sm text-[var(--ink-dim)]">{initialResults.items.length} title{initialResults.items.length === 1 ? "" : "s"} found for &quot;{initialResults.query}&quot;.</p>
             </div>
-            <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">Direct title search</p>
+            <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">Search by title</p>
           </div>
           <div className="grid gap-4 lg:grid-cols-2">
             {initialResults.items.map((movie) => (

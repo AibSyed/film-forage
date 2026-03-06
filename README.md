@@ -9,7 +9,7 @@ It uses TMDB for live movie discovery, title search, detail pages, recommendatio
 - `Short movie list` that stays focused instead of turning into another endless feed.
 - `Direct title search` for when you already know the neighborhood.
 - `Local-first watchlist` with private notes and clean export.
-- `Source guide` that explains live data, regional limits, and Film Forage backup picks plainly.
+- `Source guide` that explains live data, regional limits, and Film Forage fallback titles plainly.
 
 ## Routes
 - `/` home picker
@@ -39,7 +39,7 @@ flowchart LR
 - Live movie data comes from TMDB.
 - Watch availability comes from TMDB's JustWatch-backed provider data.
 - The app does not invent confidence scores or fake curator rationale.
-- If live data is unavailable, Film Forage explicitly switches to its own backup picks and marks availability as unknown.
+- If live data is unavailable, Film Forage explicitly switches to its own fallback titles and marks availability as unknown.
 
 ## Environment
 Copy `.env.example` to `.env.local`.

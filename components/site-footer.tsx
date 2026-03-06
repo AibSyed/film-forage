@@ -15,7 +15,7 @@ export function SiteFooter({ compact = false }: { compact?: boolean }) {
           <p className="mt-3 text-sm text-[var(--ink-muted)]">&copy; {year} Film Forage by Shoaib (Aib) Syed.</p>
           {!compact ? (
             <p className="mt-4 text-xs uppercase tracking-[0.16em] text-[var(--ink-muted)]">
-              Region-aware • Service checks • Local watchlist
+              Choose a region • check services • save your shortlist
             </p>
           ) : null}
         </div>
@@ -25,12 +25,12 @@ export function SiteFooter({ compact = false }: { compact?: boolean }) {
             <Link href={("/" as Route)} className="hover:text-[var(--ink-main)]">Home</Link>
             <Link href={("/search" as Route)} className="hover:text-[var(--ink-main)]">Search</Link>
             <Link href={("/watchlist" as Route)} className="hover:text-[var(--ink-main)]">Watchlist</Link>
-            <Link href={("/sources" as Route)} className="hover:text-[var(--ink-main)]">Data</Link>
+            <Link href={("/sources" as Route)} className="hover:text-[var(--ink-main)]">Sources</Link>
           </div>
           {!compact ? (
             <>
               <p className="text-sm leading-7 text-[var(--ink-dim)]">
-                Data comes from TMDB and JustWatch-backed provider availability through TMDB. If live data drops out, Film Forage clearly marks backup titles.
+                Data comes from TMDB and JustWatch-backed provider availability through TMDB. If live data drops out, Film Forage clearly labels reserve titles.
               </p>
               <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--ink-dim)]">
                 <a href="https://www.themoviedb.org/" target="_blank" rel="noreferrer" className="hover:text-[var(--ink-main)]">TMDB</a>

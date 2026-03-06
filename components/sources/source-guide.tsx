@@ -2,7 +2,7 @@ export function SourceGuide() {
   return (
     <div className="grid gap-6">
       <section className="rounded-[2rem] border border-[var(--line-strong)] bg-[var(--surface-1)] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.2)]">
-        <p className="text-xs uppercase tracking-[0.24em] text-[var(--ink-faint)]">Data summary</p>
+        <p className="text-xs uppercase tracking-[0.24em] text-[var(--ink-faint)]">Sources summary</p>
         <p className="mt-3 max-w-3xl text-base leading-7 text-[var(--ink-soft)]">
           Film Forage uses TMDB for movie details and JustWatch-backed streaming availability delivered through TMDB. Saved picks, hidden movies, notes, and search history stay local in your browser.
         </p>
@@ -18,10 +18,10 @@ export function SourceGuide() {
           </ul>
         </article>
         <article className="rounded-[1.75rem] border border-[var(--line-strong)] bg-[var(--surface-1)] p-5 shadow-[0_18px_52px_rgba(0,0,0,0.16)]">
-          <h2 className="font-display text-3xl text-[var(--ink-strong)]">Backup picks</h2>
+          <h2 className="font-display text-3xl text-[var(--ink-strong)]">Fallback titles</h2>
           <ul className="mt-4 grid gap-3 text-sm leading-7 text-[var(--ink-soft)]">
             <li>If live TMDB data is unavailable, Film Forage switches to a small in-app set of movie picks so you still have options to review.</li>
-            <li>Backup picks are clearly labeled and never claim current streaming availability.</li>
+            <li>Fallback titles are clearly labeled and never claim current streaming availability.</li>
             <li>These picks are a temporary safety net, not live provider data.</li>
           </ul>
         </article>
