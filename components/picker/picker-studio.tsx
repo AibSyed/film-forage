@@ -292,7 +292,7 @@ export function PickerStudio({ initialPick, initialProviders }: { initialPick: P
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Movie picks</p>
             <h3 className="font-display text-[2.1rem] leading-[0.95] text-[var(--ink-strong)] md:text-[3rem]">Movies picked for your current setup.</h3>
             <p className="max-w-3xl text-sm leading-7 text-[var(--ink-dim)]">
-              These results update when you tap Find a movie. Hidden titles stay out until you reset them in Watchlist.
+              These results update when you tap Find a movie. Movies you hide will not appear again until you reset hidden picks in Watchlist.
             </p>
           </div>
           <div className="space-y-1 text-right">
