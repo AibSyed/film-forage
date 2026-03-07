@@ -1,0 +1,25 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Film Forage social card">
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#060D18"/>
+      <stop offset="1" stop-color="#0A1423"/>
+    </linearGradient>
+    <radialGradient id="noirWarm" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1060 92) rotate(143) scale(320 220)">
+      <stop stop-color="#DCAA54" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#DCAA54" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#base)"/>
+  <rect width="1200" height="630" fill="url(#noirWarm)"/>
+  <line x1="64" y1="132.5" x2="1136" y2="132.5" stroke="#2C3544"/>
+  <text x="64" y="90" fill="#F0D3A7" font-size="30" letter-spacing="6" font-family="Arial, sans-serif">FILM FORAGE</text>
+  <text x="64" y="280" fill="#FFF8EE" font-size="96" font-weight="700" font-family="Georgia, serif">Find a movie worth</text>
+  <text x="64" y="368" fill="#FFF8EE" font-size="96" font-weight="700" font-family="Georgia, serif">watching.</text>
+  <text x="64" y="442" fill="#DCCFB8" font-size="36" font-family="Arial, sans-serif">Region and streaming filters for faster movie decisions.</text>
+  <circle cx="79" cy="522" r="7" fill="#DCAA54"/>
+  <text x="98" y="530" fill="#F0DFC5" font-size="26" font-family="Arial, sans-serif">Search</text>
+  <circle cx="239" cy="522" r="7" fill="#DCAA54"/>
+  <text x="258" y="530" fill="#F0DFC5" font-size="26" font-family="Arial, sans-serif">Compare</text>
+  <circle cx="444" cy="522" r="7" fill="#DCAA54"/>
+  <text x="463" y="530" fill="#F0DFC5" font-size="26" font-family="Arial, sans-serif">Save watchlist</text>
+</svg>
