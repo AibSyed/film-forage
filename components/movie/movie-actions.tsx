@@ -52,7 +52,7 @@ export function MovieActions({ movie, onDismissed }: { movie: MovieMatchCardVM; 
           dismissMovie(movie.id);
           onDismissed?.(movie.id);
           toast("Hidden for now", {
-            description: `"${movie.title}" will stay hidden until you reset hidden picks in Watchlist.`,
+            description: `"${movie.title}" will not appear again until you reset hidden picks in Watchlist.`,
           });
         }}
       >
