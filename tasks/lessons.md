@@ -71,3 +71,7 @@
 - What went wrong: the new shortlist copy still used internal language (`pick board`, `filters`, `snapshot`) that can confuse first-time users.
 - Root cause: plain-language review focused on technical truthfulness but not on a first-time user vocabulary pass across all visible labels.
 - Prevention rule: before merge, run a first-time-user copy sweep and replace internal terms with plain words (`setup`, `movie picks`, `live data`, `backup list`) on every route and toast.
+
+- What went wrong: Social share images were initially captured as manual page screenshots, which caused inconsistent framing and visible crop artifacts.
+- Root cause: We did not treat Open Graph metadata output as the source-of-truth visual artifact for external sharing surfaces.
+- Prevention rule: Build and validate branded `opengraph-image` and `twitter-image` assets first, and keep external portfolio/share images aligned to those metadata routes.

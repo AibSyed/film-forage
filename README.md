@@ -48,6 +48,15 @@ Copy `.env.example` to `.env.local`.
 - `TMDB_API_KEY` is also supported as an optional alternative env name when the project is using TMDB's v3 API-key auth mode.
 - `TMDB_BASE_URL` optional override.
 
+## Social Metadata and Brand Assets
+
+- Metadata is defined in [`app/layout.tsx`](./app/layout.tsx) with canonical URL, Open Graph, and Twitter cards.
+- Dynamic social image routes:
+  - `/opengraph-image` (`1200x630` PNG)
+  - `/twitter-image` (`1200x630` PNG)
+- Branded static card source (for portfolio/docs):
+  - [`public/social/film-forage-card.svg`](./public/social/film-forage-card.svg)
+
 ## Local Development
 ```bash
 pnpm install

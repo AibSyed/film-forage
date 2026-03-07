@@ -78,3 +78,10 @@ flowchart LR
 - If the configured TMDB credential is missing or invalid, the picker and detail flows degrade to Film Forage fallback picks instead of guessing live availability.
 - CSP and security headers are enforced globally.
 - No `NEXT_PUBLIC_` secrets are used.
+
+## Metadata and Share Surfaces
+
+- Root metadata in `app/layout.tsx` defines canonical URL plus Open Graph/Twitter card metadata.
+- `app/opengraph-image.tsx` is the canonical dynamic social image route.
+- `app/twitter-image.tsx` re-exports the Open Graph image implementation for consistency.
+- `public/social/film-forage-card.svg` is the static neo-noir brand card for docs and portfolio usage.
