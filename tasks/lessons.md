@@ -63,3 +63,7 @@
 - What went wrong: adding success toasts caused an e2e selector collision because the toast repeated the same movie title text as the watchlist heading assertion.
 - Root cause: I changed UI feedback surfaces without re-checking strict Playwright text locators for ambiguity.
 - Prevention rule: when introducing toasts/snackbars, immediately tighten e2e assertions to role-based selectors (`heading`, `button`, etc.) instead of generic text matching.
+
+- What went wrong: the shortlist section looked static and unclear, and the footer hierarchy felt visually unbalanced despite passing functional checks.
+- Root cause: ranking behavior and explanatory copy were implicit in code but not made explicit in the UI layout/content, and the footer layout over-compressed information into uneven columns.
+- Prevention rule: for decision-support screens, always ship behavior transparency (`what updates this`, `source`, `updated time`) and run a dedicated visual-balance pass on footer/header shells before final merge.

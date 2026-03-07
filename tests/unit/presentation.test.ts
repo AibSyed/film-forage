@@ -8,8 +8,8 @@ import {
 
 describe("picker presentation helpers", () => {
   it("maps source labels to user-facing copy", () => {
-    expect(getSourceLabel("live_tmdb")).toBe("Live movie data");
-    expect(getSourceLabel("editorial_reserve")).toBe("Film Forage picks");
+    expect(getSourceLabel("live_tmdb")).toBe("Live TMDB snapshot");
+    expect(getSourceLabel("editorial_reserve")).toBe("Film Forage reserve catalog");
   });
 
   it("uses fallback copy that explains the fallback plainly", () => {
