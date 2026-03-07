@@ -67,3 +67,7 @@
 - What went wrong: the shortlist section looked static and unclear, and the footer hierarchy felt visually unbalanced despite passing functional checks.
 - Root cause: ranking behavior and explanatory copy were implicit in code but not made explicit in the UI layout/content, and the footer layout over-compressed information into uneven columns.
 - Prevention rule: for decision-support screens, always ship behavior transparency (`what updates this`, `source`, `updated time`) and run a dedicated visual-balance pass on footer/header shells before final merge.
+
+- What went wrong: the new shortlist copy still used internal language (`pick board`, `filters`, `snapshot`) that can confuse first-time users.
+- Root cause: plain-language review focused on technical truthfulness but not on a first-time user vocabulary pass across all visible labels.
+- Prevention rule: before merge, run a first-time-user copy sweep and replace internal terms with plain words (`setup`, `movie picks`, `live data`, `backup list`) on every route and toast.

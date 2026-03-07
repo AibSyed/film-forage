@@ -58,7 +58,7 @@ export function PickerStudio({ initialPick, initialProviders }: { initialPick: P
         toast.success(getPickerStatusMessage(nextPick.meta.source));
       }
     } catch (error) {
-      toast.error("Could not update the shortlist.", {
+      toast.error("Could not refresh movie picks.", {
         description: error instanceof Error ? error.message : "Try again in a moment.",
       });
     } finally {
@@ -174,8 +174,8 @@ export function PickerStudio({ initialPick, initialProviders }: { initialPick: P
       <article className="rounded-[1.8rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.24)] md:p-6 lg:p-7">
         <div className="grid gap-4 lg:grid-cols-1 lg:items-end">
           <div className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Filters</p>
-            <h2 className="font-display text-[1.85rem] leading-[1] text-[var(--ink-strong)] md:text-[2.5rem]">Set filters and get a shortlist.</h2>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Pick setup</p>
+            <h2 className="font-display text-[1.85rem] leading-[1] text-[var(--ink-strong)] md:text-[2.5rem]">Set your preferences and get movie picks.</h2>
             <p className="max-w-2xl text-sm leading-7 text-[var(--ink-dim)]">
               Start with region and availability. Add genre, mood, or services only when you need to narrow the results.
             </p>
@@ -289,15 +289,15 @@ export function PickerStudio({ initialPick, initialProviders }: { initialPick: P
       <section className="space-y-4 rounded-[1.8rem] border border-[var(--line-soft)] bg-[linear-gradient(160deg,rgba(14,22,31,0.99),rgba(8,13,20,0.99))] p-4 shadow-[0_26px_80px_rgba(0,0,0,0.28)] md:p-6 lg:p-7">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Current pick board</p>
-            <h3 className="font-display text-[2.1rem] leading-[0.95] text-[var(--ink-strong)] md:text-[3rem]">Movies that match your filters right now.</h3>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Movie picks</p>
+            <h3 className="font-display text-[2.1rem] leading-[0.95] text-[var(--ink-strong)] md:text-[3rem]">Movies picked for your current setup.</h3>
             <p className="max-w-3xl text-sm leading-7 text-[var(--ink-dim)]">
-              This board refreshes when you run Find a movie. Hidden titles stay out until you reset them in Watchlist.
+              These results update when you tap Find a movie. Hidden titles stay out until you reset them in Watchlist.
             </p>
           </div>
           <div className="space-y-1 text-right">
             <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">Source: {getSourceLabel(pick.meta.source)}</p>
-            <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-faint)]">Updated: {updatedAtLabel}</p>
+            <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-faint)]">Last updated: {updatedAtLabel}</p>
           </div>
         </div>
 
@@ -320,7 +320,7 @@ export function PickerStudio({ initialPick, initialProviders }: { initialPick: P
           </div>
         ) : (
           <div className="rounded-[1.25rem] border border-dashed border-[var(--line-strong)] bg-[var(--surface-soft)] p-8 text-sm text-[var(--ink-dim)]">
-            No strong matches yet. Widen the runtime, loosen the availability filter, or search directly for a title.
+            No good matches yet. Try a longer runtime, switch availability to Anything, or search by title.
           </div>
         )}
       </section>
@@ -330,7 +330,7 @@ export function PickerStudio({ initialPick, initialProviders }: { initialPick: P
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h3 className="font-display text-[1.9rem] leading-[0.98] text-[var(--ink-strong)] md:text-[2.5rem]">More options</h3>
-              <p className="text-sm text-[var(--ink-dim)]">Use these when the top picks are close but not quite right.</p>
+              <p className="text-sm text-[var(--ink-dim)]">More titles to try if the first picks are not the one.</p>
             </div>
             <Link href={("/watchlist" as Route)} className="text-sm font-semibold text-[var(--ink-main)] hover:text-[var(--ink-strong)]">View watchlist</Link>
           </div>
@@ -347,10 +347,10 @@ export function PickerStudio({ initialPick, initialProviders }: { initialPick: P
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h3 className="font-display text-[1.9rem] leading-[0.98] text-[var(--ink-strong)] md:text-[2.4rem]">No matches yet</h3>
-              <p className="text-sm text-[var(--ink-dim)]">Change filters or search by title to widen the shortlist.</p>
+              <p className="text-sm text-[var(--ink-dim)]">Change your preferences or search by title to pull in more options.</p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <Button variant="secondary" onClick={() => setFiltersOpen(true)}>Open more filters</Button>
+              <Button variant="secondary" onClick={() => setFiltersOpen(true)}>Open more options</Button>
               <Button variant="ghost" onClick={() => router.push("/search" as Route)}>Search by title</Button>
             </div>
           </div>

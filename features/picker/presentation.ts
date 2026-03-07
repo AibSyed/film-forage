@@ -1,5 +1,5 @@
 export function getSourceLabel(source: "live_tmdb" | "editorial_reserve") {
-  return source === "live_tmdb" ? "Live TMDB snapshot" : "Film Forage reserve catalog";
+  return source === "live_tmdb" ? "Live movie data" : "Backup movie list";
 }
 
 export function getPickerStatusMessage(source: "live_tmdb" | "editorial_reserve") {

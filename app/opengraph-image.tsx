@@ -33,7 +33,7 @@ export default function OpenGraphImage() {
         <div style={{ display: "flex", gap: 18, fontSize: 24, color: "#bcae9b" }}>
           <div>Choose region</div>
           <div>Check services</div>
-          <div>Save shortlist</div>
+          <div>Save to watchlist</div>
         </div>
       </div>
     ),
