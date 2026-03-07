@@ -1,4 +1,5 @@
 import {
+  getGenreLabel,
   pickResponseSchema,
   type MovieMatchCardVM,
   type PickRequestVM,
@@ -70,6 +71,56 @@ function genreFilter(request: PickRequestVM) {
 
   const vibe = vibeProfiles[request.vibe];
   return vibe.genreIds.length > 0 ? vibe.genreIds.join(",") : undefined;
+}
+
+function providerMatchCount(card: MovieMatchCardVM, requestedProviders: number[]) {
+  if (requestedProviders.length === 0) {
+    return 0;
+  }
+
+  const available = new Set([
+    ...card.providerSummary.included.map((provider) => provider.id),
+    ...card.providerSummary.rent.map((provider) => provider.id),
+    ...card.providerSummary.buy.map((provider) => provider.id),
+  ]);
+
+  return requestedProviders.filter((providerId) => available.has(providerId)).length;
+}
+
+function scoreMovie(card: MovieMatchCardVM, request: PickRequestVM) {
+  let score = 0;
+
+  if (card.runtimeMinutes !== null) {
+    score += card.runtimeMinutes <= request.runtimeMax ? 22 : -18;
+    score += Math.max(0, 12 - Math.floor(Math.abs(card.runtimeMinutes - request.runtimeMax) / 12));
+  }
+
+  if (request.genre !== "any") {
+    const targetGenre = getGenreLabel(request.genre).toLowerCase();
+    score += card.genres.some((genre) => genre.toLowerCase() === targetGenre) ? 24 : -12;
+  }
+
+  const providerMatches = providerMatchCount(card, request.providers);
+  if (request.providers.length > 0) {
+    score += providerMatches * 14;
+    if (providerMatches === 0) {
+      score -= 15;
+    }
+  }
+
+  if (request.availabilityMode === "subscription") {
+    score += card.providerSummary.included.length > 0 ? 22 : -16;
+  } else if (request.availabilityMode === "rent_ok") {
+    score += card.providerSummary.included.length > 0 || card.providerSummary.rent.length > 0 ? 18 : -10;
+  } else {
+    score += card.providerSummary.status === "available" ? 8 : 0;
+  }
+
+  if (card.voteAverage !== null) {
+    score += Math.min(card.voteAverage, 9);
+  }
+
+  return score;
 }
 
 async function hydrateMovie(id: number, request: PickRequestVM): Promise<MovieMatchCardVM> {
@@ -156,9 +207,18 @@ export async function pickMovies(request: PickRequestVM) {
     }
 
     const hydrated = await Promise.all(primaryCandidates.slice(0, 5).map((candidate) => hydrateMovie(candidate.id, request)));
+    const ranked = hydrated
+      .map((movie) => ({ movie, score: scoreMovie(movie, request) }))
+      .sort((left, right) => {
+        if (right.score !== left.score) {
+          return right.score - left.score;
+        }
+        return (right.movie.voteAverage ?? 0) - (left.movie.voteAverage ?? 0);
+      })
+      .map((entry) => entry.movie);
 
-    const alternateCandidates = hydrated.length < 4 ? await discoverCandidates(request, true) : [];
-    const dedupedAlternate = alternateCandidates.filter((candidate) => !hydrated.some((movie) => movie.id === candidate.id));
+    const alternateCandidates = ranked.length < 4 ? await discoverCandidates(request, true) : [];
+    const dedupedAlternate = alternateCandidates.filter((candidate) => !ranked.some((movie) => movie.id === candidate.id));
     const alternateLane = dedupedAlternate.length > 0
       ? await Promise.all(dedupedAlternate.slice(0, 3).map((candidate) => hydrateMovie(candidate.id, {
           ...request,
@@ -168,8 +228,8 @@ export async function pickMovies(request: PickRequestVM) {
       : [];
 
     return pickResponseSchema.parse({
-      bestMatch: hydrated[0] ?? null,
-      backups: hydrated.slice(1),
+      bestMatch: ranked[0] ?? null,
+      backups: ranked.slice(1),
       alternateLane,
       meta: {
         region: request.region,

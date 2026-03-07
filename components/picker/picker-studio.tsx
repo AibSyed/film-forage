@@ -142,6 +142,14 @@ export function PickerStudio({ initialPick, initialProviders }: { initialPick: P
   }, [pick.bestMatch, pick.backups]);
 
   const moreMatches = useMemo(() => [...pick.backups.slice(2), ...pick.alternateLane], [pick.backups, pick.alternateLane]);
+  const updatedAtLabel = useMemo(() => {
+    const parsed = new Date(pick.meta.requestedAt);
+    if (Number.isNaN(parsed.getTime())) {
+      return "just now";
+    }
+
+    return parsed.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  }, [pick.meta.requestedAt]);
 
   function toggleProvider(id: number) {
     setFilters((current) => ({
@@ -281,11 +289,16 @@ export function PickerStudio({ initialPick, initialProviders }: { initialPick: P
       <section className="space-y-4 rounded-[1.8rem] border border-[var(--line-soft)] bg-[linear-gradient(160deg,rgba(14,22,31,0.99),rgba(8,13,20,0.99))] p-4 shadow-[0_26px_80px_rgba(0,0,0,0.28)] md:p-6 lg:p-7">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Shortlist</p>
-            <h3 className="font-display text-[2.1rem] leading-[0.95] text-[var(--ink-strong)] md:text-[3rem]">Best matches for your filters.</h3>
-            <p className="max-w-3xl text-sm leading-7 text-[var(--ink-dim)]">These titles match your current filters.</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">Current pick board</p>
+            <h3 className="font-display text-[2.1rem] leading-[0.95] text-[var(--ink-strong)] md:text-[3rem]">Movies that match your filters right now.</h3>
+            <p className="max-w-3xl text-sm leading-7 text-[var(--ink-dim)]">
+              This board refreshes when you run Find a movie. Hidden titles stay out until you reset them in Watchlist.
+            </p>
           </div>
-          <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">Data source: {getSourceLabel(pick.meta.source)}</p>
+          <div className="space-y-1 text-right">
+            <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-muted)]">Source: {getSourceLabel(pick.meta.source)}</p>
+            <p className="text-xs uppercase tracking-[0.22em] text-[var(--ink-faint)]">Updated: {updatedAtLabel}</p>
+          </div>
         </div>
 
         {pick.meta.source === "editorial_reserve" ? (
@@ -312,12 +325,12 @@ export function PickerStudio({ initialPick, initialProviders }: { initialPick: P
         )}
       </section>
 
-      {moreMatches.length > 0 ? (
+        {moreMatches.length > 0 ? (
         <section className="space-y-4 rounded-[1.8rem] border border-[var(--line-soft)] bg-[var(--surface-raised)] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.18)] md:p-5 lg:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h3 className="font-display text-[1.9rem] leading-[0.98] text-[var(--ink-strong)] md:text-[2.5rem]">More options</h3>
-              <p className="text-sm text-[var(--ink-dim)]">More matches if you want a wider short list.</p>
+              <p className="text-sm text-[var(--ink-dim)]">Use these when the top picks are close but not quite right.</p>
             </div>
             <Link href={("/watchlist" as Route)} className="text-sm font-semibold text-[var(--ink-main)] hover:text-[var(--ink-strong)]">View watchlist</Link>
           </div>

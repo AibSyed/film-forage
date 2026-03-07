@@ -38,11 +38,11 @@ export function PageShell({
               <h1 className="max-w-4xl font-display text-[2.35rem] leading-[0.94] text-[var(--ink-strong)] md:text-[4.6rem]">{title}</h1>
               <p className="max-w-3xl text-sm leading-7 text-[var(--ink-soft)] md:text-base">{intro}</p>
               <p className="text-xs uppercase tracking-[0.16em] text-[var(--ink-muted)] lg:hidden">
-                Choose a region • check services • save your shortlist
+                Choose a region • check services • save to watchlist
               </p>
             </div>
             <p className="hidden text-xs uppercase tracking-[0.16em] text-[var(--ink-muted)] lg:block">
-              Choose a region • check services • save your shortlist
+              Choose a region • check services • save to watchlist
             </p>
           </section>
         ) : (
