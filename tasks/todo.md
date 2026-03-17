@@ -67,6 +67,19 @@
   - `pnpm dlx knip --no-progress`
   - `pnpm run test:e2e`
 
+## 2026-03-16 Dependency Audit
+
+### Checklist
+- [completed] Refresh routine dependency drift within the current supported stack.
+- [completed] Verify whether `eslint@10` is actually compatible before upgrading.
+- [completed] Re-run `check` and `audit:high` after dependency changes.
+
+### Verification Log
+- `pnpm outdated` -> only `eslint` remained outdated after the refresh; `jsdom` moved to `29.0.0`
+- `pnpm run check` (pass)
+- `pnpm run audit:high` (pass)
+- `eslint@10.0.3` trialed and reverted after reproducing `eslint-plugin-react` runtime failure during lint
+
 
 ## UX Relaunch Pass
 

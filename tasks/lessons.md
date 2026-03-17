@@ -75,3 +75,7 @@
 - What went wrong: Social share images were initially captured as manual page screenshots, which caused inconsistent framing and visible crop artifacts.
 - Root cause: We did not treat Open Graph metadata output as the source-of-truth visual artifact for external sharing surfaces.
 - Prevention rule: Build and validate branded `opengraph-image` and `twitter-image` assets first, and keep external portfolio/share images aligned to those metadata routes.
+
+- What went wrong: I trialed `eslint@10` during dependency cleanup and broke lint immediately across the repo.
+- Root cause: I trusted broad Next peer ranges before verifying the actual `eslint-plugin-react` and sibling plugin compatibility under the current Next lint stack.
+- Prevention rule: For Next-based repos, treat any ESLint major bump as blocked until a real lint run passes with the full plugin tree, even if top-level peer ranges look permissive.
