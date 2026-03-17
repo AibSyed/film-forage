@@ -38,6 +38,7 @@ export function PickerStudio({ initialPick, initialProviders }: { initialPick: P
   const [pick, setPick] = useState(initialPick);
   const [providerCatalog, setProviderCatalog] = useState(initialProviders);
   const [pending, setPending] = useState(false);
+  const [updatedAtLabel, setUpdatedAtLabel] = useState("just now");
   const [searchPrompt, setSearchPrompt] = useState("");
   const [filters, setFilters] = useState(defaultPickRequest);
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -109,6 +110,16 @@ export function PickerStudio({ initialPick, initialProviders }: { initialPick: P
     setProviderPreference(filters.providers);
   }, [filters.providers]);
 
+  useEffect(() => {
+    const parsed = new Date(pick.meta.requestedAt);
+    if (Number.isNaN(parsed.getTime())) {
+      setUpdatedAtLabel("just now");
+      return;
+    }
+
+    setUpdatedAtLabel(parsed.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }));
+  }, [pick.meta.requestedAt]);
+
   const topProviders = useMemo(() => providerCatalog.providers.slice(0, 12), [providerCatalog.providers]);
   const summaryFacts = useMemo(() => {
     const facts = [
@@ -142,15 +153,6 @@ export function PickerStudio({ initialPick, initialProviders }: { initialPick: P
   }, [pick.bestMatch, pick.backups]);
 
   const moreMatches = useMemo(() => [...pick.backups.slice(2), ...pick.alternateLane], [pick.backups, pick.alternateLane]);
-  const updatedAtLabel = useMemo(() => {
-    const parsed = new Date(pick.meta.requestedAt);
-    if (Number.isNaN(parsed.getTime())) {
-      return "just now";
-    }
-
-    return parsed.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-  }, [pick.meta.requestedAt]);
-
   function toggleProvider(id: number) {
     setFilters((current) => ({
       ...current,
@@ -185,7 +187,14 @@ export function PickerStudio({ initialPick, initialProviders }: { initialPick: P
         <div className="mt-5 grid gap-3 xl:grid-cols-[minmax(0,1.5fr)_220px_220px_auto] xl:items-end">
           <label className="space-y-2 text-sm text-[var(--ink-main)]">
             <span>Know part of the title?</span>
-            <Input id="title-prompt" name="titlePrompt" value={searchPrompt} onChange={(event) => setSearchPrompt(event.target.value)} placeholder="Try Arrival, Princess Bride, or Spider-Verse" />
+            <Input
+              id="title-prompt"
+              name="titlePrompt"
+              value={searchPrompt}
+              onChange={(event) => setSearchPrompt(event.target.value)}
+              placeholder="Try Arrival, Princess Bride, or Spider-Verse"
+              autoComplete="off"
+            />
           </label>
           <label className="space-y-2 text-sm text-[var(--ink-main)]">
             <span>Region</span>
