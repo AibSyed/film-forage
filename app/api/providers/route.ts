@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import { regionSchema } from "@/features/picker/contracts";
 import { getProviderCatalog } from "@/lib/tmdb/providers";
 

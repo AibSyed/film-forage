@@ -107,7 +107,7 @@ export function searchReserveCards(query: string, region: string): MovieMatchCar
       const card = baseCard(region, movie);
       return {
         ...card,
-        fitReasons: [`Reserve match for \"${query.trim()}\"`],
+        fitReasons: [`Reserve match for "${query.trim()}"`],
       };
     });
 }

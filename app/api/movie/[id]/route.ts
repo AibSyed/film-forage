@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import { getMovieDetail } from "@/lib/tmdb/movie-detail";
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
