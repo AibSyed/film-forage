@@ -38,7 +38,6 @@ export function PickerStudio({ initialPick, initialProviders }: { initialPick: P
   const [pick, setPick] = useState(initialPick);
   const [providerCatalog, setProviderCatalog] = useState(initialProviders);
   const [pending, setPending] = useState(false);
-  const [updatedAtLabel, setUpdatedAtLabel] = useState("just now");
   const [searchPrompt, setSearchPrompt] = useState("");
   const [filters, setFilters] = useState(defaultPickRequest);
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -110,14 +109,17 @@ export function PickerStudio({ initialPick, initialProviders }: { initialPick: P
     setProviderPreference(filters.providers);
   }, [filters.providers]);
 
-  useEffect(() => {
+  const updatedAtLabel = useMemo(() => {
     const parsed = new Date(pick.meta.requestedAt);
     if (Number.isNaN(parsed.getTime())) {
-      setUpdatedAtLabel("just now");
-      return;
+      return "just now";
     }
 
-    setUpdatedAtLabel(parsed.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }));
+    return new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone: "UTC",
+    }).format(parsed);
   }, [pick.meta.requestedAt]);
 
   const topProviders = useMemo(() => providerCatalog.providers.slice(0, 12), [providerCatalog.providers]);
