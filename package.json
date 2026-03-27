@@ -38,7 +38,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.27",
-    "happy-dom": "^20.8.4",
+    "happy-dom": "^20.8.8",
     "markdownlint-cli2": "^0.21.0",
     "postcss": "^8.5.8",
     "tailwindcss": "^4.2.1",
