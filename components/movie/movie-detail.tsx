@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Route } from "next";
 import type { MovieDetailResponseVM } from "@/features/picker/contracts";
 import { getSourceLabel } from "@/features/picker/presentation";
 import { MovieActions } from "@/components/movie/movie-actions";
+import { TmdbImage } from "@/components/movie/tmdb-image";
 
 export function MovieDetail({ detail }: { detail: MovieDetailResponseVM }) {
   const movie = detail.movie;
@@ -14,7 +14,7 @@ export function MovieDetail({ detail }: { detail: MovieDetailResponseVM }) {
         <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="relative min-h-[24rem] bg-[linear-gradient(135deg,rgba(216,159,84,0.24),rgba(63,90,113,0.5))]">
             {movie.card.backdropUrl ? (
-              <Image src={movie.card.backdropUrl} alt={`${movie.card.title} backdrop`} fill className="object-cover" priority sizes="(min-width: 1024px) 50vw, 100vw" />
+              <TmdbImage src={movie.card.backdropUrl} alt={`${movie.card.title} backdrop`} fill className="object-cover" priority sizes="(min-width: 1024px) 50vw, 100vw" />
             ) : null}
           </div>
           <div className="space-y-5 p-5 md:p-7">

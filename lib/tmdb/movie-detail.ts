@@ -43,7 +43,7 @@ export async function getMovieDetail(id: number, region: string) {
     const providerSummary = buildProviderSummary(region, providers.results[region]);
     const cardBase = {
       ...buildMovieCardBase(detail, providerSummary),
-      backdropUrl: buildTmdbImageUrl(detail.backdrop_path, "original"),
+      backdropUrl: buildTmdbImageUrl(detail.backdrop_path, "w780"),
     };
 
     const trailer = videos.results.find((video) => video.site === "YouTube" && (video.official || video.type === "Trailer"));
