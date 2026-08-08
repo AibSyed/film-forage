@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { ClipboardList, RotateCcw, Trash2 } from "lucide-react";
 import { toast } from "sonner";
@@ -16,6 +15,7 @@ import {
 } from "@/features/workspace/storage";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { TmdbImage } from "@/components/movie/tmdb-image";
 
 export function WatchlistExperience() {
   const [workspace, setWorkspace] = useState(() => readWorkspace() ?? createWorkspaceDefaults());
@@ -62,7 +62,7 @@ export function WatchlistExperience() {
                 <div className="grid gap-0 md:grid-cols-[160px_1fr]">
                   <div className="relative min-h-44 bg-[linear-gradient(135deg,rgba(192,153,86,0.35),rgba(69,89,110,0.55))]">
                     {movie.posterUrl ? (
-                      <Image src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes="160px" />
+                      <TmdbImage src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes="160px" />
                     ) : (
                       <div className="flex h-full items-end p-4 text-xs uppercase tracking-[0.24em] text-[var(--ink-muted)]">Poster unavailable</div>
                     )}

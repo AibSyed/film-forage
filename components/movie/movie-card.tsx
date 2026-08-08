@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import type { Route } from "next";
 import { motion } from "framer-motion";
@@ -8,6 +7,7 @@ import { ArrowUpRight, Star } from "lucide-react";
 import type { MovieMatchCardVM } from "@/features/picker/contracts";
 import { getSourceLabel } from "@/features/picker/presentation";
 import { MovieActions } from "@/components/movie/movie-actions";
+import { TmdbImage } from "@/components/movie/tmdb-image";
 
 function getPosterMonogram(title: string) {
   return title
@@ -70,7 +70,7 @@ export function MovieCard({
         <div className="grid grid-cols-[112px_1fr] gap-0">
           <div className="relative min-h-full bg-[linear-gradient(155deg,rgba(201,148,71,0.16),rgba(47,75,116,0.32))]">
             {movie.posterUrl ? (
-              <Image src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes="96px" />
+              <TmdbImage src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes="96px" />
             ) : (
               <div className="flex h-full flex-col justify-between p-3">
                 <div className="inline-flex h-9 w-9 items-center justify-center rounded-[0.9rem] border border-[var(--line-soft)] bg-[rgba(7,12,18,0.44)] font-display text-sm text-[var(--ink-strong)]">
@@ -121,7 +121,7 @@ export function MovieCard({
       <div className="grid grid-cols-1 gap-0 md:grid-cols-[minmax(220px,38%)_1fr]">
         <div className="relative min-h-[17rem] bg-[linear-gradient(155deg,rgba(201,148,71,0.16),rgba(47,75,116,0.32))] md:min-h-full">
           {movie.posterUrl ? (
-            <Image src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes="(min-width: 768px) 38vw, 100vw" />
+            <TmdbImage src={movie.posterUrl} alt={`${movie.title} poster`} fill className="object-cover" sizes="(min-width: 768px) 38vw, 100vw" />
           ) : (
             <div className="flex h-full flex-col justify-between p-4">
               <div className="inline-flex h-12 w-12 items-center justify-center rounded-[1rem] border border-[var(--line-soft)] bg-[rgba(7,12,18,0.44)] font-display text-lg text-[var(--ink-strong)]">
