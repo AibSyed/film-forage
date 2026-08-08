@@ -7,5 +7,7 @@ type TmdbImageProps = Omit<ImageProps, "unoptimized">;
  * transformation pipeline while retaining next/image layout and lazy loading.
  */
 export function TmdbImage(props: TmdbImageProps) {
-  return <Image {...props} unoptimized />;
+  const unoptimized = typeof props.src === "string" && props.src.startsWith("https://image.tmdb.org/t/p/");
+
+  return <Image {...props} unoptimized={unoptimized} />;
 }
