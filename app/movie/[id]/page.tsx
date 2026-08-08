@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { PageShell } from "@/components/page-shell";
 import { MovieDetail } from "@/components/movie/movie-detail";
 import { getMovieDetail } from "@/lib/tmdb/movie-detail";
-import { regionSchema } from "@/features/picker/contracts";
+import { movieIdParamSchema, regionSchema } from "@/features/picker/contracts";
 
 async function loadMovieDetail(id: number, region: string) {
   try {
@@ -23,13 +23,13 @@ export default async function MoviePage({
 }) {
   const [{ id }, query] = await Promise.all([params, searchParams]);
   const region = regionSchema.safeParse(query.region ?? "US");
-  const movieId = Number(id);
+  const movieId = movieIdParamSchema.safeParse(id);
 
-  if (!region.success || !Number.isInteger(movieId) || movieId <= 0) {
+  if (!region.success || !movieId.success) {
     notFound();
   }
 
-  const detail = await loadMovieDetail(movieId, region.data);
+  const detail = await loadMovieDetail(movieId.data, region.data);
 
   if (!detail) {
     return (

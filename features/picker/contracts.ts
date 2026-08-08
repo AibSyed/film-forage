@@ -47,6 +47,13 @@ export const regionSchema = z
   .regex(/^[A-Z]{2}$/)
   .default("US");
 
+export const movieIdParamSchema = z
+  .string()
+  .trim()
+  .regex(/^[1-9]\d*$/)
+  .transform(Number)
+  .pipe(z.number().int().safe().positive());
+
 export const genreSchema = z.enum(genreValues).default("any");
 const vibeSchema = z.enum(vibeValues).default("any");
 const availabilityModeSchema = z.enum(availabilityValues).default("subscription");
