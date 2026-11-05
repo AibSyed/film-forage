@@ -72,9 +72,9 @@ flowchart LR
   normalized public GET route responses are also cached at Vercel for 15
   minutes and may be served stale for up to 24 hours while refreshing.
 - Movie details and provider summaries revalidate on longer windows.
-- TMDB poster and backdrop URLs bypass Vercel image transformations because
-  TMDB already serves purpose-sized CDN assets. `next/image` still owns layout,
-  responsive sizing, and lazy loading; local images retain normal optimization.
+- Images load directly from their source without Vercel transformations. TMDB
+  provides purpose-sized poster and backdrop assets; `next/image` retains
+  layout and lazy loading for the app's images.
 - Vercel creates deployments only for `master` and `release/**`, and Fluid
   Compute is repository-owned through `vercel.json`.
 - Local watchlist state is browser-only and not synchronized server-side.
